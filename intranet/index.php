@@ -1,5 +1,7 @@
+<?php
+session_start();
 
-
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,6 +24,11 @@
           
             <button class="btn btn-outline-info  mb-1 mr-4" id="menu-toggle"><i class="fas fa-chevron-left" id="flechita"></i> Menu</button>
             
+            <ul class="navbar-nav ml-auto  ">
+              <li class="nav-item text-light" >
+                    <h6><?php echo 'Bienvenido! '.utf8_encode($_SESSION['user']); ?> </h6>
+              </li>
+            </ul>
               
          
     
@@ -31,6 +38,7 @@
     
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto  ">
+                
                 <li class="nav-item">
                   <button class="btn btn-outline-info mr-5 mb-1 " href="#">Soporte</button>
                 </li>
@@ -44,7 +52,7 @@
                     <a class="dropdown-item " href="#">Informacion Personal</a>
                     <a class="dropdown-item " href="#">Another action</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item " href="#">Cerrar Sesion</a>
+                    <a class="dropdown-item " href="phpintra/cerrar.php">Cerrar Sesion</a>
                   </div>
                 </li>
                 

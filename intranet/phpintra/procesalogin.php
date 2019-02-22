@@ -24,15 +24,17 @@ echo '</pre>';
 
         //matar operacion
         echo 'No existe usuario';
+        header('Location:../../login.php');
         die();
     }
 
     if (password_verify($pass_log, $resultado['pass_usuario'])) {
        // LAS CONTRASENAS SON IGUALES
       $_SESSION['user'] = $resultado['nombre_usuario'];
-      header('Location:restrict.php');
+      header('Location:../index.php');
     }else {
         echo 'Las contrasenas no coinciden';
+        header('Location:../../login.php');
         die();
     }
     

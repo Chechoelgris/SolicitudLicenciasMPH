@@ -20,4 +20,4 @@ $_SESSION = array();
 //Finalmente, se destruye la sesion.
 
 session_destroy();
-header('Location:prueba.php');
+header('Location:../../login.php');
