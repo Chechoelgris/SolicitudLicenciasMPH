@@ -5,12 +5,17 @@
  */
  body {
     overflow-x: hidden;
+    background-image: url('../../resources/img/fondo1.jpg');
+    min-height: 100vh;
+    height: 100vh;
+    
   }
   
   
   #sidebar-wrapper {
     min-height: 100vh;
     margin-left: -15rem;
+    margin-top: 80px;
     -webkit-transition: margin .25s ease-out;
     -moz-transition: margin .25s ease-out;
     -o-transition: margin .25s ease-out;
@@ -65,18 +70,21 @@
   .negro{
     background-color: #222831;
   }
-
+  .negro:hover{
+    background-color: #3c4149;
+  }
   .navsuperior{
     width: 100%;
     max-width: 100%;
+    height: 8vh;
   }
  .margen{
    margin-top: 80px;
+   min-height: 90vh;
+   height: 90vh;
  }
+ 
 
- .margen2{
-  margin-top: 80px;
-}
  
   
   

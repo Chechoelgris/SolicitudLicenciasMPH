@@ -31,7 +31,10 @@ echo '</pre>';
     if (password_verify($pass_log, $resultado['pass_usuario'])) {
        // LAS CONTRASENAS SON IGUALES
       $_SESSION['user'] = $resultado['nombre_usuario'];
+      $_SESSION['tipo'] = $resultado['tipo_usuario'];
+
       header('Location:../index.php');
+
     }else {
         echo 'Las contrasenas no coinciden';
         header('Location:../../login.php');
