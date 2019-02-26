@@ -8,7 +8,7 @@ utf8_encode($_SESSION['tipo'])
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Administracion SSH</title>
+    <title>Registrar Usuarios - Administracion SSH</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <!--   Estilos personalizados -->
@@ -23,15 +23,11 @@ utf8_encode($_SESSION['tipo'])
           
           
             <button class="btn btn-outline-info  mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
-            
-            <ul class="navbar-nav ml-auto  ">
-              <li class="nav-item text-light d-sm-block" >
-                    <h6><?php echo 'Bienvenido! '.utf8_encode($_SESSION['user']); ?> </h6>
-              </li>
-              
-            </ul>
-              
-         
+
+            <li class="nav-item">
+                <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="../index.php"><i class="fas fa-home"></i> Home</a>
+                
+            </li>
     
             <button class="navbar-toggler btn-outline-info" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon   "></span>
@@ -53,7 +49,7 @@ utf8_encode($_SESSION['tipo'])
                     <a class="dropdown-item " href="#"><i class="fas fa-user-edit"></i> Informacion Personal</a>
                   
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item " href="phpintra/cerrar.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>
+                    <a class="dropdown-item " href="cerrar.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>
                   </div>
                 </li>
                 
@@ -79,8 +75,10 @@ utf8_encode($_SESSION['tipo'])
                         <div class="linea"></div>
 
                         <div class="text-center text-light bg-dark mt-3">
+                          
                           <h4>Administración</h4>
                         </div>
+                        <div class="linea"></div>
                         <!-- Item menu -->
 
                         <?php if($_SESSION['tipo']=='Administrador'){ ?>
@@ -94,11 +92,11 @@ utf8_encode($_SESSION['tipo'])
                             </a>
                             
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item " href="#"><i class="fas fa-user-plus"></i> Registro</a>
+                                <a class="dropdown-item " href="listarusuarios.php"><i class="fas fa-user-plus"></i> Registro</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="#"><i class="fas fa-user-times"></i> Editar / Eliminar</a>
+                                <a class="dropdown-item " href="editareliminarusr.php"><i class="fas fa-user-times"></i> Editar / Eliminar</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="#"><i class="fas fa-users"></i> listar</a>
+                                <a class="dropdown-item " href="listarusuarios.php"><i class="fas fa-users"></i> listar</a>
                             </div>
                             <div class="linea"></div>
                           </div>
@@ -125,13 +123,33 @@ utf8_encode($_SESSION['tipo'])
                           <!-- Item menu -->
                           <div>
                               <div class="linea"></div>
-                            <a href="#" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                             
-                              Gestion de Cupos</a>  
+
+                                <a href="#" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
+                                <line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                  Gestion de Cupos</a>  
                               <div class="linea"></div>
                           </div>
-                      </div>      
+
+                          <div>
+                              <div class="linea"></div>
+                              <div>
+                                  <a href="#" class="disabled list-group-item list-group-item-action text-light bg-dark mt-5 mb-4">
+                                      <i class="far fa-user"></i>
+                                      <line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line>
+                                      <line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                      <?php echo 'Usuario Activo:  '.utf8_encode($_SESSION['user']); ?> 
+                                  </a> 
+                              </div>
+                          </div>
+                          
+                      </div> 
+                    
+                      
+                     
+                      
                   </div>     <!-- /Sidebar --> 
           </article>
 
@@ -149,7 +167,7 @@ utf8_encode($_SESSION['tipo'])
                         <label for="inputRut" class="col-sm-2 col-form-label"><b>RUT</b></label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="rut" id="inputRut" onblur="javascript:Rut(document.form1.rut.value)">
+                            <input type="text" class="form-control" name="rut" id="inputRut" placeholder="Rut sin puntos ni guion (112223334)" onblur="javascript:Rut(document.form1.rut.value)">
                         </div>
                     </div>
                     <!-- Separador de campos -->

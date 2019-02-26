@@ -1,6 +1,18 @@
 <?php
 session_start();
-utf8_encode($_SESSION['tipo'])
+utf8_encode($_SESSION['tipo']);
+
+include_once 'conexion.php';//Conexion a la Base de datos
+
+$sql = 'SELECT * FROM TA_usuario';//Definimos la consulta a la base de datos
+$sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
+$sentencia->execute();            // Ejecutamos la consulta
+$resultado = $sentencia->fetchAll(); //Obtenemos los datos
+$artxpag = 5; //Se definen la cantidad de usuarios a mostrar por paginacion
+$totalobtenido = $sentencia->rowCount();//Contamos la cantidad de elementos obtenidos
+$paginas = $totalobtenido/$artxpag;//calculamos la cantidad de paginas a necesitar
+$paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS los elementos obtenidos
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -8,27 +20,59 @@ utf8_encode($_SESSION['tipo'])
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Administracion SSH</title>
+    <title>Listar usuarios - Administracion SSH</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <!--   Estilos personalizados -->
-    <link rel="stylesheet" href="cssintra/estilos.css">
-    <script src="jsintra/funciones.js" charset="utf-8"></script>
-    
+    <link rel="stylesheet" href="../cssintra/estilos.css">
+    <script src="../jsintra/funciones.js" charset="utf-8"></script>
+    <script src="../../js/validarut.js" charset="utf-8"></script>
 </head>
 <body>
+<?php 
+            if (!$_GET){
+              header('Location:listarusuarios.php?pagina=1');
+            } //Con esto, modificamos la cabecera para que nos envie a la pagina 1 si es que no se ha seleccionado ninguna pagina en especifico
+            if ($_GET['pagina']>$paginas || $_GET['pagina']<=0 ) {
 
+              header('Location:listarusuarios.php?pagina=1');
+            }//Con este if, nos aseguramos que al instar manualmente numeros que no esten en el dominio de la pagina, se redirigan a la pagina 1
+            $iniciar=($_GET['pagina']-1)*$artxpag;
+            
+            $sql_usuarios = 'SELECT * FROM TA_usuario LIMIT :iniciar, :nusuarios';  // limit, su primer parametro 
+                                                                                    //indica desde que valor iniciaremos (valor del fetch), y el segundo indica
+                                                                                    //en este caso, la cantidad de campos a mostrar (cantidad de filas del fetch obtenidas)
+            $sentencia_usuarios = $conn->prepare($sql_usuarios);                    //preparamos la sentencia sql
+
+            $sentencia_usuarios->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);   //Estamos convirtiendo el valor entero a String y lo pasamos como parametro a la sentencia preparada
+            $sentencia_usuarios->bindParam(':nusuarios', $artxpag, PDO::PARAM_INT); //El primer parametro es el enunciado indicado en la preparacion de la sentencia, el segundo es 
+                                                                                    // la variable que contiene la informacion a insertar, y el tercero, es 
+                                                                                    // la funcion que transforma la variable a string.
+
+            $sentencia_usuarios->execute();                                         //Ejecutamos la consulta sql    
+            $resultado_usuarios = $sentencia_usuarios->fetchAll();                  //Se almacenan los datos obtenidos
+             /* 
+
+            
+            
+            
+            
+            
+              
+
+    */ 
+
+?>
   <header>
       <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top navsuperior" id="navv">
           
           
-            <button class="btn btn-outline-info  mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
-            <li class="nav-item">
-                  <button class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="#"><i class="fas fa-home"></i> Home</button>
-            </li>
+            <button class="btn btn-outline-info mt-1 mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
+
             
-              
-         
+                <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="../index.php"><i class="fas fa-home"></i>Home</a>
+                
+            
     
             <button class="navbar-toggler btn-outline-info" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon   "></span>
@@ -50,7 +94,7 @@ utf8_encode($_SESSION['tipo'])
                     <a class="dropdown-item " href="#"><i class="fas fa-user-edit"></i> Informacion Personal</a>
                   
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item " href="phpintra/cerrar.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>
+                    <a class="dropdown-item " href="cerrar.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>
                   </div>
                 </li>
                 
@@ -74,9 +118,9 @@ utf8_encode($_SESSION['tipo'])
                       <div class="list-group list-group-flush dropright ">
                           
                         <div class="linea"></div>
-                        
 
                         <div class="text-center text-light bg-dark mt-3">
+                          
                           <h4>Administración</h4>
                         </div>
                         <div class="linea"></div>
@@ -93,11 +137,11 @@ utf8_encode($_SESSION['tipo'])
                             </a>
                             
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item " href="phpintra/registrousuario.php"><i class="fas fa-user-plus"></i> Registro</a>
+                                <a class="dropdown-item " href="registrousuario.php"><i class="fas fa-user-plus"></i> Registro</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="phpintra/editareliminarusr.php"><i class="fas fa-user-times"></i> Editar / Eliminar</a>
+                                <a class="dropdown-item " href="editareliminarusr.php"><i class="fas fa-user-times"></i> Editar / Eliminar</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="phpintra/listarusuarios.php"><i class="fas fa-users"></i> listar</a>
+                                <a class="dropdown-item " href="listarusuarios.php"><i class="fas fa-users"></i> listar</a>
                             </div>
                             <div class="linea"></div>
                           </div>
@@ -124,12 +168,16 @@ utf8_encode($_SESSION['tipo'])
                           <!-- Item menu -->
                           <div>
                               <div class="linea"></div>
-                            <a href="#" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                             
-                              Gestion de Cupos</a>  
+
+                                <a href="#" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
+                                <line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                  Gestion de Cupos</a>  
                               <div class="linea"></div>
                           </div>
+
                           <div>
                               <div class="linea"></div>
                               <div>
@@ -141,105 +189,84 @@ utf8_encode($_SESSION['tipo'])
                                   </a> 
                               </div>
                           </div>
-                      </div>   
+                          
+                      </div> 
+                    
                       
+                     
                       
                   </div>     <!-- /Sidebar --> 
           </article>
 
-          <article class="mr-4 ml-4 row ">
-            <section class="margen">
+          <article class="margen  container-fluid col-10">
+            <section class=" ">
               
-                <div class="p-block">
-                
-                    <div class="accordion col-12" id="accordionExample">
-                        <div class="card">
-                          <div class="card-header alert-dark" id="headingOne">
-                            <h2 class="mb-0">
-                              <button class="btn btn-outline-dark btn-lg btn-block " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                  Gestión de Usuarios
-                              </button>
-                            </h2>
-                          </div>
-                      
-                          <div id="collapseOne" class="collapse show alert-info" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <p>En este modulo, se gestionan los usuarios que tendran acceso al sistema de administracion, este 
-                                    apartado esta compuesto por tres secciones, las que se detallaran a continuacion.</p>
-                                    
-                                    <h5><b>Registro de Usuarios</b></h5>
-                                    <p>En esta seccion, el o los administradores, podran hacer el ingreso de nuevos usuarios, otorgandole los permisos 
-                                      necesarios, segun sus funciones al momento de crearlos, por medio de una opcion que requiere 
-                                      seleccionar un tipo de perfil para su creacion.</p>
-                                    <h5><b>Editar / Eliminar</b></h5>
-                                    <p>Esta seccion permite la busqueda de usuarios registrados en la base de datos, modificarlos y/o eliminarlos 
-                                      del sistema.</p>
-                                    <h5><b>Listar</b></h5>
-                                    <p>Listar le permitira acceder de manera rapida y efectiva, a todos los registros de usuarios en la base.</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header alert-dark" id="headingTwo">
-                            <h2 class="mb-0">
-                              <button class="btn btn-outline-dark  collapsed btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                  Gestión de Solicitudes
-                              </button>
-                            </h2>
-                          </div>
-                          <div id="collapseTwo" class="collapse alert-info " aria-labelledby="headingTwo" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <p>En este modulo, se gestionan las solicitudes de horas ingresadas al sistema por los vecinos, al igual que el
-                                    anterior, este apartado consiste en tres secciones, las que se detallaran a continuacion.
-                                  </p>
-                                  
-                                  <h5><b>Pendientes</b></h5>
-                                  <p>En la seccion "Pendientes", se concentran las solicitudes ingresadas al sistema, que aún no han sido
-                                    asignadas a la hora solicitada, permite validar la informacion necesaria para aceptar o rechazar 
-                                    las solicitudes.
-                                  </p>
+            <h1 class="mb-5">Listado de Usuarios</h1>
           
-                                  <h5><b>Aprobadas</b></h5>
-                                  <p>Esta seccion permite acceder de manera rapida y efectiva, a todas las solicitudes que han sido 
-                                    validadas y aprobadas en el modulo anterior.</p>
-          
-                                  <h5><b>Rechazadas</b></h5>
-                                  <p>Esta seccion permite acceder de manera rapida y efectiva, a todas las solicitudes que han sido 
-                                      validadas, y en consecuencia, rechachadas en el modulo anterior.</p>   
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header alert-dark" id="headingThree">
-                            <h2 class="mb-0">
-                              <button class="btn btn-outline-dark collapsed btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                  Gestión de Cupos
-                              </button>
-                            </h2>
-                          </div>
-                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                            <div class="card-body alert-info">
-                                <p>Esta sección nos permite administrar de manera dinamica los cupos de atencion totales 
-                                    para un dia en especifico.</p> 
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+             
+             
 
+              <div class="table-responsive-xl">
+                <table class="table  table-bordered table-hover ">
+                <caption>Listado de usuarios</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">RUT</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Correo</th>
+                      <th scope="col">Tipo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <?php foreach($resultado_usuarios as $usr):?>
                   
-
+                    <tr>
+                      <th><?php echo $usr['id_usuario']?></th>
+                      <th><?php echo $usr['rut_usuario']?></th>
+                      <td><?php echo utf8_encode($usr['nombre_usuario']).' '.utf8_encode($usr['apellidop_usuario']).' '.utf8_encode($usr['apellidom_usuario'])?></td>
+                      <td><?php echo $usr['correo_usuario']?></td>
+                      <td><?php echo $usr['tipo_usuario']?></td>
+                    </tr>
+                    <?php endforeach?>
+                  </tbody>
+                </table>
+              </div>
+             
+              
+              
+                
+              <nav aria-label="Page navigation example ">
+                  <ul class="pagination ">
+                    <li class="page-item 
+                    <?php  echo$_GET['pagina']<=1 ? 'disabled' : '' ?>
+                    " >
+                      <a class="page-link " 
+                        href="listarusuarios.php?pagina=<?php echo $_GET['pagina']-1 ?>">
+                        Anterior
+                      </a>
+                    </li>
+                   <!-- Paginacion dinamica-->
                    
+                   <?php  for ($i=0; $i < $paginas; $i++):?>
 
-                    <div class="cupos colapse d-none" id="multiCollapseExample3">
-                        <h4>Gestión de Cupos</h4>
-                        <p>Esta sección nos permite administrar de manera dinamica los cupos de atencion totales 
-                          para un dia en especifico.</p>
-                    </div>
-
-                  </div>
-
+                    <li class="page-item 
+                    <?php echo $_GET['pagina']==$i+1 ? 'active' : ''?>">
+                        <a class="page-link " 
+                        href="listarusuarios.php?pagina=<?php echo $i+1 ?>">
+                        <?php echo$i+1; ?>
+                        </a>
+                    </li>
+                    <?php  endfor?>
+                   
+                    <!-- Paginacion dinamica-->
+                    <li class="page-item
+                    <?php  echo$_GET['pagina']>=$paginas ? 'disabled' : '' ?>
+                    "><a class="page-link " href="listarusuarios.php?pagina=<?php echo $_GET['pagina']+1 ?>">Siguiente</a></li>
+                  </ul>
+              
+              </nav>
             </section>
-            
           </article>
 
 
