@@ -12,9 +12,9 @@ utf8_encode($_SESSION['tipo'])
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <!--   Estilos personalizados -->
-    <link rel="stylesheet" href="cssintra/estilos.css">
-    <script src="jsintra/funciones.js" charset="utf-8"></script>
-    
+    <link rel="stylesheet" href="../cssintra/estilos.css">
+    <script src="../jsintra/funciones.js" charset="utf-8"></script>
+    <script src="../../js/validarut.js" charset="utf-8"></script>
 </head>
 <body>
 
@@ -94,7 +94,7 @@ utf8_encode($_SESSION['tipo'])
                             </a>
                             
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item " href="phpintra/registrousuario.php"><i class="fas fa-user-plus"></i> Registro</a>
+                                <a class="dropdown-item " href="#"><i class="fas fa-user-plus"></i> Registro</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="#"><i class="fas fa-user-times"></i> Editar / Eliminar</a>
                                 <div class="dropdown-divider"></div>
@@ -135,99 +135,88 @@ utf8_encode($_SESSION['tipo'])
                   </div>     <!-- /Sidebar --> 
           </article>
 
-          <article class="mr-4 ml-4 row ">
-            <section class="margen">
+          <article class="margen  container-fluid col-10">
+            <section class=" ">
               
-                <div class="p-block">
-                
-                    <div class="accordion col-12" id="accordionExample">
-                        <div class="card">
-                          <div class="card-header alert-dark" id="headingOne">
-                            <h2 class="mb-0">
-                              <button class="btn btn-outline-dark btn-lg btn-block " type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                  Gestión de Usuarios
-                              </button>
-                            </h2>
-                          </div>
-                      
-                          <div id="collapseOne" class="collapse show alert-info" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <p>En este modulo, se gestionan los usuarios que tendran acceso al sistema de administracion, este 
-                                    apartado esta compuesto por tres secciones, las que se detallaran a continuacion.</p>
-                                    
-                                    <h5><b>Registro de Usuarios</b></h5>
-                                    <p>En esta seccion, el o los administradores, podran hacer el ingreso de nuevos usuarios, otorgandole los permisos 
-                                      necesarios, segun sus funciones al momento de crearlos, por medio de una opcion que requiere 
-                                      seleccionar un tipo de perfil para su creacion.</p>
-                                    <h5><b>Editar / Eliminar</b></h5>
-                                    <p>Esta seccion permite la busqueda de usuarios registrados en la base de datos, modificarlos y/o eliminarlos 
-                                      del sistema.</p>
-                                    <h5><b>Listar</b></h5>
-                                    <p>Listar le permitira acceder de manera rapida y efectiva, a todos los registros de usuarios en la base.</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header alert-dark" id="headingTwo">
-                            <h2 class="mb-0">
-                              <button class="btn btn-outline-dark  collapsed btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                  Gestión de Solicitudes
-                              </button>
-                            </h2>
-                          </div>
-                          <div id="collapseTwo" class="collapse alert-info " aria-labelledby="headingTwo" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <p>En este modulo, se gestionan las solicitudes de horas ingresadas al sistema por los vecinos, al igual que el
-                                    anterior, este apartado consiste en tres secciones, las que se detallaran a continuacion.
-                                  </p>
-                                  
-                                  <h5><b>Pendientes</b></h5>
-                                  <p>En la seccion "Pendientes", se concentran las solicitudes ingresadas al sistema, que aún no han sido
-                                    asignadas a la hora solicitada, permite validar la informacion necesaria para aceptar o rechazar 
-                                    las solicitudes.
-                                  </p>
-          
-                                  <h5><b>Aprobadas</b></h5>
-                                  <p>Esta seccion permite acceder de manera rapida y efectiva, a todas las solicitudes que han sido 
-                                    validadas y aprobadas en el modulo anterior.</p>
-          
-                                  <h5><b>Rechazadas</b></h5>
-                                  <p>Esta seccion permite acceder de manera rapida y efectiva, a todas las solicitudes que han sido 
-                                      validadas, y en consecuencia, rechachadas en el modulo anterior.</p>   
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header alert-dark" id="headingThree">
-                            <h2 class="mb-0">
-                              <button class="btn btn-outline-dark collapsed btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                  Gestión de Cupos
-                              </button>
-                            </h2>
-                          </div>
-                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                            <div class="card-body alert-info">
-                                <p>Esta sección nos permite administrar de manera dinamica los cupos de atencion totales 
-                                    para un dia en especifico.</p> 
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+               <form action="procesaregistro.php" method="POST" class="" name="form1">
 
-                  
+                    <div class="form-group row">
+                        <label for="" class="col-sm-4 col-form-label"><h4>Informacion Personal</h4></label>
+                    </div>
+                    <!-- Separador de campos -->
 
+                    <div class="form-group row">
+                        <label for="inputRut" class="col-sm-2 col-form-label"><b>RUT</b></label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="rut" id="inputRut" onblur="javascript:Rut(document.form1.rut.value)">
+                        </div>
+                    </div>
+                    <!-- Separador de campos -->
+                    <div class="form-group row">
+                        <label for="inputNombre" class="col-sm-2 col-form-label"><b>Nombre</b></label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="inputNombre" name="nombrenuevo" placeholder="Nombre/s">
+                        </div>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="inputApellidoP" name="apellidopnuevo" placeholder="Apellido Paterno">
+                        </div>
+
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="inputApellidoM" name="apellidomnuevo" placeholder="Apellido Materno">
+                        </div>
+
+                    </div>
                    
-
-                    <div class="cupos colapse d-none" id="multiCollapseExample3">
-                        <h4>Gestión de Cupos</h4>
-                        <p>Esta sección nos permite administrar de manera dinamica los cupos de atencion totales 
-                          para un dia en especifico.</p>
+                     <!-- Separador de campos -->
+                    <div class="form-group row">
+                            <label for="inputCorreo" class="col-sm-2 col-form-label"><b>Correo Electronico</b></label>
+    
+                            <div class="col-sm-10">
+                                <input type="email" name="correonuevo" class="form-control" id="inputCorreo" placeholder="Correo">
+                            </div>
+                    </div>
+                     <!-- Separador de campos -->
+                     <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label"><h4>Informacion de la Cuenta</h4></label>
                     </div>
 
-                  </div>
+                    <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label"><b>Contraseña</b></label>
+    
+                            <div class="col-sm-5">
+                                <input type="password" name="passnuevo" class="form-control" id="inputPassword" placeholder="Contraseña">
+                            </div>
+                             
+                            <div class="col-sm-5">
+                                    <input type="password" name="passnuevo2" class="form-control" id="inputPassword2" placeholder="Confirma tu Contraseña">
+                                </div>
+                    </div>
 
+                    <!-- Separador de campos -->
+                            
+                    <div class="form-group row">
+                            <label for="inputtipo" class="col-sm-2 col-form-label"><b>Tipo de Usuario</b></label>
+    
+                            <div class="col-sm-10">
+                                <select class="form-control" name="tiponuevo" id="selecttipo">
+                                        <option value="Funcionario" >Funcionario</option>
+                                        <option value="Administrador" >Administrador</option>
+                                </select>
+                            </div>
+                    </div>
+                    
+                        
+                    
+                    <div class="">
+                        <button type="submit" class="btn btn-success mb-2 float-right">Confirmar Registro</button>
+                        
+                    </div>
+               </form>
+                   
             </section>
-            
           </article>
 
 

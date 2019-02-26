@@ -3,7 +3,7 @@ session_start();
 
 include_once 'conexion.php'; 
 
-$rut_log = $_POST['rutlog'];
+$rut_log = $_POST['rut'];
 $pass_log = $_POST['passlog'];
 
 echo '<pre>';
