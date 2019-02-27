@@ -1,6 +1,13 @@
 <?php
 session_start();
-utf8_encode($_SESSION['tipo'])
+utf8_encode($_SESSION['tipo']);
+
+
+  if  (!isset($_SESSION['tipo'])) {
+
+      header('Location:../login.php');
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
