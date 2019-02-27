@@ -2,7 +2,11 @@
     include_once 'conexion.php'; //Conexion a la Base de datos
 
     session_start();
-    utf8_encode($_SESSION['tipo'])
+    utf8_encode($_SESSION['tipo']);
+    if  (!isset($_SESSION['tipo'])) {
+    
+      header('Location:../../login.php');
+    }
 
   
 

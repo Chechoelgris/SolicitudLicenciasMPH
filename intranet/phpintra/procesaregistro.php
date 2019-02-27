@@ -1,4 +1,10 @@
 <?php 
+session_start();
+utf8_encode($_SESSION['tipo']);
+if  (!isset($_SESSION['tipo'])) {
+
+  header('Location:../../login.php');
+}
     //CONEXION A LA BASE DE DATOS
     include_once 'conexion.php'; 
 
