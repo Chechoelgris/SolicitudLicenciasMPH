@@ -122,7 +122,7 @@ function Rut(texto)
 		invertido = invertido + dtexto.charAt(i);	
 
 	window.document.form1.rut.value = invertido.toUpperCase()		
-
+	window.document.form1.rut.value = invertido.toUpperCase()
 	if ( revisarDigito2(texto) ){		
 		return true;	 }
 

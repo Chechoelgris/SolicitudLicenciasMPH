@@ -1,14 +1,23 @@
 <?php
-session_start();
-utf8_encode($_SESSION['tipo'])
+    include_once 'conexion.php'; //Conexion a la Base de datos
+
+    session_start();
+    utf8_encode($_SESSION['tipo'])
+
+  
+
+
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registrar Usuarios - Administracion SSH</title>
+    <title>Editar/Eliminar usuarios - Administracion SSH</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <!--   Estilos personalizados -->
@@ -22,12 +31,12 @@ utf8_encode($_SESSION['tipo'])
       <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top navsuperior" id="navv">
           
           
-            <button class="btn btn-outline-info  mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
+            <button class="btn btn-outline-info mt-1 mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
 
-            <li class="nav-item">
+           
                 <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="../index.php"><i class="fas fa-home"></i> Home</a>
                 
-            </li>
+          
     
             <button class="navbar-toggler btn-outline-info" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon   "></span>
@@ -92,7 +101,7 @@ utf8_encode($_SESSION['tipo'])
                             </a>
                             
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item " href="listarusuarios.php"><i class="fas fa-user-plus"></i> Registro</a>
+                                <a class="dropdown-item " href="registrousuario.php"><i class="fas fa-user-plus"></i> Registro</a>
                                 <div class="dropdown-divider"></div>
                                 
                                 <div class="dropdown-divider"></div>
@@ -154,87 +163,20 @@ utf8_encode($_SESSION['tipo'])
           </article>
 
           <article class="margen  container-fluid col-10">
-            <section class=" ">
-              
-               <form action="procesaregistro.php" method="POST" class="" name="form1">
-
-                    <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label"><h4>Informacion Personal</h4></label>
-                    </div>
-                    <!-- Separador de campos -->
-
-                    <div class="form-group row">
-                        <label for="inputRut" class="col-sm-2 col-form-label"><b>RUT</b></label>
-
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="rut" id="inputRut" placeholder="Rut sin puntos ni guion (112223334)" onblur="javascript:Rut(document.form1.rut.value)">
-                        </div>
-                    </div>
-                    <!-- Separador de campos -->
-                    <div class="form-group row">
-                        <label for="inputNombre" class="col-sm-2 col-form-label"><b>Nombre</b></label>
-
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="inputNombre" name="nombrenuevo" placeholder="Nombre/s">
-                        </div>
-
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inputApellidoP" name="apellidopnuevo" placeholder="Apellido Paterno">
-                        </div>
-
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inputApellidoM" name="apellidomnuevo" placeholder="Apellido Materno">
-                        </div>
-
-                    </div>
-                   
-                     <!-- Separador de campos -->
-                    <div class="form-group row">
-                            <label for="inputCorreo" class="col-sm-2 col-form-label"><b>Correo Electronico</b></label>
-    
-                            <div class="col-sm-10">
-                                <input type="email" name="correonuevo" class="form-control" id="inputCorreo" placeholder="Correo">
-                            </div>
-                    </div>
-                     <!-- Separador de campos -->
-                     <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label"><h4>Informacion de la Cuenta</h4></label>
-                    </div>
-
-                    <div class="form-group row">
-                            <label for="inputPassword" class="col-sm-2 col-form-label"><b>Contraseña</b></label>
-    
-                            <div class="col-sm-5">
-                                <input type="password" name="passnuevo" class="form-control" id="inputPassword" placeholder="Contraseña">
-                            </div>
-                             
-                            <div class="col-sm-5">
-                                    <input type="password" name="passnuevo2" class="form-control" id="inputPassword2" placeholder="Confirma tu Contraseña">
-                                </div>
-                    </div>
-
-                    <!-- Separador de campos -->
-                            
-                    <div class="form-group row">
-                            <label for="inputtipo" class="col-sm-2 col-form-label"><b>Tipo de Usuario</b></label>
-    
-                            <div class="col-sm-10">
-                                <select class="form-control" name="tiponuevo" id="selecttipo">
-                                        <option value="Funcionario" >Funcionario</option>
-                                        <option value="Administrador" >Administrador</option>
-                                </select>
-                            </div>
-                    </div>
-                    
+              <section class=" ">
+                          <br>
+                          <br>
+              <div class="card text-center alert-success" >
+                    <div class="card-body">
+                        <h5 class="card-title">Operacion finalizada</h5>
+                        <p class="card-text">La operacion solicitada ha sido realizada exitosamente.</p>
+                        <p class="card-text">Para seguir trabajando, haga click en el boton de abajo para volver al menu principal.</p>
                         
-                    
-                    <div class="">
-                        <button type="submit" class="btn btn-success mb-2 float-right">Confirmar Registro</button>
-                        
+                        <a href="../index.php" class="btn btn-primary">Volver al Inicio</a>
                     </div>
-               </form>
-                   
-            </section>
+                    </div>
+                        
+              </section>
           </article>
 
 

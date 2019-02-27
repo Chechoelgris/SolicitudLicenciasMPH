@@ -22,10 +22,10 @@ utf8_encode($_SESSION['tipo'])
       <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top navsuperior" id="navv">
           
           
-            <button class="btn btn-outline-info  mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
-            <li class="nav-item">
-                  <button class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="#"><i class="fas fa-home"></i> Home</button>
-            </li>
+            <button class="btn btn-outline-info  mb-1 mr-4 mt-1" id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
+           
+                  <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="index.php"><i class="fas fa-home"></i> Home</a>
+           
             
               
          
@@ -95,7 +95,7 @@ utf8_encode($_SESSION['tipo'])
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item " href="phpintra/registrousuario.php"><i class="fas fa-user-plus"></i> Registro</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="phpintra/editareliminarusr.php"><i class="fas fa-user-times"></i> Editar / Eliminar</a>
+                                
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="phpintra/listarusuarios.php"><i class="fas fa-users"></i> listar</a>
                             </div>

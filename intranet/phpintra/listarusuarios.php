@@ -70,7 +70,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             <button class="btn btn-outline-info mt-1 mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
 
             
-                <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="../index.php"><i class="fas fa-home"></i>Home</a>
+                <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="../index.php"><i class="fas fa-home"></i> Home</a>
                 
             
     
@@ -139,7 +139,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item " href="registrousuario.php"><i class="fas fa-user-plus"></i> Registro</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="editareliminarusr.php"><i class="fas fa-user-times"></i> Editar / Eliminar</a>
+                                
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="listarusuarios.php"><i class="fas fa-users"></i> listar</a>
                             </div>
@@ -216,17 +216,22 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                       <th scope="col">Nombre</th>
                       <th scope="col">Correo</th>
                       <th scope="col">Tipo</th>
+                      <th scope="col">Acción</th>
                     </tr>
                   </thead>
                   <tbody>
                   <?php foreach($resultado_usuarios as $usr):?>
                   
                     <tr>
-                      <th><?php echo $usr['id_usuario']?></th>
+                      <th><?php echo $usr['id_usuario']?></th>  
                       <th><?php echo $usr['rut_usuario']?></th>
                       <td><?php echo utf8_encode($usr['nombre_usuario']).' '.utf8_encode($usr['apellidop_usuario']).' '.utf8_encode($usr['apellidom_usuario'])?></td>
                       <td><?php echo $usr['correo_usuario']?></td>
                       <td><?php echo $usr['tipo_usuario']?></td>
+                      <td class="">
+                        <a class="btn btn-outline-dark " href="editareliminarusr.php?usuario=<?php $_GET['usuario'] = $usr['id_usuario']; echo $_GET['usuario']; ?>"><i class="fas fa-user-edit"></i></a>
+                      
+                    </td>
                     </tr>
                     <?php endforeach?>
                   </tbody>

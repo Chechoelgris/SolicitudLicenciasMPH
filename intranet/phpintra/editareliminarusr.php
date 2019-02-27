@@ -1,7 +1,39 @@
 <?php
-session_start();
-utf8_encode($_SESSION['tipo'])
+    include_once 'conexion.php'; //Conexion a la Base de datos
+
+    session_start();
+    utf8_encode($_SESSION['tipo'])
+
+  
+
+
+
 ?>
+<?php  if(isset($_GET['usuario'])): //Si se recibieron datos por GET haremos lo de abajo?> 
+                          <?php  
+
+                          $usr = $_GET['usuario'];
+                          $sql = 'SELECT * FROM TA_usuario WHERE (id_usuario) = (?)';//Definimos la consulta a la base de datos
+                          $sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
+                          $sentencia->execute(array($usr)); // Ejecutamos la consulta
+                          $resultado = $sentencia->fetchAll(); //Obtenemos los datos     <!-- realizamos consulta sql para traer los datos del usuario y mostrarlos -->
+                          
+                          
+                          if($resultado == NULL){ //Si el valor ingresado no esta asociado a ningun elemento en la base, se redirige
+                            header('Location:listarusuarios.php');
+                          }
+                       
+                          ?> 
+ <?php endif ?> 
+
+ <?php  if(!isset($_GET['usuario'])): //Si no se recibieron datos por GET haremos lo de abajo?> 
+                      
+                      
+                      <?php header('Location:listarusuarios.php'); ?>
+                   
+
+ <?php  endif ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,12 +54,12 @@ utf8_encode($_SESSION['tipo'])
       <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top navsuperior" id="navv">
           
           
-            <button class="btn btn-outline-info  mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
+            <button class="btn btn-outline-info mt-1 mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
 
-            <li class="nav-item">
+           
                 <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="../index.php"><i class="fas fa-home"></i> Home</a>
                 
-            </li>
+          
     
             <button class="navbar-toggler btn-outline-info" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon   "></span>
@@ -94,7 +126,7 @@ utf8_encode($_SESSION['tipo'])
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item " href="registrousuario.php"><i class="fas fa-user-plus"></i> Registro</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="#"><i class="fas fa-user-times"></i> Editar / Eliminar</a>
+                                
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="listarusuarios.php"><i class="fas fa-users"></i> listar</a>
                             </div>
@@ -154,11 +186,111 @@ utf8_encode($_SESSION['tipo'])
           </article>
 
           <article class="margen  container-fluid col-10">
-            <section class=" ">
-              
-               
-                   
-            </section>
+              <section class=" ">
+                          
+             
+                            
+                        <?php  if(isset($_GET['usuario'])): //Si se recibieron datos por GET haremos lo de abajo?> 
+                        
+                          <h3>Editar Usuario</h3>
+                        <form action="procesaedicion.php" method="POST" class="" name="form1">
+                            <?php foreach($resultado as $usr):?>
+                            
+
+                              <div class="form-group row">
+                                  <label for="" class="col-sm-4 col-form-label"><h4>Informacion Personal</h4></label>
+                              </div>
+                              <!-- Separador de campos -->
+
+                              <div class="form-group row">
+                                  <label for="inputRut" class="col-sm-2 col-form-label"><b>RUT</b></label>
+
+                                  <div class="col-sm-10">
+                                      <input type="text" class="form-control" value="<?php echo $usr['rut_usuario']?>" name="rut" id="inputRut" placeholder="Rut sin puntos ni guion (112223334)" onblur="javascript:Rut(document.form1.rut.value)">
+                                  </div>
+                                  
+                                    
+                              </div>
+                              <!-- Separador de campos -->
+                              <div class="form-group row">
+                                  <label for="inputNombre" class="col-sm-2 col-form-label"><b>Nombre</b></label>
+
+                                  <div class="col-sm-4">
+                                      <input type="text" class="form-control" value="<?php echo utf8_encode($usr['nombre_usuario'])?>" id="inputNombre" name="nombrenuevo" placeholder="Nombre/s">
+                                  </div>
+
+                                  <div class="col-sm-3">
+                                      <input type="text" class="form-control" value="<?php echo utf8_encode($usr['apellidop_usuario'])?>" id="inputApellidoP" name="apellidopnuevo" placeholder="Apellido Paterno">
+                                  </div>
+
+                                  <div class="col-sm-3">
+                                      <input type="text" class="form-control" value="<?php echo utf8_encode($usr['apellidom_usuario'])?>" id="inputApellidoM" name="apellidomnuevo" placeholder="Apellido Materno">
+                                  </div>
+
+                              </div>
+
+                              <!-- Separador de campos -->
+                              <div class="form-group row">
+                                      <label for="inputCorreo" class="col-sm-2 col-form-label"><b>Correo Electronico</b></label>
+
+                                      <div class="col-sm-10">
+                                          <input type="email" name="correonuevo" class="form-control" value="<?php echo utf8_encode($usr['correo_usuario'])?>" id="inputCorreo" placeholder="Correo">
+                                      </div>
+                              </div>
+                              <!-- Separador de campos -->
+                              <div class="form-group row">
+                                      <label for="" class="col-sm-4 col-form-label"><h4>Informacion de la Cuenta</h4></label>
+                              </div>
+
+                              <div class="form-group row">
+                                      <label for="inputPassword" class="col-sm-2 col-form-label" ><b>Contraseña nueva</b></label>
+
+                                      <div class="col-sm-5">
+                                          <input type="password" name="passnuevo" class="form-control"  id="inputPassword" placeholder="Contraseña">
+                                      </div>
+                                      
+                                      <div class="col-sm-5">
+                                              <input type="password" name="passnuevo2" class="form-control" id="inputPassword2" placeholder="Confirma tu Contraseña">
+                                          </div>
+                              </div>
+
+                              <!-- Separador de campos -->
+                                      
+                              <div class="form-group row">
+                                      <label for="inputtipo" class="col-sm-2 col-form-label"><b>Tipo de Usuario</b></label>
+
+                                      <div class="col-sm-10">
+                                        <?php if ($usr['tipo_usuario']=='Funcionario'): ?>  
+                                           
+                                          
+                                          <select class="form-control" name="tiponuevo" id="selecttipo">
+                                            
+                                                  <option value="Funcionario" >Funcionario</option>
+                                                  <option value="Administrador" >Administrador</option>
+                                          </select>
+                                        <?php endif ?>  
+
+                                        <?php if ($usr['tipo_usuario']=='Administrador'): ?>  
+                                           <select class="form-control" name="tiponuevo" id="selecttipo">               
+                                                  <option value="Administrador" >Administrador</option>
+                                                  <option value="Funcionario" >Funcionario</option>
+                                          </select>
+                                        <?php endif ?>  
+                                      </div>
+                              </div>
+
+                            <?php endforeach?>      
+
+                              <div class="">
+                                  <button type="submit" class="btn btn-success mb-2 float-right">Confirmar Edicion</button>
+                                  
+                              </div>
+                        </form>
+                        
+                    <?php  endif ?>
+
+                    
+              </section>
           </article>
 
 
