@@ -3,10 +3,9 @@ session_start();
 utf8_encode($_SESSION['tipo']);
 
 
-  if  (!isset($_SESSION['tipo'])) {
-
+    if  (!isset($_SESSION['tipo'])) {
       header('Location:../login.php');
-    }
+    } //validacion de sesion
 
 ?>
 <!DOCTYPE html>

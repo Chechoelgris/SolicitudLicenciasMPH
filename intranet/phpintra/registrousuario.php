@@ -4,7 +4,11 @@ utf8_encode($_SESSION['tipo']);
 if  (!isset($_SESSION['tipo'])) {
 
   header('Location:../../login.php');
-}
+}//validacion de sesion iniciada
+if ($_SESSION['tipo']=='Funcionario') {
+  header('Location:../../login.php');
+}//validacion de perfil de sesion
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -161,7 +165,7 @@ if  (!isset($_SESSION['tipo'])) {
             <section class=" ">
               
                <form action="procesaregistro.php" method="POST" class="" name="form1">
-
+                    
                     <div class="form-group row">
                         <label for="" class="col-sm-4 col-form-label"><h4>Informacion Personal</h4></label>
                     </div>
@@ -171,7 +175,7 @@ if  (!isset($_SESSION['tipo'])) {
                         <label for="inputRut" class="col-sm-2 col-form-label"><b>RUT</b></label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="rut" id="inputRut" placeholder="Rut sin puntos ni guion (112223334)" onblur="javascript:Rut(document.form1.rut.value)">
+                            <input type="text" class="form-control" name="rut" id="inputRut" required placeholder="Rut sin puntos ni guion (112223334)" onblur="javascript:Rut(document.form1.rut.value)">
                         </div>
                     </div>
                     <!-- Separador de campos -->
@@ -179,15 +183,15 @@ if  (!isset($_SESSION['tipo'])) {
                         <label for="inputNombre" class="col-sm-2 col-form-label"><b>Nombre</b></label>
 
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="inputNombre" name="nombrenuevo" placeholder="Nombre/s">
+                            <input type="text" class="form-control" id="inputNombre" required name="nombrenuevo" placeholder="Nombre/s">
                         </div>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inputApellidoP" name="apellidopnuevo" placeholder="Apellido Paterno">
+                            <input type="text" class="form-control" id="inputApellidoP" required name="apellidopnuevo" placeholder="Apellido Paterno">
                         </div>
 
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inputApellidoM" name="apellidomnuevo" placeholder="Apellido Materno">
+                            <input type="text" class="form-control" id="inputApellidoM" required name="apellidomnuevo" placeholder="Apellido Materno">
                         </div>
 
                     </div>
@@ -197,7 +201,7 @@ if  (!isset($_SESSION['tipo'])) {
                             <label for="inputCorreo" class="col-sm-2 col-form-label"><b>Correo Electronico</b></label>
     
                             <div class="col-sm-10">
-                                <input type="email" name="correonuevo" class="form-control" id="inputCorreo" placeholder="Correo">
+                                <input type="email" name="correonuevo" class="form-control" id="inputCorreo" required placeholder="Correo">
                             </div>
                     </div>
                      <!-- Separador de campos -->
@@ -209,11 +213,11 @@ if  (!isset($_SESSION['tipo'])) {
                             <label for="inputPassword" class="col-sm-2 col-form-label"><b>Contraseña</b></label>
     
                             <div class="col-sm-5">
-                                <input type="password" name="passnuevo" class="form-control" id="inputPassword" placeholder="Contraseña">
+                                <input type="password" name="passnuevo" class="form-control" required id="inputPassword" placeholder="Contraseña">
                             </div>
                              
                             <div class="col-sm-5">
-                                    <input type="password" name="passnuevo2" class="form-control" id="inputPassword2" placeholder="Confirma tu Contraseña">
+                                    <input type="password" name="passnuevo2" required class="form-control" id="inputPassword2" placeholder="Confirma tu Contraseña">
                                 </div>
                     </div>
 

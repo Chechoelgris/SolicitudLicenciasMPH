@@ -4,7 +4,10 @@ utf8_encode($_SESSION['tipo']);
 if  (!isset($_SESSION['tipo'])) {
 
   header('Location:../../login.php');
-}
+}//validacion de sesion iniciada
+if ($_SESSION['tipo']=='Funcionario') {
+  header('Location:../../login.php');
+}//validacion de perfil de sesion
 
 include_once 'conexion.php';//Conexion a la Base de datos
 
