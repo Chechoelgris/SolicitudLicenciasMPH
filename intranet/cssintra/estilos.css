@@ -5,7 +5,7 @@
  */
  body {
     overflow-x: hidden;
-    background-image: url('../../resources/img/fondo1.jpg');
+    background-image: url('../../resources/img/fondo6.jpg');
     min-height: 100vh;
     height: 100vh;
     
@@ -84,8 +84,42 @@
    height: 90vh;
  }
  
-
+ .titulo{
+   font-family: "Lucida Sans Unicode";
+   text-align: center;
+   background-color: #358eb886;
+ }
+ .row2{
+  margin: 15px;
+ }
+ .ventana{
+   
+  display:block;
+  
+  
+  margin: 30px;
+  overflow:auto;
+  color: #FFF;
+  position: fixed;
+  background-image: url('../../resources/img/fondotrans.png');
  
+ }
+ .imagen{
+  display:block;
+  margin:auto;
+
+  
+  }
+  .cerrar{
+    color: #FFF;
+    font-weight: 900;
+    text-align: right;
+  }
+
+  .cerrar:hover{
+    
+    color: rgb(228, 101, 27);
+  }
   
   
   

@@ -176,7 +176,7 @@
                         <p class="card-text">La operacion solicitada ha sido realizada exitosamente.</p>
                         <p class="card-text">Para seguir trabajando, haga click en el boton de abajo para volver al menu principal.</p>
                         
-                        <a href="../index.php" class="btn btn-primary">Volver al Inicio</a>
+                        <a href="../index.php" class="btn btn-dark">Volver al Inicio</a>
                     </div>
                     </div>
                         

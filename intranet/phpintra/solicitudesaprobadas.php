@@ -1,12 +1,25 @@
 <?php
 session_start();
 utf8_encode($_SESSION['tipo']);
+if  (!isset($_SESSION['tipo'])) {
 
+  header('Location:../../login.php');
+}//validacion de sesion iniciada
+//if ($_SESSION['tipo']=='Funcionario') {
+  //header('Location:../../login.php');
+//}//validacion de perfil de sesion
 
-    if  (!isset($_SESSION['tipo'])) {
-      header('Location:../login.php');
-    } //validacion de sesion
-
+include_once 'conexion.php';//Conexion a la Base de datos
+/*
+$sql = 'SELECT * FROM TA_usuario';//Definimos la consulta a la base de datos
+$sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
+$sentencia->execute();            // Ejecutamos la consulta
+$resultado = $sentencia->fetchAll(); //Obtenemos los datos
+$artxpag = 5; //Se definen la cantidad de usuarios a mostrar por paginacion
+$totalobtenido = $sentencia->rowCount();//Contamos la cantidad de elementos obtenidos
+$paginas = $totalobtenido/$artxpag;//calculamos la cantidad de paginas a necesitar
+$paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS los elementos obtenidos
+*/
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,27 +27,59 @@ utf8_encode($_SESSION['tipo']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Administracion SSH</title>
+    <title>Solicitudes Aprobadas - Administracion SSH</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <!--   Estilos personalizados -->
-    <link rel="stylesheet" href="cssintra/estilos.css">
-    <script src="jsintra/funciones.js" charset="utf-8"></script>
-    
+    <link rel="stylesheet" href="../cssintra/estilos.css">
+    <script src="../jsintra/funciones.js" charset="utf-8"></script>
+    <script src="../../js/validarut.js" charset="utf-8"></script>
 </head>
 <body>
+<?php 
+           /* if (!$_GET){
+              header('Location:listarusuarios.php?pagina=1');
+            } //Con esto, modificamos la cabecera para que nos envie a la pagina 1 si es que no se ha seleccionado ninguna pagina en especifico
+            if ($_GET['pagina']>$paginas || $_GET['pagina']<=0 ) {
 
+              header('Location:listarusuarios.php?pagina=1');
+            }//Con este if, nos aseguramos que al instar manualmente numeros que no esten en el dominio de la pagina, se redirigan a la pagina 1
+            $iniciar=($_GET['pagina']-1)*$artxpag;
+            
+            $sql_usuarios = 'SELECT * FROM TA_usuario LIMIT :iniciar, :nusuarios';  // limit, su primer parametro 
+                                                                                    //indica desde que valor iniciaremos (valor del fetch), y el segundo indica
+                                                                                    //en este caso, la cantidad de campos a mostrar (cantidad de filas del fetch obtenidas)
+            $sentencia_usuarios = $conn->prepare($sql_usuarios);                    //preparamos la sentencia sql
+
+            $sentencia_usuarios->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);   //Estamos convirtiendo el valor entero a String y lo pasamos como parametro a la sentencia preparada
+            $sentencia_usuarios->bindParam(':nusuarios', $artxpag, PDO::PARAM_INT); //El primer parametro es el enunciado indicado en la preparacion de la sentencia, el segundo es 
+                                                                                    // la variable que contiene la informacion a insertar, y el tercero, es 
+                                                                                    // la funcion que transforma la variable a string.
+
+            $sentencia_usuarios->execute();                                         //Ejecutamos la consulta sql    
+            $resultado_usuarios = $sentencia_usuarios->fetchAll();                  //Se almacenan los datos obtenidos
+             /* 
+
+            
+            
+            
+            
+            
+              
+
+    */ 
+
+?>
   <header>
       <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top navsuperior" id="navv">
           
           
-            <button class="btn btn-outline-info  mb-1 mr-4 mt-1" id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
-           
-                  <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="index.php"><i class="fas fa-home"></i> Home</a>
-           
+            <button class="btn btn-outline-info mt-1 mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
+
             
-              
-         
+                <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="../index.php"><i class="fas fa-home"></i> Home</a>
+                
+            
     
             <button class="navbar-toggler btn-outline-info" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon   "></span>
@@ -56,7 +101,7 @@ utf8_encode($_SESSION['tipo']);
                     <a class="dropdown-item " href="#"><i class="fas fa-user-edit"></i> Informacion Personal</a>
                   
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item " href="phpintra/cerrar.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>
+                    <a class="dropdown-item " href="cerrar.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>
                   </div>
                 </li>
                 
@@ -80,9 +125,9 @@ utf8_encode($_SESSION['tipo']);
                       <div class="list-group list-group-flush dropright ">
                           
                         <div class="linea"></div>
-                        
 
                         <div class="text-center text-light bg-dark mt-3">
+                          
                           <h4>Administración</h4>
                         </div>
                         <div class="linea"></div>
@@ -99,11 +144,11 @@ utf8_encode($_SESSION['tipo']);
                             </a>
                             
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item " href="phpintra/registrousuario.php"><i class="fas fa-user-plus"></i> Registro</a>
+                                <a class="dropdown-item " href="registrousuario.php"><i class="fas fa-user-plus"></i> Registro</a>
                                 <div class="dropdown-divider"></div>
                                 
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="phpintra/listarusuarios.php"><i class="fas fa-users"></i> listar</a>
+                                <a class="dropdown-item " href="listarusuarios.php"><i class="fas fa-users"></i> listar</a>
                             </div>
                             <div class="linea"></div>
                           </div>
@@ -116,9 +161,9 @@ utf8_encode($_SESSION['tipo']);
                             Gestion de Solicitudes
                             </a>
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown2">
-                                <a class="dropdown-item " href="phpintra/solicitudespendientes.php"><i class="far fa-calendar"></i> Pendientes</a>
+                                <a class="dropdown-item " href="solicitudespendientes.php"><i class="far fa-calendar"></i> Pendientes</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="phpintra/solicitudesaprobadas.php"><i class="fas fa-calendar-check"></i> Aprobadas</a>
+                                <a class="dropdown-item " href="#"><i class="fas fa-calendar-check"></i> Aprobadas</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="#"><i class="fas fa-calendar-times"></i> Rechazadas</a>
                             </div>
@@ -130,12 +175,16 @@ utf8_encode($_SESSION['tipo']);
                           <!-- Item menu -->
                           <div>
                               <div class="linea"></div>
-                            <a href="#" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                             
-                              Gestion de Cupos</a>  
+
+                                <a href="#" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
+                                <line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line>
+                                <line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                  Gestion de Cupos</a>  
                               <div class="linea"></div>
                           </div>
+
                           <div>
                               <div class="linea"></div>
                               <div>
@@ -147,58 +196,90 @@ utf8_encode($_SESSION['tipo']);
                                   </a> 
                               </div>
                           </div>
-                      </div>   
+                          
+                      </div> 
+                    
                       
+                     
                       
                   </div>     <!-- /Sidebar --> 
           </article>
 
-          <article class="margen  container-fluid col-10  ">
-            <section class="">
+          <article class="margen  container-fluid col-10">
+            <section class=" ">
+              
+            <h1 class="titulo border border-info rounded-pill mb-4">Solicitudes Aprobadas</h1>
+        
+          
+             
+             
+
+              <div class="table-responsive-xl">
+                <table class="table table-dark table-bordered table-hover ">
+                <caption>Listado de Solicitudes que requieren aprobacion</caption>
+                  <thead>
+                    <tr>
+                      
+                      <th scope="col">RUT</th>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Hora</th>
+                      <th scope="col">Nombre</th>
+                    
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>  
+                        <th><?php echo '19.001.795-8';?></th>  
+                        <th>
+                                <?php $hoy = getdate();
+                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
+                                ?>
+                        </th>
+                        <td><?php echo '08:30'; ?></td>
+                        <td><?php ?>Salvador Contreras</td>
+                    </tr>
+                    <tr>  
+                        <th><?php echo '19.001.795-8';?></th>  
+                        <th>
+                                <?php $hoy = getdate();
+                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
+                                ?>
+                        </th>
+                        <td><?php echo '08:30'; ?></td>
+                        <td><?php ?>Salvador Contreras</td>
+                       
+                    </tr>
+                    <tr>  
+                        <th><?php echo '19.001.795-8';?></th>  
+                        <th>
+                                <?php $hoy = getdate();
+                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
+                                ?>
+                        </th>
+                        <td><?php echo '08:30'; ?></td>
+                        <td><?php ?>Salvador Contreras</td>
+                      
+                    </tr>
+                    <tr>  
+                        <th><?php echo '19.001.795-8';?></th>  
+                        <th>
+                                <?php $hoy = getdate();
+                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
+                                ?>
+                        </th>
+                        <td><?php echo '08:30'; ?></td>
+                        <td><?php ?>Salvador Contreras</td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+             
+              
               
                 
-                   
-            <div class="">
-            <div class="row">
-            
-              <div class="col-sm-6">
-              <div class="card alert-info border-dark">
-                  <div class="card-body">
-                    <h5 class="card-title "><b>Gestion de Solicitudes</b></h5>
-                    <br>
-                    <p class="card-text">En este apartado te informaremos sobre las nuevas solicitudes que requieran aprobacion.</p>
-                    <p class="text">Existen <b>50</b> solicitudes que requieren confirmacion</p>
-                    <br>
-                    
-                    <a href="phpintra/solicitudespendientes.php" class="btn btn-dark">Solicitudes Pendientes</a>
-                    
-                  </div>
-                </div>
-              </div>
-<br>            
-<?php if ($_SESSION['tipo']=='Administrador'):?>
-              <div class="col-sm-6">
-                <div class="card alert-info border-dark" >
-                  <div class="card-body">
-                    <h5 class="card-title mb-1"><b>Gestion de Usuarios</b></h5>
-                    <p class="card-text">Te mantendremos al tanto del estado de tu mantenedor de usuarios.</p>
-                    <p class="text">En tu base hay <b>2</b> usuarios con el perfil de: <i>Administrador</i></p>
-                    <p class="text">En tu base hay <b>15</b> usuarios con el perfil de: <i>Funcionario</i></p>
-                    <p class="text">En tu base hay <b>3</b> usuarios con el perfil de: <i>Inactivo</i></p>
-                    
-                    <a href="phpintra/listarusuarios.php" class="btn btn-dark">Listar usuarios</a>
-                  </div>
-                </div>
-              </div>
-             <?php endif ?>
-            </div>
-            </div>
-                  
-
-                  
-
+             
             </section>
-            
           </article>
 
 

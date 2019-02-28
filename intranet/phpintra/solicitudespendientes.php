@@ -5,12 +5,12 @@ if  (!isset($_SESSION['tipo'])) {
 
   header('Location:../../login.php');
 }//validacion de sesion iniciada
-if ($_SESSION['tipo']=='Funcionario') {
-  header('Location:../../login.php');
-}//validacion de perfil de sesion
+//if ($_SESSION['tipo']=='Funcionario') {
+  //header('Location:../../login.php');
+//}//validacion de perfil de sesion
 
 include_once 'conexion.php';//Conexion a la Base de datos
-
+/*
 $sql = 'SELECT * FROM TA_usuario';//Definimos la consulta a la base de datos
 $sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
 $sentencia->execute();            // Ejecutamos la consulta
@@ -19,7 +19,7 @@ $artxpag = 5; //Se definen la cantidad de usuarios a mostrar por paginacion
 $totalobtenido = $sentencia->rowCount();//Contamos la cantidad de elementos obtenidos
 $paginas = $totalobtenido/$artxpag;//calculamos la cantidad de paginas a necesitar
 $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS los elementos obtenidos
-
+*/
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -27,17 +27,18 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Listar usuarios - Administracion SSH</title>
+    <title>Solicitudes Pendientes - Administracion SSH</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <!--   Estilos personalizados -->
     <link rel="stylesheet" href="../cssintra/estilos.css">
     <script src="../jsintra/funciones.js" charset="utf-8"></script>
     <script src="../../js/validarut.js" charset="utf-8"></script>
+    
 </head>
 <body>
 <?php 
-            if (!$_GET){
+           /* if (!$_GET){
               header('Location:listarusuarios.php?pagina=1');
             } //Con esto, modificamos la cabecera para que nos envie a la pagina 1 si es que no se ha seleccionado ninguna pagina en especifico
             if ($_GET['pagina']>$paginas || $_GET['pagina']<=0 ) {
@@ -161,9 +162,9 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                             Gestion de Solicitudes
                             </a>
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown2">
-                                <a class="dropdown-item " href="solicitudespendientes.php"><i class="far fa-calendar"></i> Pendientes</a>
+                                <a class="dropdown-item " href="#"><i class="far fa-calendar"></i> Pendientes</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="#"><i class="fas fa-calendar-check"></i> Aprobadas</a>
+                                <a class="dropdown-item " href="solicitudesaprobadas.php"><i class="fas fa-calendar-check"></i> Aprobadas</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="#"><i class="fas fa-calendar-times"></i> Rechazadas</a>
                             </div>
@@ -208,76 +209,96 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
           <article class="margen  container-fluid col-10">
             <section class=" ">
               
-           
-            <h1 class="titulo border border-info rounded-pill mb-4">Listado de Usuarios</h1>
+            <h1 class="titulo border border-info rounded-pill mb-4">Solicitudes Pendientes</h1>
+        
+          
              
              
 
               <div class="table-responsive-xl">
                 <table class="table table-dark table-bordered table-hover ">
-                <caption>Listado de usuarios</caption>
+                <caption>Listado de Solicitudes que requieren aprobacion</caption>
                   <thead>
                     <tr>
-                      <th scope="col">ID</th>
+                      
                       <th scope="col">RUT</th>
-                      <th scope="col">Nombre</th>
-                      <th scope="col">Correo</th>
-                      <th scope="col">Tipo</th>
-                      <th scope="col">Acción</th>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Hora</th>
+                      <th scope="col">Direccion</th>
+                      <th scope="col">Archivo</th>
+                      <th scope="col">Estado</th>
                     </tr>
                   </thead>
                   <tbody>
-                  <?php foreach($resultado_usuarios as $usr):?>
-                  
-                    <tr>
-                      <th><?php echo $usr['id_usuario']?></th>  
-                      <th><?php echo $usr['rut_usuario']?></th>
-                      <td><?php echo utf8_encode($usr['nombre_usuario']).' '.utf8_encode($usr['apellidop_usuario']).' '.utf8_encode($usr['apellidom_usuario'])?></td>
-                      <td><?php echo $usr['correo_usuario']?></td>
-                      <td><?php echo $usr['tipo_usuario']?></td>
-                      <td class="">
-                        <a class="btn btn-outline-warning " href="editareliminarusr.php?usuario=<?php $_GET['usuario'] = $usr['id_usuario']; echo $_GET['usuario']; ?>"><i class="fas fa-user-edit"></i></a>
-                      
-                    </td>
+                    <tr>  
+                        <th><?php echo '19.001.795-8';?></th>  
+                        <th>
+                                <?php $hoy = getdate();
+                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
+                                ?>
+                        </th>
+                        <td><?php echo '08:30'; ?></td>
+                        <td><?php ?>Salvador Contreras 241, Padre Hurtado</td>
+                        <td class="">
+                           <a class="btn btn-outline-info "><i class="fas fa-file-image"></i></a>
+                        </td>
+                        <td><a class="btn btn-outline-success mr-4" href=""><i class="fas fa-calendar-check"></i></a><a class="btn btn-outline-danger" href=""><i class="fas fa-calendar-times"></i></a></td>
                     </tr>
-                    <?php endforeach?>
+                    <tr>  
+                        <th><?php echo '19.001.795-8';?></th>  
+                        <th>
+                                <?php $hoy = getdate();
+                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
+                                ?>
+                        </th>
+                        <td><?php echo '08:30'; ?></td>
+                        <td><?php ?>Salvador Malakias 354, Cerrillos</td>
+                        <td class="">
+                            <a class="btn btn-outline-info "><i class="fas fa-file-image"></i></a>
+                        </td>
+                        <td><a class="btn btn-outline-success mr-4" href=""><i class="fas fa-calendar-check"></i></a><a class="btn btn-outline-danger" href=""><i class="fas fa-calendar-times"></i></a></td>
+                    </tr>
+                    <tr>  
+                        <th><?php echo '19.001.795-8';?></th>  
+                        <th>
+                                <?php $hoy = getdate();
+                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
+                                ?>
+                        </th>
+                        <td><?php echo '08:30'; ?></td>
+                        <td><?php ?>Salvador Contreras</td>
+                        <td class="">
+                            <a class="btn btn-outline-info "><i class="fas fa-file-image"></i></a>
+                        </td>
+                        <td><a class="btn btn-outline-success mr-4" href=""><i class="fas fa-calendar-check"></i></a><a class="btn btn-outline-danger" href=""><i class="fas fa-calendar-times"></i></a></td>
+                    </tr>
+                    <tr>  
+                        <th><?php echo '19.001.795-8';?></th>  
+                        <th>
+                                <?php $hoy = getdate();
+                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
+                                ?>
+                        </th>
+                        <td><?php echo '08:30'; ?></td>
+                        <td><?php ?>Salvador Contreras</td>
+                        <td class="">
+                            <a class="btn btn-outline-info "><i class="fas fa-file-image"></i></a>
+                        </td>
+                        <td><a class="btn btn-outline-success mr-4" href=""><i class="fas fa-calendar-check"></i></a><a class="btn btn-outline-danger" href=""><i class="fas fa-calendar-times"></i></a></td>
+                    </tr>
+                    
                   </tbody>
                 </table>
               </div>
              
               
               
+              <div class="ventana fixed-top">
+                <div class="cerrar"><i class="far fa-times-circle"></i></div>
                 
-              <nav aria-label="Page navigation example ">
-                  <ul class="pagination ">
-                    <li class="page-item 
-                    <?php  echo$_GET['pagina']<=1 ? 'disabled' : '' ?>
-                    " >
-                      <a class="page-link " 
-                        href="listarusuarios.php?pagina=<?php echo $_GET['pagina']-1 ?>">
-                        Anterior
-                      </a>
-                    </li>
-                   <!-- Paginacion dinamica-->
-                   
-                   <?php  for ($i=0; $i < $paginas; $i++):?>
-
-                    <li class="page-item 
-                    <?php echo $_GET['pagina']==$i+1 ? 'active' : ''?>">
-                        <a class="page-link " 
-                        href="listarusuarios.php?pagina=<?php echo $i+1 ?>">
-                        <?php echo$i+1; ?>
-                        </a>
-                    </li>
-                    <?php  endfor?>
-                   
-                    <!-- Paginacion dinamica-->
-                    <li class="page-item
-                    <?php  echo$_GET['pagina']>=$paginas ? 'disabled' : '' ?>
-                    "><a class="page-link " href="listarusuarios.php?pagina=<?php echo $_GET['pagina']+1 ?>">Siguiente</a></li>
-                  </ul>
-              
-              </nav>
+                <img src="https://unsplash.it/600.jpg?image=251" class="imagen">
+                <small class="text-dark">texto de legenda</small>
+              </div>
             </section>
           </article>
 

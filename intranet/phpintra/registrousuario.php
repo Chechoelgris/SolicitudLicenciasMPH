@@ -30,12 +30,12 @@ if ($_SESSION['tipo']=='Funcionario') {
       <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top navsuperior" id="navv">
           
           
-            <button class="btn btn-outline-info  mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
+            <button class="btn btn-outline-info mt-1 mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
 
-            <li class="nav-item">
+            
                 <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="../index.php"><i class="fas fa-home"></i> Home</a>
                 
-            </li>
+           
     
             <button class="navbar-toggler btn-outline-info" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon   "></span>
@@ -117,9 +117,9 @@ if ($_SESSION['tipo']=='Funcionario') {
                             Gestion de Solicitudes
                             </a>
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown2">
-                                <a class="dropdown-item " href="#"><i class="far fa-calendar"></i> Pendientes</a>
+                                <a class="dropdown-item " href="solicitudespendientes.php"><i class="far fa-calendar"></i> Pendientes</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="#"><i class="fas fa-calendar-check"></i> Aprobadas</a>
+                                <a class="dropdown-item " href="solicitudesaprobadas.php"><i class="fas fa-calendar-check"></i> Aprobadas</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="#"><i class="fas fa-calendar-times"></i> Rechazadas</a>
                             </div>
@@ -162,8 +162,9 @@ if ($_SESSION['tipo']=='Funcionario') {
           </article>
 
           <article class="margen  container-fluid col-10">
-            <section class=" ">
-              
+            <section >
+                          <h1 class="titulo border border-info rounded-pill">Registro de Usuarios</h1>
+                          
                <form action="procesaregistro.php" method="POST" class="" name="form1">
                     
                     <div class="form-group row">
