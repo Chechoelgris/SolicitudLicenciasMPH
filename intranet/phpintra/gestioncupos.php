@@ -165,8 +165,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                 <a class="dropdown-item " href="solicitudespendientes.php"><i class="far fa-calendar"></i> Pendientes</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="solicitudesaprobadas.php"><i class="fas fa-calendar-check"></i> Aprobadas</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="#"><i class="fas fa-calendar-times"></i> Rechazadas</a>
+                                
                             </div>
                             <div class="linea"></div>
                           </div>
@@ -238,7 +237,19 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
+    <script>
+    
+    $("#menu-toggle").click(function(e){
+        e.preventDefault();
+
+        $("#wrapper").toggleClass("toggled");
+
+        $("#flechita").toggleClass("fa-chevron-right");
+       
+        $("#headermenulateral").toggleClass("d-none");
+       });
+   
+   </script>                      
     
     
 </body>

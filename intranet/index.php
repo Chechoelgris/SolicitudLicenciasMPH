@@ -14,7 +14,7 @@ utf8_encode($_SESSION['tipo']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Administracion SSH</title>
+    <title>Home - Administracion SSH</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <!--   Estilos personalizados -->
@@ -119,8 +119,7 @@ utf8_encode($_SESSION['tipo']);
                                 <a class="dropdown-item " href="phpintra/solicitudespendientes.php"><i class="far fa-calendar"></i> Pendientes</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="phpintra/solicitudesaprobadas.php"><i class="fas fa-calendar-check"></i> Aprobadas</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="#"><i class="fas fa-calendar-times"></i> Rechazadas</a>
+                               
                             </div>
                             <div class="linea"></div>
                           </div>

@@ -151,8 +151,7 @@
                                 <a class="dropdown-item " href="#"><i class="far fa-calendar"></i> Pendientes</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="#"><i class="fas fa-calendar-check"></i> Aprobadas</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="#"><i class="fas fa-calendar-times"></i> Rechazadas</a>
+                          
                             </div>
                             <div class="linea"></div>
                           </div>

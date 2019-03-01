@@ -164,8 +164,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                 <a class="dropdown-item " href="solicitudespendientes.php"><i class="far fa-calendar"></i> Pendientes</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="#"><i class="fas fa-calendar-check"></i> Aprobadas</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="#"><i class="fas fa-calendar-times"></i> Rechazadas</a>
+                          
                             </div>
                             <div class="linea"></div>
                           </div>
@@ -208,7 +207,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
           <article class="margen  container-fluid col-10">
             <section class=" ">
               
-            <h1 class="titulo border text-warning border-warning rounded-pill mb-4">Solicitudes Aprobadas</h1>
+            <h1 class="titulo border text-light border-warning rounded-pill mb-4">Solicitudes Aprobadas</h1>
         
           
              
