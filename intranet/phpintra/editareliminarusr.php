@@ -192,27 +192,31 @@
                   </div>     <!-- /Sidebar --> 
           </article>
 
-          <article class="margen  container-fluid col-10">
-              <section class=" ">
+          <article class="margen container-fluid col-6  ">
+              <h1 class="titulo border text-light border-warning rounded-pill mb-4">Edicion de Usuarios</h1>
+
+              <section class="registro text-light row ">
                           
              
                             
                         <?php  if(isset($_GET['usuario'])): //Si se recibieron datos por GET haremos lo de abajo?> 
                         
-                          <h3>Editar Usuario</h3>
+                          
                         <form action="procesaedicion.php" method="POST" class="" name="form1">
                             <?php foreach($resultado as $usr):?>
                             
 
-                              <div class="form-group row">
-                                  <label for="" class="col-sm-4 col-form-label"><h4>Informacion Personal</h4></label>
-                              </div>
+                            <div class="form-group row ">
+                                <label for="" class="col-sm-12 col-form-label"><h4><b>Informacion Personal</b></h4></label>
+                            </div>
                               <!-- Separador de campos -->
+                             
+
 
                               <div class="form-group row">
-                                  <label for="inputRut" class="col-sm-2 col-form-label"><b>RUT</b></label>
+                                  <label for="inputRut" class="col-sm-12 col-form-label"><b>RUT</b></label>
 
-                                  <div class="col-sm-10">
+                                  <div class="col-sm-5">
                                       <input type="text" class="form-control" value="<?php echo $usr['rut_usuario']?>" name="rut" id="inputRut" placeholder="Rut sin puntos ni guion (112223334)" onblur="javascript:Rut(document.form1.rut.value)">
                                   </div>
                                   
@@ -220,51 +224,59 @@
                               </div>
                               <!-- Separador de campos -->
                               <div class="form-group row">
-                                  <label for="inputNombre" class="col-sm-2 col-form-label"><b>Nombre</b></label>
-
+                              <label for="inputNombre" class="col-sm-12 col-form-label"><b>Nombre</b></label>
                                   <div class="col-sm-4">
+                                      
                                       <input type="text" class="form-control" value="<?php echo utf8_encode($usr['nombre_usuario'])?>" id="inputNombre" name="nombrenuevo" placeholder="Nombre/s">
                                   </div>
-
+                                
                                   <div class="col-sm-3">
                                       <input type="text" class="form-control" value="<?php echo utf8_encode($usr['apellidop_usuario'])?>" id="inputApellidoP" name="apellidopnuevo" placeholder="Apellido Paterno">
                                   </div>
-
+                                  
                                   <div class="col-sm-3">
                                       <input type="text" class="form-control" value="<?php echo utf8_encode($usr['apellidom_usuario'])?>" id="inputApellidoM" name="apellidomnuevo" placeholder="Apellido Materno">
                                   </div>
-
+                                
                               </div>
 
                               <!-- Separador de campos -->
+                              
                               <div class="form-group row">
-                                      <label for="inputCorreo" class="col-sm-2 col-form-label"><b>Correo Electronico</b></label>
+                              <label for="inputCorreo" class="col-sm-12 col-form-label"><b>Correo Electronico</b></label>
 
-                                      <div class="col-sm-10">
+                                      <div class="col-sm-10 ">
                                           <input type="email" name="correonuevo" class="form-control" value="<?php echo utf8_encode($usr['correo_usuario'])?>" id="inputCorreo" placeholder="Correo">
                                       </div>
                               </div>
-                              <!-- Separador de campos -->
+                              <!-- Separador de campos --><br>
                               <div class="form-group row">
-                                      <label for="" class="col-sm-4 col-form-label"><h4>Informacion de la Cuenta</h4></label>
-                              </div>
+                                
+                            <label for="" class="col-sm-12 col-form-label"><h4><b>Informacion de la Cuenta</b></h4></label>
+                            
+                    </div>
 
                               <div class="form-group row">
-                                      <label for="inputPassword" class="col-sm-2 col-form-label" ><b>Contraseña nueva</b></label>
+                                      <label for="inputPassword" class="col-sm-12 col-form-label" ><b>Contraseña nueva</b></label>
 
                                       <div class="col-sm-5">
                                           <input type="password" name="passnuevo" class="form-control"  id="inputPassword" placeholder="Contraseña">
                                       </div>
                                       
-                                      <div class="col-sm-5">
+                                      
+                              </div>
+                              <div class="form-group row">
+                              <label for="inputRut" class="col-sm-12 col-form-label"><b>Repetir Contraseña</b></label>
+
+                                    <div class="col-sm-5">
                                               <input type="password" name="passnuevo2" class="form-control" id="inputPassword2" placeholder="Confirma tu Contraseña">
-                                          </div>
+                                    </div>
                               </div>
 
                               <!-- Separador de campos -->
                                       
                               <div class="form-group row">
-                                      <label for="inputtipo" class="col-sm-2 col-form-label"><b>Tipo de Usuario</b></label>
+                                      <label for="inputtipo" class="col-sm-12 col-form-label"><b>Tipo de Usuario</b></label>
 
                                       <div class="col-sm-10">
                                         <?php if ($usr['tipo_usuario']=='Funcionario'): ?>  
@@ -289,9 +301,11 @@
                             <?php endforeach?>      
 
                               <div class="">
-                                  <button type="submit" class="btn btn-success mb-2 float-right">Confirmar Edicion</button>
+                                <br>
+                                  <button type="submit" class="btn btn-success mb-2 float-left">Confirmar Edicion</button>
                                   
                               </div>
+                             
                         </form>
                         
                     <?php  endif ?>

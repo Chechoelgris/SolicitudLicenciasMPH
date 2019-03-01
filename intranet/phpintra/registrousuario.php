@@ -100,7 +100,7 @@ if ($_SESSION['tipo']=='Funcionario') {
                             </a>
                             
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item " href="listarusuarios.php"><i class="fas fa-user-plus"></i> Registro</a>
+                                <a class="dropdown-item " href="registrousuario.php"><i class="fas fa-user-plus"></i> Registro</a>
                                 <div class="dropdown-divider"></div>
                                 
                                 <div class="dropdown-divider"></div>
@@ -132,7 +132,7 @@ if ($_SESSION['tipo']=='Funcionario') {
                           <div>
                               <div class="linea"></div>
 
-                                <a href="#" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
+                                <a href="gestioncupos.php" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
                                 <line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line>
@@ -160,28 +160,33 @@ if ($_SESSION['tipo']=='Funcionario') {
                       
                   </div>     <!-- /Sidebar --> 
           </article>
+          
+          
+          
+          <article class="margen container-fluid col-6  ">
+              <h1 class="titulo border text-light border-warning rounded-pill mb-4">Registro de Usuarios</h1>
 
-          <article class="margen  container-fluid col-10">
-            <section >
-                          <h1 class="titulo border border-info rounded-pill">Registro de Usuarios</h1>
+            <section class="registro text-light row">
+
                           
-               <form action="procesaregistro.php" method="POST" class="" name="form1">
+               <form action="procesaregistro.php" method="POST" class="form-signin" name="form1">
                     
-                    <div class="form-group row">
-                        <label for="" class="col-sm-4 col-form-label"><h4>Informacion Personal</h4></label>
+                    <div class="form-group row ">
+                        <label for="" class="col-sm-12 col-form-label"><h4><b>Informacion Personal</b></h4></label>
                     </div>
                     <!-- Separador de campos -->
-
                     <div class="form-group row">
-                        <label for="inputRut" class="col-sm-2 col-form-label"><b>RUT</b></label>
-
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="rut" id="inputRut" required placeholder="Rut sin puntos ni guion (112223334)" onblur="javascript:Rut(document.form1.rut.value)">
+                        <label for="inputRut" class="col-sm-12 col-form-label"><b>RUT</b></label>
+                        
+                        <div class="col-sm-5">
+                              <input type="text" class="form-control text-dark" name="rut" id="inputRut" required placeholder="11222333-4" onblur="javascript:Rut(document.form1.rut.value)">
                         </div>
                     </div>
                     <!-- Separador de campos -->
-                    <div class="form-group row">
-                        <label for="inputNombre" class="col-sm-2 col-form-label"><b>Nombre</b></label>
+                       
+                      
+                      <div class="form-group row">
+                       <label for="inputRut" class="col-sm-12 col-form-label"><b>Nombre</b></label>
 
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="inputNombre" required name="nombrenuevo" placeholder="Nombre/s">
@@ -198,34 +203,40 @@ if ($_SESSION['tipo']=='Funcionario') {
                     </div>
                    
                      <!-- Separador de campos -->
+                     
                     <div class="form-group row">
-                            <label for="inputCorreo" class="col-sm-2 col-form-label"><b>Correo Electronico</b></label>
-    
+                    <label for="inputRut" class="col-sm-12 col-form-label"><b>Correo Electronico</b></label>
                             <div class="col-sm-10">
                                 <input type="email" name="correonuevo" class="form-control" id="inputCorreo" required placeholder="Correo">
                             </div>
                     </div>
+                    <br>
                      <!-- Separador de campos -->
                      <div class="form-group row">
-                            <label for="" class="col-sm-4 col-form-label"><h4>Informacion de la Cuenta</h4></label>
+                            <label for="" class="col-sm-12 col-form-label"><h4><b>Informacion de la Cuenta</b></h4></label>
+                            
                     </div>
-
+                    
                     <div class="form-group row">
-                            <label for="inputPassword" class="col-sm-2 col-form-label"><b>Contraseña</b></label>
+                    <label for="inputRut" class="col-sm-12 col-form-label"><b>Contraseña</b></label>
     
                             <div class="col-sm-5">
                                 <input type="password" name="passnuevo" class="form-control" required id="inputPassword" placeholder="Contraseña">
                             </div>
-                             
-                            <div class="col-sm-5">
-                                    <input type="password" name="passnuevo2" required class="form-control" id="inputPassword2" placeholder="Confirma tu Contraseña">
-                                </div>
+                    </div>   
+          
+               
+                    <div class="form-group row">
+                    <label for="inputRut" class="col-sm-12 col-form-label"><b>Repetir Contraseña</b></label>
+                          <div class="col-sm-5">
+                              <input type="password" name="passnuevo2" required class="form-control" id="inputPassword2" placeholder="Confirma tu Contraseña">
+                          </div>
                     </div>
 
                     <!-- Separador de campos -->
-                            
+                    
                     <div class="form-group row">
-                            <label for="inputtipo" class="col-sm-2 col-form-label"><b>Tipo de Usuario</b></label>
+                    <label for="inputRut" class="col-sm-12 col-form-label"><b>Tipo de Usuario</b></label>       
     
                             <div class="col-sm-10">
                                 <select class="form-control" name="tiponuevo" id="selecttipo">
@@ -238,7 +249,8 @@ if ($_SESSION['tipo']=='Funcionario') {
                         
                     
                     <div class="">
-                        <button type="submit" class="btn btn-success mb-2 float-right">Confirmar Registro</button>
+                      <br>
+                        <button type="submit" class="btn btn-success mb-2 float-left">Confirmar Registro</button>
                         
                     </div>
                </form>

@@ -176,7 +176,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                           <div>
                               <div class="linea"></div>
 
-                                <a href="#" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
+                                <a href="gestioncupos.php" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
                                 <line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line>
@@ -209,7 +209,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             <section class=" ">
               
            
-            <h1 class="titulo border border-info rounded-pill mb-4">Listado de Usuarios</h1>
+            <h1 class="titulo border text-light border-warning rounded-pill mb-4">Listado de Usuarios</h1>
              
              
 

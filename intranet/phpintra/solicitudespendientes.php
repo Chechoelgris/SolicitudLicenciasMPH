@@ -162,7 +162,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                             Gestion de Solicitudes
                             </a>
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown2">
-                                <a class="dropdown-item " href="#"><i class="far fa-calendar"></i> Pendientes</a>
+                                <a class="dropdown-item " href="solicitudespendientes.php"><i class="far fa-calendar"></i> Pendientes</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item " href="solicitudesaprobadas.php"><i class="fas fa-calendar-check"></i> Aprobadas</a>
                                 <div class="dropdown-divider"></div>
@@ -177,7 +177,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                           <div>
                               <div class="linea"></div>
 
-                                <a href="#" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
+                                <a href="gestioncupos.php" class="list-group-item list-group-item-action text-light bg-dark mt-3 mb-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
                                 <line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line>
@@ -209,7 +209,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
           <article class="margen  container-fluid col-10">
             <section class=" ">
               
-            <h1 class="titulo border border-info rounded-pill mb-4">Solicitudes Pendientes</h1>
+            <h1 class="titulo border text-white border-warning rounded-pill mb-4">Solicitudes Pendientes</h1>
         
           
              
@@ -226,6 +226,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                       <th scope="col">Hora</th>
                       <th scope="col">Direccion</th>
                       <th scope="col">Archivo</th>
+                      <th scope="col">Accion</th>
                       <th scope="col">Estado</th>
                     </tr>
                   </thead>
@@ -240,52 +241,13 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                         <td><?php echo '08:30'; ?></td>
                         <td><?php ?>Salvador Contreras 241, Padre Hurtado</td>
                         <td class="">
-                           <a class="btn btn-outline-info "><i class="fas fa-file-image"></i></a>
+                           <a class="btn btn-outline-info " id="verimg"><i class="fas fa-file-image"></i></a>
                         </td>
-                        <td><a class="btn btn-outline-success mr-4" href=""><i class="fas fa-calendar-check"></i></a><a class="btn btn-outline-danger" href=""><i class="fas fa-calendar-times"></i></a></td>
-                    </tr>
-                    <tr>  
-                        <th><?php echo '19.001.795-8';?></th>  
-                        <th>
-                                <?php $hoy = getdate();
-                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
-                                ?>
-                        </th>
-                        <td><?php echo '08:30'; ?></td>
-                        <td><?php ?>Salvador Malakias 354, Cerrillos</td>
-                        <td class="">
-                            <a class="btn btn-outline-info "><i class="fas fa-file-image"></i></a>
-                        </td>
-                        <td><a class="btn btn-outline-success mr-4" href=""><i class="fas fa-calendar-check"></i></a><a class="btn btn-outline-danger" href=""><i class="fas fa-calendar-times"></i></a></td>
-                    </tr>
-                    <tr>  
-                        <th><?php echo '19.001.795-8';?></th>  
-                        <th>
-                                <?php $hoy = getdate();
-                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
-                                ?>
-                        </th>
-                        <td><?php echo '08:30'; ?></td>
-                        <td><?php ?>Salvador Contreras</td>
-                        <td class="">
-                            <a class="btn btn-outline-info "><i class="fas fa-file-image"></i></a>
-                        </td>
-                        <td><a class="btn btn-outline-success mr-4" href=""><i class="fas fa-calendar-check"></i></a><a class="btn btn-outline-danger" href=""><i class="fas fa-calendar-times"></i></a></td>
-                    </tr>
-                    <tr>  
-                        <th><?php echo '19.001.795-8';?></th>  
-                        <th>
-                                <?php $hoy = getdate();
-                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
-                                ?>
-                        </th>
-                        <td><?php echo '08:30'; ?></td>
-                        <td><?php ?>Salvador Contreras</td>
-                        <td class="">
-                            <a class="btn btn-outline-info "><i class="fas fa-file-image"></i></a>
-                        </td>
-                        <td><a class="btn btn-outline-success mr-4" href=""><i class="fas fa-calendar-check"></i></a><a class="btn btn-outline-danger" href=""><i class="fas fa-calendar-times"></i></a></td>
-                    </tr>
+                        <td><a class="btn btn-outline-success mr-2" href=""><i class="fas fa-calendar-check"></i></a><a class="btn btn-outline-danger" href=""><i class="far fa-eye-slash"></i></a></td>
+                        <td><?php echo 'Pendiente'; ?></td>
+
+                      </tr>
+                   
                     
                   </tbody>
                 </table>
@@ -293,43 +255,22 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
              
               
               
-              <div class="ventana fixed-top">
-                <div class="cerrar"><i class="far fa-times-circle"></i></div>
+              <div class="ventana fixed-top d-none" id="lightbox">
+                <div class="cerrar negro border border-warning " id="ojito"><i class="far fa-eye-slash"></i></div>
                 
-                <img src="https://unsplash.it/600.jpg?image=251" class="imagen">
-                <small class="text-dark">texto de legenda</small>
+                <img src="https://s3-eu-west-1.amazonaws.com/barkibu-blog/blog+images/mi-perro-tiene-hipo-muy-seguido-que-le-pasa/perros-hipo-2.jpg?" class="imagen cerrar  bg-dark border border-warning">
+                <div class="text-center  cerrar  negro border border-warning text-light " ><b >Imagen adjuntada por el usuario.</b></div>
+                
+                
               </div>
+              
             </section>
           </article>
-
-
-
 
 
       </div> <!--/todo aqui denshro -->
 
 
-
-
-
-
-
-
-            
-            
-    
-
-
-  
-    
-
-  
-
-
-
-
-    
-  
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -342,10 +283,29 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
         $("#flechita").toggleClass("fa-chevron-right");
        
         $("#headermenulateral").toggleClass("d-none");
+       });
+    </script>
+    <script>
+       $("#verimg").click(function(e){
+          e.preventDefault();
+
+        $("#lightbox").toggleClass("d-none");
 
         
+       });
+
+    //$("#mi_imagen").attr("src","img/origen_2.jpg"); con esto cambiamos la imagen asociada al src
+
+
+
+        $("#ojito").click(function(e){
+          e.preventDefault();
+
+        $("#lightbox").toggleClass("d-none");
+
         
-    });
+       });
+
     </script>
     
 </body>
