@@ -178,7 +178,7 @@ if ($_SESSION['tipo']=='Funcionario') {
                         <label for="inputRut" class="col-sm-12 col-form-label"><b>RUT</b></label>
                         
                         <div class="col-sm-5">
-                              <input type="text" class="form-control text-dark" name="rut" id="inputRut" required placeholder="11222333-4" onblur="javascript:Rut(document.form1.rut.value)">
+                              <input type="text" class="form-control" name="rut" id="inputRut" required placeholder="11222333-4" onblur="javascript:Rut(document.form1.rut.value)">
                         </div>
                     </div>
                     <!-- Separador de campos -->

@@ -234,6 +234,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                       <td><?php echo utf8_encode($usr['nombre_usuario']).' '.utf8_encode($usr['apellidop_usuario']).' '.utf8_encode($usr['apellidom_usuario'])?></td>
                       <td><?php echo $usr['correo_usuario']?></td>
                       <td><?php echo $usr['tipo_usuario']?></td>
+                      
                       <td class="">
                         <a class="btn btn-outline-warning " href="editareliminarusr.php?usuario=<?php $_GET['usuario'] = $usr['id_usuario']; echo $_GET['usuario']; ?>"><i class="fas fa-user-edit"></i></a>
                       

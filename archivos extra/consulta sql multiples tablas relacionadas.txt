@@ -1,0 +1,7 @@
+Select id_solicitud,ta_persona.rut_persona, ta_persona.nombre_persona,ta_persona.apellidop_persona, ta_fecha.fecha_asignada from ta_solicitud 
+INNER JOIN ta_persona 
+ON ta_solicitud.fk_id_persona = ta_persona.id_persona 
+INNER JOIN ta_direccion 
+ON ta_direccion.fk_id_persona = ta_persona.id_persona 
+INNER JOIN ta_fecha
+ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha 

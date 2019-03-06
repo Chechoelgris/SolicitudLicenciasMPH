@@ -1,0 +1,33 @@
+body {
+    background-color: #1a3c40;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+  }
+.contenedor-interior{
+    background-color: #fef8e6;
+    width: 60vw;
+    max-width:60vw;
+}
+.formu{
+    background-color: #7393a7;
+    width: 35vw;
+    max-width:35vw;
+}
+.btnw{
+    background-color: #fef8e6;
+}
+.btnw:hover{
+    background-color: #3a9099;
+    
+}
+.inputlog{
+    background-color: #20646b;
+    color: #f8c244;
+}
+.inputlog:focus{
+    background-color: #63bac4;
+    color: rgb(0, 0, 0);
+    
+}
+.inputlog::placeholder {
+    color: #ffffff;
+  }

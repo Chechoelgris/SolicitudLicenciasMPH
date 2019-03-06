@@ -44,7 +44,7 @@
             <h1 class=" h2 delay-2s wobble animated infinite d-none alert-danger rounded-pill" id="animacion" >Rut y/o Contraseña Vacíos</h1>
             <p class="mt-5 mb-3 text-muted"></p>
             
-          </form>
+    </form>
         
           
     <footer>

@@ -5,13 +5,14 @@ if  (!isset($_SESSION['tipo'])) {
 
   header('Location:../../login.php');
 }//validacion de sesion iniciada
-//if ($_SESSION['tipo']=='Funcionario') {
-  //header('Location:../../login.php');
-//}//validacion de perfil de sesion
+if ($_SESSION['tipo']=='Funcionario') {
+  header('Location:../../login.php');
+}//validacion de perfil de sesion
 
 include_once 'conexion.php';//Conexion a la Base de datos
-/*
-$sql = 'SELECT * FROM TA_usuario';//Definimos la consulta a la base de datos
+
+$sql = 'SELECT * FROM pendientes';//Definimos la consulta a la base de datos
+
 $sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
 $sentencia->execute();            // Ejecutamos la consulta
 $resultado = $sentencia->fetchAll(); //Obtenemos los datos
@@ -19,7 +20,7 @@ $artxpag = 5; //Se definen la cantidad de usuarios a mostrar por paginacion
 $totalobtenido = $sentencia->rowCount();//Contamos la cantidad de elementos obtenidos
 $paginas = $totalobtenido/$artxpag;//calculamos la cantidad de paginas a necesitar
 $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS los elementos obtenidos
-*/
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -31,23 +32,27 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <!--   Estilos personalizados -->
+    <link rel="stylesheet" href="../cssintra/jquery.fancybox.css">
     <link rel="stylesheet" href="../cssintra/estilos.css">
+    
+
     <script src="../jsintra/funciones.js" charset="utf-8"></script>
-    <script src="../../js/validarut.js" charset="utf-8"></script>
+    
+    
     
 </head>
 <body>
 <?php 
-           /* if (!$_GET){
-              header('Location:listarusuarios.php?pagina=1');
+            if (!$_GET){
+              header('Location:solicitudespendientes.php?pagina=1');
             } //Con esto, modificamos la cabecera para que nos envie a la pagina 1 si es que no se ha seleccionado ninguna pagina en especifico
             if ($_GET['pagina']>$paginas || $_GET['pagina']<=0 ) {
 
-              header('Location:listarusuarios.php?pagina=1');
+              header('Location:solicitudespendientes.php?pagina=1');
             }//Con este if, nos aseguramos que al instar manualmente numeros que no esten en el dominio de la pagina, se redirigan a la pagina 1
             $iniciar=($_GET['pagina']-1)*$artxpag;
             
-            $sql_usuarios = 'SELECT * FROM TA_usuario LIMIT :iniciar, :nusuarios';  // limit, su primer parametro 
+            $sql_usuarios = 'SELECT * FROM pendientes LIMIT :iniciar, :nusuarios';  // limit, su primer parametro 
                                                                                     //indica desde que valor iniciaremos (valor del fetch), y el segundo indica
                                                                                     //en este caso, la cantidad de campos a mostrar (cantidad de filas del fetch obtenidas)
             $sentencia_usuarios = $conn->prepare($sql_usuarios);                    //preparamos la sentencia sql
@@ -59,16 +64,9 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
 
             $sentencia_usuarios->execute();                                         //Ejecutamos la consulta sql    
             $resultado_usuarios = $sentencia_usuarios->fetchAll();                  //Se almacenan los datos obtenidos
-             /* 
-
-            
-            
-            
-            
-            
               
 
-    */ 
+     
 
 ?>
   <header>
@@ -210,43 +208,52 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
               
             <h1 class="titulo border text-white border-warning rounded-pill mb-4">Solicitudes Pendientes</h1>
         
+          <div class="alert-white" >
+              <?php var_dump ($resultado_usuarios);?>
+                    
+          </div>
           
              
-             
 
-              <div class="table-responsive-xl">
+              <div class="table-responsive-xl" name="tabla">
                 <table class="table table-dark table-bordered table-hover ">
                 <caption>Listado de Solicitudes que requieren aprobacion</caption>
                   <thead>
                     <tr>
                       
-                      <th scope="col">RUT</th>
+                      <th scope="col">Nombre</th>
                       <th scope="col">Fecha</th>
                       <th scope="col">Hora</th>
                       <th scope="col">Direccion</th>
                       <th scope="col">Archivo</th>
-                      <th scope="col">Accion</th>
                       <th scope="col">Estado</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>  
-                        <th><?php echo '19.001.795-8';?></th>  
-                        <th>
-                                <?php $hoy = getdate();
-                                print_r($hoy['mday']); echo '/'; print_r($hoy['mon']); echo '/'; print_r($hoy['year']);
-                                ?>
-                        </th>
-                        <td><?php echo '08:30'; ?></td>
-                        <td><?php ?>Salvador Contreras 241, Padre Hurtado</td>
-                        <td class="">
-                           <a class="btn btn-outline-info " id="verimg"><i class="fas fa-file-image"></i></a>
-                        </td>
-                        <td><a class="btn btn-outline-success mr-2" href=""><i class="fas fa-calendar-check"></i></a><a class="btn btn-outline-danger" href=""><i class="far fa-eye-slash"></i></a></td>
-                        <td><?php echo 'Pendiente'; ?></td>
 
+                  <?php foreach($resultado_usuarios as $pend):?>
+                    
+
+                      <tr>
+                        <th><?php echo $pend['nombre_persona']?></th>  
+                        <th><?php echo $pend['fecha_asignada']?></th>
+                        <th><?php echo $pend['hora_asignada']?></th>
+                        <td><?php echo utf8_encode($pend['comuna_dir']).', '.utf8_encode($pend['calle_dir']).' '.utf8_encode($pend['numero_dir'])?></td>
+                        
+                        <td class="">
+                          <a class="btn btn-outline-warning " id="verimg" name ="imagen" data-fancybox="gallery" href="<?php echo $pend['ruta_archivo']?>">
+                            <i class="far fa-file-image">
+                              
+                            </i>
+                          </a>
+                          
+                        </td>
+                        <td><?php echo $pend['estado_solicitud']?></td>
                       </tr>
-                   
+                      
+
+                  <?php endforeach?> 
                     
                   </tbody>
                 </table>
@@ -254,14 +261,6 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
              
               
               
-              <div class="ventana fixed-top d-none" id="lightbox">
-                <div class="cerrar negro border border-warning " id="ojito"><i class="far fa-eye-slash"></i></div>
-                
-                <img src="https://s3-eu-west-1.amazonaws.com/barkibu-blog/blog+images/mi-perro-tiene-hipo-muy-seguido-que-le-pasa/perros-hipo-2.jpg?" class="imagen cerrar  bg-dark border border-warning">
-                <div class="text-center  cerrar  negro border border-warning text-light " ><b >Imagen adjuntada por el usuario.</b></div>
-                
-                
-              </div>
               
             </section>
           </article>
@@ -273,7 +272,8 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script>
+    <script src="../jsintra/jquery.fancybox.js" charset="utf-8"></script>                      
+   <script>
       $("#menu-toggle").click(function(e){
         e.preventDefault();
 
@@ -284,28 +284,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
         $("#headermenulateral").toggleClass("d-none");
        });
     </script>
-    <script>
-       $("#verimg").click(function(e){
-          e.preventDefault();
-
-        $("#lightbox").toggleClass("d-none");
-
-        
-       });
-
-    //$("#mi_imagen").attr("src","img/origen_2.jpg"); con esto cambiamos la imagen asociada al src
-
-
-
-        $("#ojito").click(function(e){
-          e.preventDefault();
-
-        $("#lightbox").toggleClass("d-none");
-
-        
-       });
-
-    </script>
+   
     
 </body>
 </html>
