@@ -5,13 +5,30 @@ if  (!isset($_SESSION['tipo'])) {
 
   header('Location:../../login.php');
 }//validacion de sesion iniciada
-if ($_SESSION['tipo']=='Funcionario') {
+
+if ($_SESSION['tipo']!='Funcionario' && $_SESSION['tipo']!='Administrador') {
   header('Location:../../login.php');
 }//validacion de perfil de sesion
 
 include_once 'conexion.php';//Conexion a la Base de datos
 
-$sql = 'SELECT * FROM pendientes';//Definimos la consulta a la base de datos
+$sql = "SELECT id_solicitud , ta_persona.rut_persona , ta_persona.nombre_persona , ta_persona.apellidop_persona , ta_fecha.fecha_asignada , ta_hora.hora_asignada ,ta_direccion.comuna_dir , ta_direccion.calle_dir , ta_direccion.numero_dir , ta_acreditadomicilio.ruta_archivo , ta_solicitud.estado_solicitud   
+from ta_solicitud 
+
+INNER JOIN ta_persona 
+ON ta_solicitud.fk_id_persona = ta_persona.id_persona 
+
+INNER JOIN ta_direccion 
+ON ta_solicitud.fk_id_persona = ta_direccion.fk_id_persona
+
+INNER JOIN ta_fecha
+ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha
+
+INNER JOIN ta_hora
+ON ta_solicitud.fk_id_hora = ta_hora.id_hora
+
+INNER JOIN ta_acreditadomicilio
+ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo";
 
 $sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
 $sentencia->execute();            // Ejecutamos la consulta
@@ -20,6 +37,7 @@ $artxpag = 5; //Se definen la cantidad de usuarios a mostrar por paginacion
 $totalobtenido = $sentencia->rowCount();//Contamos la cantidad de elementos obtenidos
 $paginas = $totalobtenido/$artxpag;//calculamos la cantidad de paginas a necesitar
 $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS los elementos obtenidos
+
 
 ?>
 <!DOCTYPE html>
@@ -52,18 +70,34 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             }//Con este if, nos aseguramos que al instar manualmente numeros que no esten en el dominio de la pagina, se redirigan a la pagina 1
             $iniciar=($_GET['pagina']-1)*$artxpag;
             
-            $sql_usuarios = 'SELECT * FROM pendientes LIMIT :iniciar, :nusuarios';  // limit, su primer parametro 
+            $sql_pendientes = "SELECT id_solicitud , ta_persona.rut_persona , ta_persona.nombre_persona , ta_persona.apellidop_persona , ta_fecha.fecha_asignada , ta_hora.hora_asignada ,ta_direccion.comuna_dir , ta_direccion.calle_dir , ta_direccion.numero_dir , ta_acreditadomicilio.ruta_archivo , ta_solicitud.estado_solicitud   
+            from ta_solicitud 
+            
+            INNER JOIN ta_persona 
+            ON ta_solicitud.fk_id_persona = ta_persona.id_persona 
+            
+            INNER JOIN ta_direccion 
+            ON ta_solicitud.fk_id_persona = ta_direccion.fk_id_persona
+            
+            INNER JOIN ta_fecha
+            ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha
+            
+            INNER JOIN ta_hora
+            ON ta_solicitud.fk_id_hora = ta_hora.id_hora
+            
+            INNER JOIN ta_acreditadomicilio
+            ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo";  // limit, su primer parametro 
                                                                                     //indica desde que valor iniciaremos (valor del fetch), y el segundo indica
                                                                                     //en este caso, la cantidad de campos a mostrar (cantidad de filas del fetch obtenidas)
-            $sentencia_usuarios = $conn->prepare($sql_usuarios);                    //preparamos la sentencia sql
+            $sentencia_pendientes = $conn->prepare($sql_pendientes);                    //preparamos la sentencia sql
 
-            $sentencia_usuarios->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);   //Estamos convirtiendo el valor entero a String y lo pasamos como parametro a la sentencia preparada
-            $sentencia_usuarios->bindParam(':nusuarios', $artxpag, PDO::PARAM_INT); //El primer parametro es el enunciado indicado en la preparacion de la sentencia, el segundo es 
+            $sentencia_pendientes->bindParam(':iniciar', $iniciar, PDO::PARAM_INT);   //Estamos convirtiendo el valor entero a String y lo pasamos como parametro a la sentencia preparada
+            $sentencia_pendientes->bindParam(':nusuarios', $artxpag, PDO::PARAM_INT); //El primer parametro es el enunciado indicado en la preparacion de la sentencia, el segundo es 
                                                                                     // la variable que contiene la informacion a insertar, y el tercero, es 
                                                                                     // la funcion que transforma la variable a string.
 
-            $sentencia_usuarios->execute();                                         //Ejecutamos la consulta sql    
-            $resultado_usuarios = $sentencia_usuarios->fetchAll();                  //Se almacenan los datos obtenidos
+            $sentencia_pendientes->execute();                                         //Ejecutamos la consulta sql    
+            $resultado_pendientes = $sentencia_pendientes->fetchAll();                  //Se almacenan los datos obtenidos
               
 
      
@@ -209,7 +243,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             <h1 class="titulo border text-white border-warning rounded-pill mb-4">Solicitudes Pendientes</h1>
         
           <div class="alert-white" >
-              <?php var_dump ($resultado_usuarios);?>
+              
                     
           </div>
           
@@ -221,25 +255,36 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                   <thead>
                     <tr>
                       
+                      <th scope="col">Nº Solicitud</th>
+                      <th scope="col">RUT</th>
                       <th scope="col">Nombre</th>
                       <th scope="col">Fecha</th>
                       <th scope="col">Hora</th>
-                      <th scope="col">Direccion</th>
+                      <th scope="col">Dirección</th>
                       <th scope="col">Archivo</th>
                       <th scope="col">Estado</th>
+                      <th scope="col">Acción</th>
+
                       
                     </tr>
                   </thead>
                   <tbody>
 
-                  <?php foreach($resultado_usuarios as $pend):?>
+                  <?php foreach($resultado_pendientes as $pend):?>
                     
 
                       <tr>
-                        <th><?php echo $pend['nombre_persona']?></th>  
-                        <th><?php echo $pend['fecha_asignada']?></th>
-                        <th><?php echo $pend['hora_asignada']?></th>
-                        <td><?php echo utf8_encode($pend['comuna_dir']).', '.utf8_encode($pend['calle_dir']).' '.utf8_encode($pend['numero_dir'])?></td>
+                        <th><?php echo $pend['id_solicitud']   ?></th> 
+                        <th><?php echo $pend['rut_persona']    ?></th> 
+                        <th><?php echo utf8_encode($pend['nombre_persona'])
+                                  .' '.utf8_encode($pend['apellidop_persona']) 
+                                                               ?></th> 
+                        
+                        <th><?php echo $pend['fecha_asignada'] ?></th>
+                        <th><?php echo $pend['hora_asignada']  ?></th>
+                        <td><?php echo utf8_encode($pend['comuna_dir'])
+                                 .' '. utf8_encode($pend['calle_dir'])
+                                 .' '. $pend['numero_dir']     ?></td>
                         
                         <td class="">
                           <a class="btn btn-outline-warning " id="verimg" name ="imagen" data-fancybox="gallery" href="<?php echo $pend['ruta_archivo']?>">

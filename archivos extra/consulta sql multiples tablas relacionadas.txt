@@ -1,7 +1,22 @@
-Select id_solicitud,ta_persona.rut_persona, ta_persona.nombre_persona,ta_persona.apellidop_persona, ta_fecha.fecha_asignada from ta_solicitud 
+Consulta que funciona en phpmyadmin
+
+
+
+Select id_solicitud NumeroSolicitud, ta_persona.rut_persona RUT, ta_persona.nombre_persona Nombre, ta_persona.apellidop_persona Apellido, ta_fecha.fecha_asignada FechaControl, ta_hora.hora_asignada Hora,ta_direccion.comuna_dir Comuna, ta_direccion.calle_dir Calle, ta_direccion.numero_dir N°, ta_acreditadomicilio.ruta_archivo Archivo, ta_solicitud.estado_solicitud Estado  from ta_solicitud 
+
 INNER JOIN ta_persona 
 ON ta_solicitud.fk_id_persona = ta_persona.id_persona 
+
 INNER JOIN ta_direccion 
-ON ta_direccion.fk_id_persona = ta_persona.id_persona 
+ON ta_solicitud.fk_id_persona = ta_direccion.fk_id_persona
+
 INNER JOIN ta_fecha
-ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha 
+ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha
+
+INNER JOIN ta_hora
+ON ta_solicitud.fk_id_hora = ta_hora.id_hora
+
+INNER JOIN ta_acreditadomicilio
+ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo
+
+
