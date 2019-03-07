@@ -41,6 +41,9 @@ echo '</pre>';
       header('Location:../index.php');
 
     }else {
+       $sentencia_consultar=null;
+        $conn=null;
+
         echo 'Las contrasenas no coinciden';
         header('Location:../../login.php');
         die();

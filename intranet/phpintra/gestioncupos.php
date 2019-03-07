@@ -251,6 +251,9 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
    
    </script>                      
     
-    
+    <?php  /* $sentencia_agregar=null;
+        $conn=null;
+    */?>
+
 </body>
 </html>

@@ -58,7 +58,9 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
 
             $sentencia_usuarios->execute();                                         //Ejecutamos la consulta sql    
             $resultado_usuarios = $sentencia_usuarios->fetchAll();                  //Se almacenan los datos obtenidos
-             /* 
+             
+            
+            /* 
 
             
             
@@ -329,3 +331,6 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
     
 </body>
 </html>
+<?php  $sentencia_usuarios=null;
+        $conn=null;
+?>

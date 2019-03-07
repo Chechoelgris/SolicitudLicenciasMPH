@@ -33,7 +33,7 @@ ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo";
 $sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
 $sentencia->execute();            // Ejecutamos la consulta
 $resultado = $sentencia->fetchAll(); //Obtenemos los datos
-$artxpag = 5; //Se definen la cantidad de usuarios a mostrar por paginacion
+$artxpag = 7; //Se definen la cantidad de usuarios a mostrar por paginacion
 $totalobtenido = $sentencia->rowCount();//Contamos la cantidad de elementos obtenidos
 $paginas = $totalobtenido/$artxpag;//calculamos la cantidad de paginas a necesitar
 $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS los elementos obtenidos
@@ -43,18 +43,28 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Solicitudes Pendientes - Administracion SSH</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<!--   Estilos personalizados -->
-    <link rel="stylesheet" href="../cssintra/jquery.fancybox.css">
-    <link rel="stylesheet" href="../cssintra/estilos.css">
-    
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Solicitudes Pendientes - Administracion SSH</title>
 
-    <script src="../jsintra/funciones.js" charset="utf-8"></script>
+
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> <!--   El buen Bootstrap 4.3  -->
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> <!--   Iconos puestos en todo el sistema  -->
+              
+            <link rel="stylesheet" href="../cssintra/jquery.fancybox.css"> <!--   Estilos lightbox -->
+            <link rel="stylesheet" href="../cssintra/estilos.css"> <!--   Estilos personalizados -->
+            
+
+            <script>
+                        function rechazar(idsolicitud){
+                                if (confirm("¿Deseas rechazar esta solicitud?. Esta opcion es irreversible.") == true) {
+                                        return true; 
+                                        }else{
+                                        return false;
+                                }
+                        }
+            </script>
     
     
     
@@ -86,7 +96,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             ON ta_solicitud.fk_id_hora = ta_hora.id_hora
             
             INNER JOIN ta_acreditadomicilio
-            ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo";  // limit, su primer parametro 
+            ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo LIMIT :iniciar, :nusuarios";  // limit, su primer parametro 
                                                                                     //indica desde que valor iniciaremos (valor del fetch), y el segundo indica
                                                                                     //en este caso, la cantidad de campos a mostrar (cantidad de filas del fetch obtenidas)
             $sentencia_pendientes = $conn->prepare($sql_pendientes);                    //preparamos la sentencia sql
@@ -103,48 +113,55 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
      
 
 ?>
-  <header>
+  <header>                                                                                                                            <!-- /Header-->
       <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top navsuperior" id="navv">
           
           
-            <button class="btn btn-outline-info mt-1 mb-1 mr-4 " id="menu-toggle"><i class="fas fa-chevron-left text-light" id="flechita"></i> <i class="far fa-eye text-light"></i></button>
+            <button class="btn btn-outline-info mt-1 mb-1 mr-4 " id="menu-toggle"> <!--   Boton mostrar ocultar el menu  -->
+                      <i class="fas fa-chevron-left text-light" id="flechita">
+                      </i> <i class="far fa-eye text-light"></i>
+            </button>
 
-            
-                <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="../index.php"><i class="fas fa-home"></i> Home</a>
+            <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="../index.php"><!--   Boton home  -->
+                    <i class="fas fa-home"></i>
+                     Home
+            </a>
                 
             
     
-            <button class="navbar-toggler btn-outline-info" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon   "></span>
+            <button class="navbar-toggler btn-outline-info" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                       <span class="navbar-toggler-icon   "></span>
             </button>
     
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav ml-auto  ">
-                
-                <li class="nav-item">
-                  <button class="btn btn-outline-info mt-1 mr-5 mb-1 text-light" href="#"><i class="fas fa-headset"></i> Soporte</button>
-                </li>
-               
-               
-                <li class="nav-item dropdown mt-1">
-                  <button class="btn btn-outline-info dropdown-toggle mb-1 text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-user-cog"></i> 
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-right alert-info " aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item " href="#"><i class="fas fa-user-edit"></i> Informacion Personal</a>
-                  
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item " href="cerrar.php"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>
-                  </div>
-                </li>
-                
-              </ul>
+                      <ul class="navbar-nav ml-auto  ">
+                            <li class="nav-item">
+                                  <button class="btn btn-outline-info mt-1 mr-5 mb-1 text-light" href="#"><i class="fas fa-headset"></i> Soporte</button>
+                            </li>
+
+                            <li class="nav-item dropdown mt-1">
+                                  <button class="btn btn-outline-info dropdown-toggle mb-1 text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-user-cog"></i> 
+                                  </button>
+                                  <div class="dropdown-menu dropdown-menu-right alert-info " aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item " href="#"><i class="fas fa-user-edit"></i> Informacion Personal</a>                               
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item " href="cerrar.php">
+                                                    <i class="fas fa-sign-out-alt"></i> 
+                                                    Cerrar Sesion
+                                            </a>
+                                  </div>
+                            </li>
+                        
+                      </ul>
             </div>
+
           </nav>
 
-  </header>
+  </header>                                                                                                                           <!-- /Header-->
 
-      <div class=" d-flex flex-row bd-highlight" > <!--todo aqui denshro -->
+      <div class=" d-flex flex-row bd-highlight" >                                                                                    <!--Contenido de la pagina  -->
          
           <article>
               <div class="bd-highlight uno" id="wrapper">
@@ -238,76 +255,119 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
           </article>
 
           <article class="margen  container-fluid col-10">
-            <section class=" ">
-              
-            <h1 class="titulo border text-white border-warning rounded-pill mb-4">Solicitudes Pendientes</h1>
-        
-          <div class="alert-white" >
-              
-                    
-          </div>
-          
-             
-
-              <div class="table-responsive-xl" name="tabla">
-                <table class="table table-dark table-bordered table-hover ">
-                <caption>Listado de Solicitudes que requieren aprobacion</caption>
-                  <thead>
-                    <tr>
+                    <section class=" ">
                       
-                      <th scope="col">Nº Solicitud</th>
-                      <th scope="col">RUT</th>
-                      <th scope="col">Nombre</th>
-                      <th scope="col">Fecha</th>
-                      <th scope="col">Hora</th>
-                      <th scope="col">Dirección</th>
-                      <th scope="col">Archivo</th>
-                      <th scope="col">Estado</th>
-                      <th scope="col">Acción</th>
-
-                      
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                  <?php foreach($resultado_pendientes as $pend):?>
-                    
-
-                      <tr>
-                        <th><?php echo $pend['id_solicitud']   ?></th> 
-                        <th><?php echo $pend['rut_persona']    ?></th> 
-                        <th><?php echo utf8_encode($pend['nombre_persona'])
-                                  .' '.utf8_encode($pend['apellidop_persona']) 
-                                                               ?></th> 
+                            <h1 class="titulo border text-white border-warning rounded-pill mb-4">Solicitudes Pendientes</h1>
+                
                         
-                        <th><?php echo $pend['fecha_asignada'] ?></th>
-                        <th><?php echo $pend['hora_asignada']  ?></th>
-                        <td><?php echo utf8_encode($pend['comuna_dir'])
-                                 .' '. utf8_encode($pend['calle_dir'])
-                                 .' '. $pend['numero_dir']     ?></td>
-                        
-                        <td class="">
-                          <a class="btn btn-outline-warning " id="verimg" name ="imagen" data-fancybox="gallery" href="<?php echo $pend['ruta_archivo']?>">
-                            <i class="far fa-file-image">
-                              
-                            </i>
-                          </a>
-                          
-                        </td>
-                        <td><?php echo $pend['estado_solicitud']?></td>
-                      </tr>
-                      
-
-                  <?php endforeach?> 
+                  
                     
-                  </tbody>
-                </table>
-              </div>
-             
-              
-              
-              
-            </section>
+
+                            <div class="table-responsive-xl" name="tabla">
+                                  <table class="table table-dark table-bordered table-hover ">                                       <!-- Tabla con la informacion-->
+                                          <caption>Listado de Solicitudes que requieren aprobacion</caption>
+                                          <thead>
+                                            <tr>
+                                              
+                                              <th scope="col">Nº Solicitud</th>
+                                              <th scope="col">RUT</th>
+                                              <th scope="col">Nombre</th>
+                                              <th scope="col">Fecha</th>
+                                              <th scope="col">Hora</th>
+                                              <th scope="col">Dirección</th>
+                                              <th scope="col">Archivo</th>
+                                              <th scope="col">Estado</th>
+                                              <th scope="col">Acción</th>
+
+                                              
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+
+                                                  <?php foreach($resultado_pendientes as $pend):?>
+                                                    
+
+                                                      <tr>
+                                                            <th>
+                                                                    <?php echo $pend['id_solicitud']   ?>
+                                                            </th> 
+                                                            <th>
+                                                                    <?php echo $pend['rut_persona']    ?>
+                                                            </th> 
+                                                            <th>
+                                                                    <?php echo utf8_encode($pend['nombre_persona']).' '.utf8_encode($pend['apellidop_persona']) ?>
+                                                            </th> 
+                                                            
+                                                            <th>
+                                                                    <?php echo $pend['fecha_asignada'] ?>
+                                                            </th>
+                                                            <th>
+                                                                    <?php echo $pend['hora_asignada']; ?>
+                                                            </th>
+                                                            <td>
+                                                                    <?php echo utf8_encode($pend['comuna_dir']).' '. utf8_encode($pend['calle_dir']).' '. $pend['numero_dir'] ?>
+                                                                      </td>
+                                                            
+                                                            <td class="">
+                                                                    <a class="btn btn-outline-warning " id="verimg" name ="imagen" data-fancybox="gallery" href="<?php echo $pend['ruta_archivo']?>">
+                                                                          <i class="far fa-file-image"></i>
+                                                                    </a>
+                                                            </td>
+                                                            <td>
+                                                                    <?php echo $pend['estado_solicitud']?>
+                                                            </td>
+                                                            <td class="">
+                                                                    <a onclick="return rechazah()" class="btn btn-outline-success "  href="">
+                                                                        <i class="far fa-calendar-check"></i>
+                                                                    </a>
+
+                                                                    <a onclick="return rechazar(<?php echo $pend['id_solicitud']; ?>)" class="btn btn-outline-danger "  
+                                                                          href="rechazarsolicitud.php?id=<?php echo $pend['id_solicitud']; ?>">
+                                                                          <i class="far fa-calendar-times"></i>
+                                                                    </a>
+                                                            </td>
+                                                      </tr>
+                                                      
+
+                                                  <?php endforeach?> 
+                                            
+                                          </tbody>
+                                  </table>                                                                                           <!-- /Tabla con la informacion-->
+                            </div>
+                    
+                      
+                      <nav aria-label="Page navigation example ">                                                                    <!-- menu de navegacion entre paginas-->
+
+                              <ul class="pagination ">
+                                      <li class="page-item <?php  echo$_GET['pagina']<=1 ? 'disabled' : '' ?> " >
+                                              <a class="page-link " href="solicitudespendientes.php?pagina=<?php echo $_GET['pagina']-1 ?>">
+                                                  Anterior
+                                              </a>
+                                      </li>
+                                      <!-- Paginacion dinamica-->
+                                    
+                                      <?php  for ($i=0; $i < $paginas; $i++):?>
+
+                                      <li class="page-item <?php echo $_GET['pagina']==$i+1 ? 'active' : ''?>">
+                                              <a class="page-link " href="solicitudespendientes.php?pagina=<?php echo $i+1 ?>">
+                                                  <?php echo$i+1; ?>
+                                              </a>
+                                      </li>
+
+                                      <?php  endfor?>
+
+                                      <!-- Paginacion dinamica-->
+
+                                      <li class="page-item <?php  echo$_GET['pagina']>=$paginas ? 'disabled' : '' ?> ">
+                                              <a class="page-link " href="solicitudespendientes.php?pagina=<?php echo $_GET['pagina']+1 ?>">
+                                                  Siguiente
+                                              </a>
+                                      </li>
+                              </ul>
+                      
+                      </nav>                                                                                                        <!-- /menu de navegacion entre paginas-->
+                      
+                    </section>
           </article>
 
 
@@ -317,8 +377,22 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="../jsintra/jquery.fancybox.js" charset="utf-8"></script>                      
-   <script>
+    <script src="../jsintra/jquery.fancybox.js" charset="utf-8"></script>    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script><!--   Alertas   -->
+   
+    <script type="Text/javascript">
+        function rechazah() {
+            swal({
+                type: 'error',
+                title: 'La contraseña es incorrecta',
+                showConfirmButton: false,
+                timer: 3000 // es ms (mili-segundos)
+            })
+        }
+    </script>
+   
+   
+    <script>
       $("#menu-toggle").click(function(e){
         e.preventDefault();
 
@@ -330,6 +404,8 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
        });
     </script>
    
-    
+   <?php  $sentencia_pendientes=null;
+   $conn=null;
+    ?>
 </body>
 </html>
