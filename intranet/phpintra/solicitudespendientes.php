@@ -12,27 +12,8 @@ if ($_SESSION['tipo']!='Funcionario' && $_SESSION['tipo']!='Administrador') {
 
 include_once 'conexion.php';//Conexion a la Base de datos
 
-$sql = "SELECT id_solicitud , ta_persona.rut_persona , ta_persona.nombre_persona , ta_persona.apellidop_persona , ta_fecha.fecha_asignada , ta_hora.hora_asignada ,ta_direccion.comuna_dir , ta_direccion.calle_dir , ta_direccion.numero_dir , ta_acreditadomicilio.ruta_archivo , ta_solicitud.estado_solicitud   
-from ta_solicitud 
+include_once 'contarpendientes.php';//Contar pendientes
 
-INNER JOIN ta_persona 
-ON ta_solicitud.fk_id_persona = ta_persona.id_persona 
-
-INNER JOIN ta_direccion 
-ON ta_solicitud.fk_id_persona = ta_direccion.fk_id_persona
-
-INNER JOIN ta_fecha
-ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha
-
-INNER JOIN ta_hora
-ON ta_solicitud.fk_id_hora = ta_hora.id_hora
-
-INNER JOIN ta_acreditadomicilio
-ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo";
-
-$sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
-$sentencia->execute();            // Ejecutamos la consulta
-$resultado = $sentencia->fetchAll(); //Obtenemos los datos
 $artxpag = 7; //Se definen la cantidad de usuarios a mostrar por paginacion
 $totalobtenido = $sentencia->rowCount();//Contamos la cantidad de elementos obtenidos
 $paginas = $totalobtenido/$artxpag;//calculamos la cantidad de paginas a necesitar
@@ -63,13 +44,20 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
 </head>
 <body>
 <?php 
+            
             if (!$_GET){
-              header('Location:solicitudespendientes.php?pagina=1');
-            } //Con esto, modificamos la cabecera para que nos envie a la pagina 1 si es que no se ha seleccionado ninguna pagina en especifico
-            if ($_GET['pagina']>$paginas || $_GET['pagina']<=0 ) {
 
               header('Location:solicitudespendientes.php?pagina=1');
+            } //Con esto, modificamos la cabecera para que nos envie a la pagina 1 si es que no se ha seleccionado ninguna pagina en especifico
+            
+            
+            if ($_GET['pagina']>$paginas || $_GET['pagina']<=0 ) {
+                
+
+              //header('Location:solicitudespendientes.php?pagina=1');
             }//Con este if, nos aseguramos que al instar manualmente numeros que no esten en el dominio de la pagina, se redirigan a la pagina 1
+            
+            
             $iniciar=($_GET['pagina']-1)*$artxpag;
             
             $sql_pendientes = "SELECT id_solicitud , ta_persona.rut_persona , ta_persona.nombre_persona , ta_persona.apellidop_persona , ta_fecha.fecha_asignada , ta_hora.hora_asignada ,ta_direccion.comuna_dir , ta_direccion.calle_dir , ta_direccion.numero_dir , ta_acreditadomicilio.ruta_archivo , ta_solicitud.estado_solicitud   
@@ -88,7 +76,10 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             ON ta_solicitud.fk_id_hora = ta_hora.id_hora
             
             INNER JOIN ta_acreditadomicilio
-            ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo LIMIT :iniciar, :nusuarios";  // limit, su primer parametro 
+            ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo 
+            WHERE TA_solicitud.estado_solicitud = 'Pendiente'
+            
+            LIMIT :iniciar, :nusuarios";  // limit, su primer parametro 
                                                                                     //indica desde que valor iniciaremos (valor del fetch), y el segundo indica
                                                                                     //en este caso, la cantidad de campos a mostrar (cantidad de filas del fetch obtenidas)
             $sentencia_pendientes = $conn->prepare($sql_pendientes);                    //preparamos la sentencia sql
@@ -250,14 +241,11 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                     <section class=" ">
                       
                             <h1 class="titulo border text-white border-warning rounded-pill mb-4">Solicitudes Pendientes</h1>
-                
-                        
-                  
-                    
-
                             <div class="table-responsive-xl" name="tabla">
                                   <table class="table table-dark table-bordered table-hover ">                                       <!-- Tabla con la informacion-->
-                                          <caption>Listado de Solicitudes que requieren aprobacion</caption>
+                                          <caption> <span class="text-light table-bordered rounded bg-dark  p-1 text-center" >
+                                                  Solicitudes que requieren aprobacion: <?php echo $_SESSION['pendientes'];?>
+                                          </span></caption>
                                           <thead>
                                             <tr>
                                               
@@ -309,11 +297,11 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                                                     <?php echo $pend['estado_solicitud']?>
                                                             </td>
                                                             <td class="">
-                                                                    <a onclick="return rechazar()" class="btn btn-outline-success "  href="#" >
+                                                                    <a class="btn btn-outline-success "  href="procesaaprobacionsolicitud.php?id=<?php echo $pend['id_solicitud']; ?>" id="aceptar">
                                                                         <i class="far fa-calendar-check"></i>
                                                                     </a>
 
-                                                                    <a class="btn btn-outline-danger " href="procesarechazosolicitud.php?id=<?php echo $pend['id_solicitud']; ?>" id="confirm">
+                                                                    <a class="btn btn-outline-danger " href="procesarechazosolicitud.php?id=<?php echo $pend['id_solicitud']; ?>" id="rechazar">
                                                                           <i class="far fa-calendar-times"></i>
                                                                     </a>
                                                             </td>
@@ -372,29 +360,8 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script><!--   Alertas   -->
    
     <script type="Text/javascript">
-                     /*  $("#linku").click(function(e) {
-                                e.preventDefault(); // Prevent the href from redirecting directly
-                                var linkURL = $(this).attr("href");
-                                rechazah(linkURL);
-                        });
-
-                        function rechazah(linkURL) {
-                                swal({
-                                        title: "Leave this site?", 
-                                        text: "If you click 'OK', you will be redirected to " + linkURL,
-                                        showCancelButton: true,
-                                        type: "warning"
-                                }, function(linku){
-                                if(linku){
-                                        console.log('confirmado');
-                                        window.location.href = linkURL;
-                                }else{
-                                        console.log('cancelado');
- 
-                                }
-                                })
-                        }*/
-                        $("#confirm").click(function(e) {
+                   
+                        $("#rechazar").click(function(e) {
                                 e.preventDefault(); // Prevent the href from redirecting directly
                                 var linkURL = $(this).attr("href");
                                 warnBeforeRedirect(linkURL);
@@ -402,10 +369,11 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
 
                                 function warnBeforeRedirect(linkURL) {
                                 swal({
-                                        title: "Are you sure?",
-                                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                                        title: "¿Desea Rechazar esta Solicitud?",
+                                        text: "Si acepta, esta solicitud sera eliminada del sistema  y el usuario recibira la informacion por correo electronico.",
                                         icon: "warning",
-                                        buttons: true,
+                                        buttons: ["Volver", "Rechazar"],
+                                        
                                         dangerMode: true,
                                                                                 
                                 }).then(function(result) {
@@ -418,7 +386,9 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                               
                                 }else{
                                         swal({
+                                               
                                          title: "Gestion Cancelada!",
+                                         icon: "warning",
                                         });
                                        
                                         console.log('cancelado');
@@ -426,9 +396,47 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                 }
                                 });
                                 }
+
+                               
                      
                         
     </script>
+    <script>
+     $("#aceptar").click(function(e) {
+                                e.preventDefault(); // Prevent the href from redirecting directly
+                                var linkURL = $(this).attr("href");
+                                warnBeforeRedirect1(linkURL);
+                                });
+
+                                function warnBeforeRedirect1(linkURL) {
+                                swal({
+                                        title: "¿Desea Aceptar esta Solicitud?",
+                                        text: "Si acepta, esta solicitud sera confirmada y el usuario recibira la confirmacion por correo electronico.",
+                                        icon: "info",
+
+                                        buttons: ["Volver", "Aceptar"],
+                                        
+                                       
+                                                                                
+                                }).then(function(result) {
+                                        console.log(linkURL);
+                                console.log(result);
+                                
+                                if (result != null) {
+                                        window.location.href = linkURL;
+                                        console.log('aceptado');
+                                        
+                                }else{
+                                        swal({
+                                                icon: "warning",
+                                         title: "Gestion Cancelada!",
+                                        });
+                                       
+                                        console.log('cancelado');
+
+                                }
+                                });
+                                }</script>
 
    
    

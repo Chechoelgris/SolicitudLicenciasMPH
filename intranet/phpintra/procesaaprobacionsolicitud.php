@@ -14,7 +14,7 @@ if ($_SESSION['tipo']!='Funcionario' && $_SESSION['tipo']!='Administrador') {
 include_once 'conexion.php'; //CONEXION A LA BASE DE DATOS
 
 
-$idsol = $_GET['id'];//obtenemos el id de la solicitud a rechazar enviado por get
+$idsol = $_GET['id'];//obtenemos el id de la solicitud a aceptar enviado por get
 
 
 if (!$_GET){//Aqui confirmamos que recibimos el dato por get. Si no fue el caso, se redirige a la pagina anterior.
@@ -39,8 +39,9 @@ if (!$_GET){//Aqui confirmamos que recibimos el dato por get. Si no fue el caso,
             header('Location:solicitudespendientes.php?pagina=1');
         
     }
+        // Definimos la inserciñón a la base de datos
         $sql_cambio  = 'UPDATE ta_solicitud 
-                        SET estado_solicitud = "Rechazada"  
+                        SET estado_solicitud = "Aceptada"  
                         WHERE id_solicitud = ?';
 
         $sentencia_cambio = $conn->prepare($sql_cambio); // Preparamos la consulta a la base de datos

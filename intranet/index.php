@@ -1,7 +1,7 @@
 <?php
 session_start();
 utf8_encode($_SESSION['tipo']);
-
+include_once 'phpintra/conexion.php';//Conexion a la Base de datos
 
     if  (!isset($_SESSION['tipo'])) {
       header('Location:../login.php');
@@ -10,6 +10,7 @@ utf8_encode($_SESSION['tipo']);
     if ($_SESSION['tipo']!='Funcionario' && $_SESSION['tipo']!='Administrador') {
       header('Location:../../login.php');
     }//validacion de perfil de sesion
+    include_once 'phpintra/contarpendientes.php';//Contar pendientes
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -169,7 +170,7 @@ utf8_encode($_SESSION['tipo']);
                     <h5 class="card-title "><b>Gestion de Solicitudes</b></h5>
                     <br>
                     <p class="card-text">En este apartado te informaremos sobre las nuevas solicitudes que requieran aprobacion.</p>
-                    <p class="text">Existen <b>50</b> solicitudes que requieren confirmacion</p>
+                    <p class="text">Existen <b><?php echo $_SESSION['pendientes']; ?></b> solicitudes que requieren confirmacion</p>
                     <br>
                     
                     <a href="phpintra/solicitudespendientes.php" class="btn btn-dark">Solicitudes Pendientes</a>
