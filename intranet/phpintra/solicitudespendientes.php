@@ -56,15 +56,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             <link rel="stylesheet" href="../cssintra/estilos.css"> <!--   Estilos personalizados -->
             
 
-            <script>
-                        function rechazar(idsolicitud){
-                                if (confirm("¿Deseas rechazar esta solicitud?. Esta opcion es irreversible.") == true) {
-                                        return true; 
-                                        }else{
-                                        return false;
-                                }
-                        }
-            </script>
+            
     
     
     
@@ -317,12 +309,11 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                                                     <?php echo $pend['estado_solicitud']?>
                                                             </td>
                                                             <td class="">
-                                                                    <a onclick="return rechazah()" class="btn btn-outline-success "  href="">
+                                                                    <a onclick="return rechazar()" class="btn btn-outline-success "  href="#" >
                                                                         <i class="far fa-calendar-check"></i>
                                                                     </a>
 
-                                                                    <a onclick="return rechazar(<?php echo $pend['id_solicitud']; ?>)" class="btn btn-outline-danger "  
-                                                                          href="rechazarsolicitud.php?id=<?php echo $pend['id_solicitud']; ?>">
+                                                                    <a class="btn btn-outline-danger " href="procesarechazosolicitud.php?id=<?php echo $pend['id_solicitud']; ?>" id="confirm">
                                                                           <i class="far fa-calendar-times"></i>
                                                                     </a>
                                                             </td>
@@ -381,15 +372,65 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script><!--   Alertas   -->
    
     <script type="Text/javascript">
-        function rechazah() {
-            swal({
-                type: 'error',
-                title: 'La contraseña es incorrecta',
-                showConfirmButton: false,
-                timer: 3000 // es ms (mili-segundos)
-            })
-        }
+                     /*  $("#linku").click(function(e) {
+                                e.preventDefault(); // Prevent the href from redirecting directly
+                                var linkURL = $(this).attr("href");
+                                rechazah(linkURL);
+                        });
+
+                        function rechazah(linkURL) {
+                                swal({
+                                        title: "Leave this site?", 
+                                        text: "If you click 'OK', you will be redirected to " + linkURL,
+                                        showCancelButton: true,
+                                        type: "warning"
+                                }, function(linku){
+                                if(linku){
+                                        console.log('confirmado');
+                                        window.location.href = linkURL;
+                                }else{
+                                        console.log('cancelado');
+ 
+                                }
+                                })
+                        }*/
+                        $("#confirm").click(function(e) {
+                                e.preventDefault(); // Prevent the href from redirecting directly
+                                var linkURL = $(this).attr("href");
+                                warnBeforeRedirect(linkURL);
+                                });
+
+                                function warnBeforeRedirect(linkURL) {
+                                swal({
+                                        title: "Are you sure?",
+                                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                                        icon: "warning",
+                                        buttons: true,
+                                        dangerMode: true,
+                                                                                
+                                }).then(function(result) {
+                                        console.log(linkURL);
+                                console.log(result);
+                                
+                                if (result != null) {
+                                        window.location.href = linkURL;
+                                        console.log('aceptado');
+                              
+                                }else{
+                                        swal({
+                                         title: "Gestion Cancelada!",
+                                        });
+                                       
+                                        console.log('cancelado');
+
+                                }
+                                });
+                                }
+                     
+                        
     </script>
+
+   
    
    
     <script>

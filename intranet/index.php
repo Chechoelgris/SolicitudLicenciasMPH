@@ -6,7 +6,10 @@ utf8_encode($_SESSION['tipo']);
     if  (!isset($_SESSION['tipo'])) {
       header('Location:../login.php');
     } //validacion de sesion
-
+    
+    if ($_SESSION['tipo']!='Funcionario' && $_SESSION['tipo']!='Administrador') {
+      header('Location:../../login.php');
+    }//validacion de perfil de sesion
 ?>
 <!DOCTYPE html>
 <html lang="es">
