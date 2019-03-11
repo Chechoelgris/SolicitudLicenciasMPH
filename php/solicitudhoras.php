@@ -22,7 +22,7 @@
    
       
 
-          <form name="form1" id="formu" class="form-signin text-center mt-5" action="procesainiciosolicitud.php"  method="POST">
+          <form name="form1" id="formu" class="form-signin text-center mt-5" action="iniciosolicitud.php"  method="POST">
 
             <h1 class="h3 mb-4 mt-1 font-weight-normal">Ingrese su RUT para continuar</h1>
             <br>
@@ -31,11 +31,11 @@
             <br>
             <br>
             
-            <button class="button mt-3 " id="envialogin"  type="submit" >
-                                      Ingresar
-                                      <div class="button__horizontal"></div>
-                                      <div class="button__vertical"></div>
-                            </button>
+            <button class="button mt-3 " id=""  type="submit" >
+                          Ingresar
+                          <div class="button__horizontal"></div>
+                          <div class="button__vertical"></div>
+            </button>
             <br>
             <br><br>
             

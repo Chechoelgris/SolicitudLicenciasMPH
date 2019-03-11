@@ -1,38 +1,63 @@
 <?php
 include_once '../intranet/phpintra/conexion.php'; 
+session_start();
+$rut_usr = $_SESSION['rut'];
+/*
+$archivo = $_FILES['archivo'];
+$nameFilearchivo= $_FILES['archivo']['name'];
+$tmpFilearchivo = $_FILES['archivo']['tmp_name'];
 
-echo '<pre>';
-echo 'hasta aqui oc';
-
-$rut_usr = $_POST['rut'];
 
 
-echo '<pre>';
-var_dump($rut_usr);
-echo '</pre>';
 
-                            
-    $select_consulta = 'SELECT * FROM TA_persona WHERE rut_persona = ?';
-    $sentencia_consultar = $conn->prepare($select_consulta);
-    $sentencia_consultar->execute(array($rut_usr));
-    $resultado = $sentencia_consultar->fetch();
+$ruta = "../resources/subidas/";
+$ruta = $ruta . basename( $nameFilearchivo); 
+if(move_uploaded_file($tmpFilearchivo, $ruta)) {
+    echo "El archivo ".  basename( $nameFilearchivo). 
+    " ha sido subido";
 
+} else{
+    echo "Ha ocurrido un error, trate de nuevo!";
+}
+*/
+
+
+
+$uploadedfileload="true";
+$msg;
+
+
+
+if ($_FILES['archivo']['size']>2000000)                                                                    // Validacion de tamaño
+{$msg="El archivo es mayor que 2000KB, debes reduzcirlo antes de subirlo<BR>";
+$uploadedfileload="false";
+
+}
+echo 'pasa validacion de tamaño';
+echo '<br>';
+if (!($_FILES['archivo']['type'] =="image/jpeg" OR $_FILES['archivo']['type'] =="image/gif"))               // Validacion de formato
+{$msg="Tu archivo tiene que ser JPG o GIF. Otros archivos no son permitidos<BR>";
+$uploadedfileload="false";
+}
+echo 'pasa validacion de formato';
+echo '<br>';
+
+$nameFilearchivo= $_FILES['archivo']['name'];
+$tmpFilearchivo = $_FILES['archivo']['tmp_name'];
+
+$ruta = "../resources/subidas/";
+$ruta = $ruta . basename( $nameFilearchivo); 
+
+
+if($uploadedfileload=="true"){
+
+    if(move_uploaded_file($tmpFilearchivo, $ruta)) {
+        echo "El archivo ".  basename( $nameFilearchivo). 
+        " ha sido subido";
     
+    } else{
+        echo "Ha ocurrido un error, trate de nuevo!";
+    }
 
-    if (!$resultado) {
-
-        //matar operacion
-        echo 'No se han encontrado datos de solicitud asociados a este rut';
-        //header('Location:../../login.php');
-        die();
-    }else{
-        $_SESSION['id'] = $resultado['id_persona'];
-    
-        $select_consulta2 = 'SELECT * FROM TA_solicitud WHERE fk_id_persona = ?';
-        $sentencia_consultar2 = $conn->prepare($select_consulta2);
-        $sentencia_consultar2->execute(array($_SESSION['id']));
-        $resultado2 = $sentencia_consultar2->fetch();
-       
-    } 
-    var_dump($resultado2);
+}else{echo $msg;}
     
