@@ -72,16 +72,11 @@ echo '</pre>';
 
             <div class="container text-center"> 
                     <h1>Datos Personales</h1>
-                            <article>
+                            <article class="contform">
                                     <form action="procesainiciosolicitud.php" method="POST" enctype="multipart/form-data">
 
-                                        <input type="file" name="archivo">
-                                        <br>
-                                        <button class="button mt-3 " id="envialogin"  type="submit" >
-                                                subir
-                                                <div class="button__horizontal"></div>
-                                                <div class="button__vertical"></div>
-                                  </button>
+
+
 
                                     </form>
                             </article>

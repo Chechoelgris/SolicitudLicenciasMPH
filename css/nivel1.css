@@ -28,7 +28,7 @@ body {
     font-weight: bold;
     text-align:center;
     width: 100%;
-    max-width: 330px;
+    max-width: 500px;
     padding: 15px;
     margin: 0 auto;
     
@@ -107,3 +107,29 @@ body {
   .button:hover .button__vertical {
     transform: scaleY(0);
   }
+
+  /*Estilos aplicados al formulario a llenar (form1 pa delante) */
+
+  .input-oscuro{ 
+    color: #48bbaf;  
+  }
+  .input-oscuro::placeholder{ 
+    color: #acece6;  
+  }
+
+  .contform{
+    
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .label{
+    display: flex;
+    justify-content: left;
+    margin-bottom: 0;
+    margin-top: 5px;
+    font-size: 0.9rem;
+ 
+  }
+
+ 
