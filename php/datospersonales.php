@@ -1,3 +1,7 @@
+<?php 
+session_start();
+
+?>
 <!doctype html>
 <html lang="es">
   <head>
@@ -28,8 +32,10 @@
                                     <div class="determinate" style="width: 10%"></div>
                             </div>
                     </div>
-                    <form name="form1" id="formu" class="mt-5" action="iniciosolicitud.php"  method="POST">
-            
+                    <form name="form1" id="formu" class="mt-5" action="procesa/procesadatospersonales.php"  method="POST">
+
+                            
+
                             <h1 class="h2 mb-4 mt-1 font-weight-normal">Datos Personales</h1>
 
                             <small>Queremos conocerte, por favor, completa estos datos para continuar.</small>
@@ -37,19 +43,14 @@
 
                             <div class="form-group">
 
-                                <div class="row">    
-                                        <div class="input-field col s12">
-                                                <input type="text" name="rut"  id="inputRut" required="" onblur="javascript:Rut(document.form1.rut.value)" class=" input-oscuro"  autofocus="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
-                                                <label for="rut">RUT</label>
-                                                <span class="abajito" data-error="wrong" data-success="right">Sin puntos ni guión</span>
-                                        </div>        
-                                </div>
-
-                                <!-- Separador de campos -->
+                               
 
                                 <div class="row">    
                                         <div class="input-field col s12">
-                                                <input type="text" name="ingresonombre" class="input-oscuro" pattern="" required="">
+                                                <input type="text" name="ingresonombre" class="input-oscuro"  required="" autofocus
+                                                value=" <?php if ($_SESSION['encontrado']) {
+                                                        echo utf8_encode($_SESSION['nombre_obtenido']);
+                                                }?>" >
                                                 <label for="ingresonombre">Nombre</label>
                                                 <span class="abajito" data-error="wrong" data-success="right">Un nombre es suficiente</span>
                                         </div>        
@@ -57,7 +58,10 @@
                                 <!-- Separador de campos -->
                                 <div class="row">    
                                         <div class="input-field col s12">
-                                                <input type="text" name="ingresapellidop" class="input-oscuro"  required="">
+                                                <input type="text" name="ingresapellidop" class="input-oscuro"  required=""
+                                                value=" <?php if ($_SESSION['encontrado']) {
+                                                        echo utf8_encode($_SESSION['apellidop_obtenido']);
+                                                }?>" >
                                                 <label for="ingresapellidop">Apellido Paterno</label>
                                                 <span class="abajito" data-error="wrong" data-success="right">Primer apellido</span>
                                         </div>        
@@ -67,7 +71,10 @@
 
                                 <div class="row">    
                                         <div class="input-field col s12">
-                                                <input type="text" name="ingresapellidom" class="input-oscuro" required="">
+                                                <input type="text" name="ingresapellidom" class="input-oscuro" required=""
+                                                value=" <?php if ($_SESSION['encontrado']) {
+                                                        echo utf8_encode($_SESSION['apellidom_obtenido']);
+                                                        }?>" >
                                                 <label for="ingresapellidom">Apellido Materno</label>
                                                 <span class="abajito" data-error="wrong" data-success="right">Segundo apellido</span>
                                         </div>        
@@ -75,12 +82,55 @@
                                 <!-- Separador de campos -->
                                 <div class="row">    
                                         <div class="input-field col s12">
-                                                        <input type="date" class="input-oscuro" name="fechanacimiento" placeholder="" min="1919-01-01" required>
+                                                <input type="date" class="input-oscuro" name="fechanacimiento" placeholder="" min="1919-01-01" required
+                                                >
                                                 <label for="fechanacimiento">Fecha de Nacimiento</label>
                                                 <span class="abajito" data-error="wrong" data-success="right">Se desplegará un menú cuando haga click</span>
                                         </div>        
                                 </div> 
 
+                                <!-- Separador de campos -->
+                                <div class="row">    
+                                        <div class="input-field col s12">
+                                        <label for="sexo">Sexo</label>
+                                        <p>
+                                                        <label>
+                                                          <input name="sexo" type="radio" value="No Especifica" <?php if ($_SESSION['encontrado']) {
+                                                                if($_SESSION['sexo_obtenido']=='No Especifica'){
+                                                                        echo 'checked';
+                                                                }
+                                                                
+                                                                }?>  />
+                                                          <span>Prefiero no decir</span>
+                                                        </label>
+                                                      </p>
+                                                      <p>
+                                                        <label>
+                                                          <input name="sexo" type="radio" value="Femenino" <?php if ($_SESSION['encontrado']) {
+                                                                if($_SESSION['sexo_obtenido']=='Femenino'){
+                                                                        echo 'checked';
+                                                                }
+                                                                
+                                                                }?> />
+                                                          <span>Femenino</span>
+                                                        </label>
+                                                      </p>
+                                                      <p>
+                                                        <label>
+                                                          <input class="with-gap" name="sexo" type="radio" value="Masculino" <?php if ($_SESSION['encontrado']) {
+                                                                if($_SESSION['sexo_obtenido']=='Masculino'){
+                                                                        echo 'checked';
+                                                                }
+                                                                
+                                                                }?> />
+                                                          <span>Masculino</span>
+                                                        </label>
+                                                      </p>
+                                                
+                                                
+                                                <span class="abajito" data-error="wrong" data-success="right">Indique su sexo.</span>
+                                        </div>        
+                                </div> 
                                 <!-- Separador de campos -->
                                 <br>
                                 <h1 class="h2 mb-4 mt-1 font-weight-normal">Contacto</h1>
@@ -92,7 +142,10 @@
                                          <div class="input-field col s12">
                                                               
 
-                                                <input id="email" type="email" class="input-oscuro "  required>
+                                                <input name="email" id="email" type="email" class="input-oscuro "  required
+                                                value=" <?php if ($_SESSION['encontrado']) {
+                                                        echo utf8_encode($_SESSION['correo_obtenido']);
+                                                        }?>" >
                                                 <label for="email">Email</label>
                                                 <span class="abajito" data-error="wrong" data-success="right">Su correo actualizado</span>
                                          </div>        
@@ -104,7 +157,12 @@
                                         <div class="input-field col s12 ">
                                                         
 
-                                                <input id="telefono" type="tel" class="input-oscuro" pattern="[0-9]{9}" required>
+                                                <input name="telefono" id="telefono" type="tel" class="input-oscuro"  required
+                                                value=" <?php if ($_SESSION['encontrado']) {
+                                                        echo $_SESSION['telefono_obtenido'];
+                                                        }else{
+                                                                echo '+56';   
+                                                        }?>" >
                                                 <label for="telefono">Teléfono</label>
                                                 <span class="abajito" data-error="wrong" data-success="right">Desde el 9 en adelante  </span>
                                         </div>        
