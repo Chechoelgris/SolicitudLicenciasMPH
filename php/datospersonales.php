@@ -29,7 +29,7 @@ session_start();
             <div class="container">
                     <div class="barra">
                             <div class="progress">
-                                    <div class="determinate" style="width: 10%"></div>
+                                    <div class="determinate" style="width: 20%"></div>
                             </div>
                     </div>
                     <form name="form1" id="formu" class="mt-5" action="procesa/procesadatospersonales.php"  method="POST">
@@ -48,7 +48,7 @@ session_start();
                                 <div class="row">    
                                         <div class="input-field col s12">
                                                 <input type="text" name="ingresonombre" class="input-oscuro"  required="" autofocus
-                                                value=" <?php if ($_SESSION['encontrado']) {
+                                                value="<?php if ($_SESSION['encontrado']) {
                                                         echo utf8_encode($_SESSION['nombre_obtenido']);
                                                 }?>" >
                                                 <label for="ingresonombre">Nombre</label>
@@ -59,7 +59,7 @@ session_start();
                                 <div class="row">    
                                         <div class="input-field col s12">
                                                 <input type="text" name="ingresapellidop" class="input-oscuro"  required=""
-                                                value=" <?php if ($_SESSION['encontrado']) {
+                                                value="<?php if ($_SESSION['encontrado']) {
                                                         echo utf8_encode($_SESSION['apellidop_obtenido']);
                                                 }?>" >
                                                 <label for="ingresapellidop">Apellido Paterno</label>
@@ -72,7 +72,7 @@ session_start();
                                 <div class="row">    
                                         <div class="input-field col s12">
                                                 <input type="text" name="ingresapellidom" class="input-oscuro" required=""
-                                                value=" <?php if ($_SESSION['encontrado']) {
+                                                value="<?php if ($_SESSION['encontrado']) {
                                                         echo utf8_encode($_SESSION['apellidom_obtenido']);
                                                         }?>" >
                                                 <label for="ingresapellidom">Apellido Materno</label>
@@ -158,7 +158,7 @@ session_start();
                                                         
 
                                                 <input name="telefono" id="telefono" type="tel" class="input-oscuro"  required
-                                                value=" <?php if ($_SESSION['encontrado']) {
+                                                value="<?php if ($_SESSION['encontrado']) {
                                                         echo $_SESSION['telefono_obtenido'];
                                                         }else{
                                                                 echo '+56';   
@@ -188,7 +188,12 @@ session_start();
                             <br>
                             <small class="">Tranquilo, son solo unos pocos datos, y solo los pediremos <b>una vez</b>. Tu proxima visita cargará estos datos automaticamente.</small>
 
-                        
+                            <div class="row">
+                                        <div class="input-field col s12">
+                                                       <?php include("procesa/imprvalidacion.php"); ?>
+                                        
+                                        </div>
+                            </div>
                     </form>
             </div>
       

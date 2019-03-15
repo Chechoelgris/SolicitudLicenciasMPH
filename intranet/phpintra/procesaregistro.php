@@ -69,15 +69,8 @@ if ($_SESSION['tipo']=='Funcionario') {
         echo 'La contraseña no es válida.';
     }
     
-    echo '<pre>';
-        var_dump($rut_nuevo);
-        var_dump($nombre_nuevo);
-        var_dump($apellidop_nuevo);
-        var_dump($apellidom_nuevo);
-        var_dump($correo_nuevo);
-        var_dump($pass_nuevo);
-        var_dump($tipo_nuevo);
-    echo '</pre>';
+    
+    
 
     
 ?>
