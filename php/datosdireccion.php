@@ -1,9 +1,13 @@
 <?php
+include_once '../intranet/phpintra/conexion.php'; 
 session_start();
-//echo 'Hola '.$_SESSION['nombre'].', su id es: '.$_SESSION['id_persona'];
 
+$listarregiones = "SELECT id_region, nombre_region FROM ta_region ORDER BY nombre_region ASC";
 
-//    ciudad_dir 	comuna_dir 	calle_dir 	blockedif_dir 	numero_dir 	
+$sentencia_listarreg = $conn->prepare($listarregiones);// Preparamos la consulta a la base de datos
+$sentencia_listarreg->execute();            // Ejecutamos la consulta
+$resultado_listarreg = $sentencia_listarreg->fetchAll(); //Obtenemos los datos
+
 ?>
 <!doctype html>
 <html lang="es">
@@ -16,6 +20,7 @@ session_start();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script></script>
     <link rel="stylesheet" href="../css/nivel1.css">
 
 
@@ -51,7 +56,12 @@ session_start();
 
                                                                 <div class="row">    
                                                                                 <div class="input-field col s12">
-                                                                                        <select name="" id="regiones"></select>
+                                                                                        <select name="" id="regiones">
+                                                                                                  <option value="0">Selecciona una Región</option>
+                                                                                                  <?php foreach($resultado_listarreg as $nombreregion): ?>
+                                                                                                        <option value=""><?php echo utf8_encode($nombreregion['nombre_region']);?></option>     
+                                                                                                  <?php endforeach?>
+                                                                                        </select>
                                                                                         <label for="ingresonombre">Region</label>
                                                                                         <span class="abajito" data-error="wrong" data-success="right">Seleccione su región de residencia</span>
                                                                                 </div>        
@@ -59,7 +69,9 @@ session_start();
                                                                 <!-- Separador de campos -->
                                                                 <div class="row">    
                                                                                 <div class="input-field col s12">
-                                                                                        <select id="comunas"></select>
+                                                                                        <select id="comunas">
+                                                                                                <option value="">Selecciona una Comuna</option>
+                                                                                        </select>
                                                                                         <label for="comunas">Comuna</label>
                                                                                         <span class="abajito" data-error="wrong" data-success="right">Seleccione su comuna de residencia</span>
                                                                                 </div>        
