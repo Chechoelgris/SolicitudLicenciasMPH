@@ -56,21 +56,22 @@ $resultado_listarreg = $sentencia_listarreg->fetchAll(); //Obtenemos los datos
 
                                                                 <div class="row">    
                                                                                 <div class="input-field col s12">
-                                                                                        <select name="" id="regiones">
+                                                                                        <select name="regiones" id="regiones" onblur="javascript:cargarcomunas();">
                                                                                                   <option value="0">Selecciona una Región</option>
                                                                                                   <?php foreach($resultado_listarreg as $nombreregion): ?>
-                                                                                                        <option value=""><?php echo utf8_encode($nombreregion['nombre_region']);?></option>     
+                                                                                                        <option value="<?php echo $nombreregion['id_region'];?>"><?php echo utf8_encode($nombreregion['nombre_region']);?></option>     
                                                                                                   <?php endforeach?>
                                                                                         </select>
-                                                                                        <label for="ingresonombre">Region</label>
+                                                                                        <label for="regiones">Region</label>
                                                                                         <span class="abajito" data-error="wrong" data-success="right">Seleccione su región de residencia</span>
                                                                                 </div>        
                                                                 </div>
                                                                 <!-- Separador de campos -->
                                                                 <div class="row">    
                                                                                 <div class="input-field col s12">
-                                                                                        <select id="comunas">
-                                                                                                <option value="">Selecciona una Comuna</option>
+                                                                                        <select name="comunas" id="comunas">
+                                                                                                 <option value="0">Selecciona una Comuna</option>
+                                                                                                
                                                                                         </select>
                                                                                         <label for="comunas">Comuna</label>
                                                                                         <span class="abajito" data-error="wrong" data-success="right">Seleccione su comuna de residencia</span>
@@ -103,16 +104,40 @@ $resultado_listarreg = $sentencia_listarreg->fetchAll(); //Obtenemos los datos
    </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
-   
+  
     <script>
              $(document).ready(function(){
                 $('select').formSelect();
         });
     </script>
+
+    <script>
+            function cargarcomunas(){
+                
+                var region = document.getElementById('regiones').value;
+
+                $.ajax({
+                        type:'POST',
+                        url: 'procesa/consultaregion.php',
+                        data:(region),
+                        success:function(respuesta){
+
+                        //if (respuesta=1) {
+                                alert(region);
+                               
+                               
+                                
+                        }
+                })//ajax
+
+            }//funcion
+    </script>
+   
+    
     
 </body>
 </html>
