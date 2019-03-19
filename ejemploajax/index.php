@@ -48,7 +48,7 @@ $resultado_listarreg = $sentencia_listarreg->fetchAll(); //Obtenemos los datos
                 <!-- Separador de campos -->
                 <div class="row">    
                                 <div class="input-field col s12">
-                                        <select name="comunas" id="comunas" onclick="javascript:cargarcomunas();">
+                                        <select name="comunas" id="comunas" >
                                                  <option value="0">Selecciona una Comuna</option>
                                                 
                                         </select>
@@ -83,7 +83,7 @@ $resultado_listarreg = $sentencia_listarreg->fetchAll(); //Obtenemos los datos
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
-        function EnviarDatos(){
+        function cargarcomunas(){
             var region = document.getElementById('region').value;
 
             $.ajax({
@@ -91,27 +91,27 @@ $resultado_listarreg = $sentencia_listarreg->fetchAll(); //Obtenemos los datos
                 url: 'backend.php',
                 data:('region='+region),
                 success:function(respuesta){
-                    if (respuesta=1) {
+                    if (respuesta) {
+                        $('#mensaje').html('ha obetenido un id');
+                       
 
-                        $('#mensaje').html('Tu mensaje se ha enviado correctamente');
+                        $.each(respuesta.result, function(i, item) {
+                            
+                            console.log(respuesta);
 
-                        $('#comunas').append($('<option>', {
-                            value: region,
-                            text: 'My option'+region
+                            $('#comunas').append($('<option>', {
+                            value: respuesta.result[i],
+                            text: 'Comuna'+nombre_comuna
+                            
                         }));
-                        
-                    }else{
-                        if (respuesta=2) {
-                            $('#mensaje').html('Tu mensaje se ha enviado correctamente');
+                        })
 
-                                $('#comunas').append($('<option>', {
-                                    value: region,
-                                    text: 'My option'+(region+1)+''
-                                }));
-                                                            
-                        }else{
-                            $('#mensaje').html('Tu mensaje falló');
-                        }
+                        
+                       
+                       
+
+                        
+                        
                     }
 
 

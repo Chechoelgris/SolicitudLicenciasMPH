@@ -8,6 +8,17 @@ $sentencia_listarreg = $conn->prepare($listarregiones);// Preparamos la consulta
 $sentencia_listarreg->execute();            // Ejecutamos la consulta
 $resultado_listarreg = $sentencia_listarreg->fetchAll(); //Obtenemos los datos
 
+// Consulta de comunas
+
+$listarcomunas = "SELECT id_comuna, nombre_comuna FROM ta_comuna WHERE fk_id_region = ?";
+$rm=16;
+$sentencia_listacomunas = $conn->prepare($listarcomunas);// Preparamos la consulta a la base de datos
+$sentencia_listacomunas->execute(array($rm));            // Ejecutamos la consulta
+$resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los datos
+
+
+
+
 ?>
 <!doctype html>
 <html lang="es">
@@ -53,30 +64,70 @@ $resultado_listarreg = $sentencia_listarreg->fetchAll(); //Obtenemos los datos
                                                 <div class="form-group">
 
                                                 
-
+                                                                <!--
                                                                 <div class="row">    
                                                                                 <div class="input-field col s12">
                                                                                         <select name="regiones" id="regiones" onblur="javascript:cargarcomunas();">
                                                                                                   <option value="0">Selecciona una Región</option>
-                                                                                                  <?php foreach($resultado_listarreg as $nombreregion): ?>
-                                                                                                        <option value="<?php echo $nombreregion['id_region'];?>"><?php echo utf8_encode($nombreregion['nombre_region']);?></option>     
-                                                                                                  <?php endforeach?>
+                                                                                                  <?php //foreach($resultado_listarreg as $nombreregion): ?>
+                                                                                                        <option value="<?php //echo $nombreregion['id_region'];?>"><?php //echo utf8_encode($nombreregion['nombre_region']);?></option>     
+                                                                                                  <?php //endforeach?>
                                                                                         </select>
                                                                                         <label for="regiones">Region</label>
                                                                                         <span class="abajito" data-error="wrong" data-success="right">Seleccione su región de residencia</span>
                                                                                 </div>        
                                                                 </div>
+                                                                -->
                                                                 <!-- Separador de campos -->
                                                                 <div class="row">    
                                                                                 <div class="input-field col s12">
                                                                                         <select name="comunas" id="comunas">
                                                                                                  <option value="0">Selecciona una Comuna</option>
+                                                                                                 <?php foreach($resultado_listacomuna as $nombrecomuna): ?>
+                                                                                                        <option value="<?php echo $nombrecomuna['id_comuna'];?>"><?php echo utf8_encode($nombrecomuna['nombre_comuna']);?></option>     
+                                                                                                  <?php endforeach?>
                                                                                                 
                                                                                         </select>
                                                                                         <label for="comunas">Comuna</label>
                                                                                         <span class="abajito" data-error="wrong" data-success="right">Seleccione su comuna de residencia</span>
                                                                                 </div>        
                                                                 </div>
+
+                                                                 <!-- Separador de campos -->
+                                                                <div class="row">    
+                                                                        <div class="input-field col s12">
+                                                                        <input type="text" id="calle" name="calle" class="input-oscuro" required=""
+                                                                        value="<?php //if ($_SESSION['encontrado']) {
+                                                                                //echo utf8_encode($_SESSION['apellidom_obtenido']);
+                                                                                //}?>" >
+                                                                                <label for="calle">Calle o Pasaje</label>
+                                                                                <span class="abajito" data-error="wrong" data-success="right">Ingrese el nombre de la calle en donde vive</span>
+                                                                        </div>        
+                                                                </div> 
+
+                                                                <!-- Separador de campos -->
+
+                                                                <div class="row">    
+                                                                        <div class="input-field col s6">
+                                                                        <input type="text" id="calle" name="calle" class="input-oscuro" required=""
+                                                                        value="<?php //if ($_SESSION['encontrado']) {
+                                                                                //echo utf8_encode($_SESSION['apellidom_obtenido']);
+                                                                                //}?>" >
+                                                                                <label for="calle">Numero</label>
+                                                                                <span class="abajito" data-error="wrong" data-success="right">Numeracion</span>
+                                                                        </div>    
+                                                                        
+                                                                        <div class="input-field col s6">
+                                                                                <input type="text" id="calle" name="calle" class="input-oscuro" 
+                                                                                value="<?php //if ($_SESSION['encontrado']) {
+                                                                                        //echo utf8_encode($_SESSION['apellidom_obtenido']);
+                                                                                        //}?>" >
+                                                                                        <label for="calle">Otro</label>
+                                                                                        <span class="abajito" data-error="wrong" data-success="right">Casa /block / Dpto</span>
+                                                                                </div>  
+                                                                </div> 
+
+                                                                <!-- Separador de campos -->
 
                                                               
                                                 </div>
