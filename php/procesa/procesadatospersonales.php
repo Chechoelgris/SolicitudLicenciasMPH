@@ -40,8 +40,16 @@ $copiaencontrado = $_SESSION['encontrado'];
 
                                         if ($sentencia_update->execute(array(utf8_decode($nombre), utf8_decode($apellidop), utf8_decode($apellidom), $fechanac, $sexo, utf8_decode($email), $telefono, $rut))){
                                                  echo 'editado exitosamente  brotah<br>';
-                                                 $sentencia_update=null;
-                                                 $conn=null;
+                                                 
+
+                                                $select_validacion = 'SELECT * FROM TA_persona WHERE rut_persona = ?';
+                                                $sentencia_consultar = $conn->prepare($select_validacion);
+                                                $sentencia_consultar->execute(array($rut));
+                                                $resultado = $sentencia_consultar->fetch();
+                                                var_dump($resultado['id_persona']);
+                                                $_SESSION['id_persona'] = $resultado['id_persona'];
+                                                $sentencia_consultar=null;
+                                                $conn=null;
                                                  header('location:../datosdireccion.php');
                                         }else{
                                             $_SESSION['fallaupdate'] = true;

@@ -51,7 +51,7 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
 
                                 <br>
 
-                                <form name="form1" id="formu" class="mt-5" action="procesa/procesadatospersonales.php"  method="POST">
+                                <form name="form1" id="formu" class="mt-5" action="procesa/procesadatosdireccion.php"  method="POST">
 
                             
 
@@ -109,20 +109,20 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
 
                                                                 <div class="row">    
                                                                         <div class="input-field col s6">
-                                                                        <input type="text" id="calle" name="calle" class="input-oscuro" required=""
+                                                                        <input type="text" id="numero" name="numero" class="input-oscuro" required=""
                                                                         value="<?php //if ($_SESSION['encontrado']) {
                                                                                 //echo utf8_encode($_SESSION['apellidom_obtenido']);
                                                                                 //}?>" >
-                                                                                <label for="calle">Numero</label>
+                                                                                <label for="numero">Numero</label>
                                                                                 <span class="abajito" data-error="wrong" data-success="right">Numeracion</span>
                                                                         </div>    
                                                                         
                                                                         <div class="input-field col s6">
-                                                                                <input type="text" id="calle" name="calle" class="input-oscuro" 
+                                                                                <input type="text" id="otro" name="otro" class="input-oscuro" 
                                                                                 value="<?php //if ($_SESSION['encontrado']) {
                                                                                         //echo utf8_encode($_SESSION['apellidom_obtenido']);
                                                                                         //}?>" >
-                                                                                        <label for="calle">Otro</label>
+                                                                                        <label for="otro">Otro</label>
                                                                                         <span class="abajito" data-error="wrong" data-success="right">Casa /block / Dpto</span>
                                                                                 </div>  
                                                                 </div> 
