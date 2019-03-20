@@ -109,3 +109,23 @@ foreach ($resultado as $reg) {
   
  $cont++;
 }
+$rut_nuevo = '19.001.795-8';
+$nombre_nuevo = 'Sergio';
+$apellidop_nuevo = 'Sepúlveda';
+$apellidom_nuevo = 'Muñoz';
+$correo_nuevo = 'so.sepulveda.m@gmail.com';
+$pass_nuevo = 'checho1994';
+$tipo_nuevo = 'Funcionario';
+//HASH DE CONTRASEÑAS
+$pass_nuevo = password_hash($pass_nuevo, PASSWORD_DEFAULT);
+//SI LA CONTRASEÑA PASA LA VALIDACION, ENTONCES SE ALMACENA EN LA BD
+$sql_agregar= 'INSERT INTO TA_Usuario (rut_usuario, nombre_usuario, apellidop_usuario, apellidom_usuario, correo_usuario, pass_usuario, tipo_usuario) VALUES (?,?,?,?,?,?,?)';
+$sentencia_agregar = $conn->prepare($sql_agregar);
+    
+    if ($sentencia_agregar->execute(array($rut_nuevo, utf8_decode($nombre_nuevo), utf8_decode($apellidop_nuevo), utf8_decode($apellidom_nuevo), utf8_decode($correo_nuevo), $pass_nuevo, $tipo_nuevo ) )) {
+        echo 'Agregado exitosamente <br>';
+
+    }else{
+        echo 'No agregado <br>';
+    }
+    

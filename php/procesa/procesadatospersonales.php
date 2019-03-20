@@ -16,7 +16,10 @@ $copiaencontrado = $_SESSION['encontrado'];
                 if (!empty($_POST['ingresonombre']) 
                 && !empty($_POST['ingresapellidop']) 
                 && !empty($_POST['ingresapellidom']) 
-                && !empty($_POST['fechanacimiento']) && !empty($_POST['sexo']) && !empty($_POST['email']) && !empty($_POST['telefono']) ) {
+                && !empty($_POST['fechanacimiento']) 
+                && !empty($_POST['sexo']) 
+                && !empty($_POST['email']) 
+                && !empty($_POST['telefono']) ) {
 //Validacion en php de largo de variables                            
                             if(strlen($_POST['ingresonombre']) < 40 
                             && strlen($_POST['ingresapellidop']) < 50 
@@ -103,7 +106,7 @@ $copiaencontrado = $_SESSION['encontrado'];
 
                 }else {
                     
-                    $_SESSION['vacios'];
+                    $_SESSION['vacios']=true;
                     header('location:../datospersonales.php');
                 }
         

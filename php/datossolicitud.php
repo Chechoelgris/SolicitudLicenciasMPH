@@ -35,7 +35,7 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
     <link rel="stylesheet" href="../css/nivel1.css">
 
 
-    <title>Datos de Residencia!</title>
+    <title>Detalles de la Solicitud!</title>
   </head>
   <body>
    <header>
@@ -55,7 +55,7 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
 
                             
 
-                                                <h1 class="h2 mb-4 mt-1 font-weight-normal">Datos de Residencia</h1>
+                                                <h1 class="h2 mb-4 mt-1 font-weight-normal">Detalles de la Solicitud</h1>
 
                                                 <small>Hola <b class="abajito"><?php echo $_SESSION['nombre']; ?></b>, Recuerda que debes ser residente de la comuna de <b class="abajito">Padre Hurtado</b> para que tu solicitud sea aprobada.</small>
                                                 <br>
@@ -64,20 +64,7 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
                                                 <div class="form-group">
 
                                                 
-                                                                <!--
-                                                                <div class="row">    
-                                                                                <div class="input-field col s12">
-                                                                                        <select name="regiones" id="regiones" onblur="javascript:cargarcomunas();">
-                                                                                                  <option value="0">Selecciona una Región</option>
-                                                                                                  <?php //foreach($resultado_listarreg as $nombreregion): ?>
-                                                                                                        <option value="<?php //echo $nombreregion['id_region'];?>"><?php //echo utf8_encode($nombreregion['nombre_region']);?></option>     
-                                                                                                  <?php //endforeach?>
-                                                                                        </select>
-                                                                                        <label for="regiones">Region</label>
-                                                                                        <span class="abajito" data-error="wrong" data-success="right">Seleccione su región de residencia</span>
-                                                                                </div>        
-                                                                </div>
-                                                                -->
+                                                               
                                                                 <!-- Separador de campos -->
                                                                 <div class="row">    
                                                                                 <div class="input-field col s12">

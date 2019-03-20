@@ -4,13 +4,10 @@
 
 if (isset($_SESSION['fallaemail'])) {
     echo '<br>';
-    echo '<h5 class="text-danger">* Hay un probelma con el correo ingresado.</h5>';
+    echo '<h5 class="text-danger">* Hay un problema con el correo ingresado.</h5>';
     unset($_SESSION['fallaemail']);
 }else{
-    
-    
-    echo '<h5 class="text-danger">* correo oc.</h5>';
-    
+       
 }
 
 if (isset($_SESSION['fallaupdate'])) {
@@ -18,8 +15,16 @@ if (isset($_SESSION['fallaupdate'])) {
     echo '<h5 class="--red">* Hubo un problema al actualizar su informacion.</h5>';
     unset($_SESSION['fallaupdate']);
 }else{
+    
+    
+}
+
+if (isset($_SESSION['fallainsert'])) {
     echo '<br>';
-    echo '<h5 class="text-danger">* subida oc.</h5>';
+    echo '<h5 class="--red">* Hubo un problema al ingresar su informacion.</h5>';
+    unset($_SESSION['fallainsert']);
+}else{
+    
     
 }
 
@@ -28,18 +33,16 @@ if (isset($_SESSION['fallalongitud'])) {
     echo '<h5 class="--red">* Ha ingresado demasiados caracteres en uno o mas campos.</h5>';
     unset($_SESSION['fallalongitud']);
 }else{
-    echo '<br>';
-    echo '<h5 class="text-danger">* longitud oc.</h5>';
+   
     
 }
 
-if (isset($_SESSION['vacios'])) {
+if ($_SESSION['vacios']) {
     echo '<br>';
-    echo '<h5 class="--red">* Uno o mas campos estan vacíos.</h5>';
+    echo '<h5 class="--red">* Uno o mas campos se enviaron vacíos.</h5>';
     unset($_SESSION['vacios']);
 }else{
-    echo '<br>';
-    echo '<h5 class="text-danger">* vacios oc.</h5>';
+    
     
 }
 
