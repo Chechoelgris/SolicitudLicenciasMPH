@@ -5,7 +5,7 @@ include("listadecomunas.php");
 include("llenaregiones.php"); 
 
 function llenarcomuna($id,$comunas,$conn){
-$conta=1;
+    $conta=1;
 
     foreach ($comunas as $comu) {
 
@@ -18,6 +18,30 @@ $conta=1;
             $conta++;
     }           
 }
+
+$licencias = array(
+        
+  "A1","A2","A3","A4","A5","B","C","D","A1-A2 Ley 18.290"
+
+);
+
+echo '<br>';
+function licencia($licencias,$conn){
+      $contadore=1;
+
+      foreach ($licencias as $lic) {
+
+          echo '<br>For cont:'.''.$contadore.''.'<br>';
+              $insertlicencia = 'INSERT INTO ta_claselicencia(tipo_licencia) 
+                              VALUES (?)';
+              $sentencia_insertl = $conn->prepare($insertlicencia);
+              $sentencia_insertl->execute(array($lic)); 
+              
+              $contadore++;
+      }           
+}
+
+licencia($licencias,$conn);
 
 $sql = "SELECT * FROM ta_region";
 
@@ -118,14 +142,18 @@ $pass_nuevo = 'checho1994';
 $tipo_nuevo = 'Funcionario';
 //HASH DE CONTRASEÑAS
 $pass_nuevo = password_hash($pass_nuevo, PASSWORD_DEFAULT);
-//SI LA CONTRASEÑA PASA LA VALIDACION, ENTONCES SE ALMACENA EN LA BD
 $sql_agregar= 'INSERT INTO TA_Usuario (rut_usuario, nombre_usuario, apellidop_usuario, apellidom_usuario, correo_usuario, pass_usuario, tipo_usuario) VALUES (?,?,?,?,?,?,?)';
 $sentencia_agregar = $conn->prepare($sql_agregar);
     
     if ($sentencia_agregar->execute(array($rut_nuevo, utf8_decode($nombre_nuevo), utf8_decode($apellidop_nuevo), utf8_decode($apellidom_nuevo), utf8_decode($correo_nuevo), $pass_nuevo, $tipo_nuevo ) )) {
-        echo 'Agregado exitosamente <br>';
+        echo 'Usuario Agregado exitosamente <br>';
 
     }else{
         echo 'No agregado <br>';
-    }
-    
+      }
+
+      
+
+
+
+

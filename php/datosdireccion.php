@@ -17,7 +17,7 @@ $sentencia_listacomunas->execute(array($rm));            // Ejecutamos la consul
 $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los datos
 
 
-
+header('location:ingresorut.php');
 
 ?>
 <!doctype html>

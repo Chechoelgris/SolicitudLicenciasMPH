@@ -2,11 +2,11 @@
 include_once '../intranet/phpintra/conexion.php'; 
 session_start();
 
-$listarregiones = "SELECT id_region, nombre_region FROM ta_region ORDER BY nombre_region ASC";
+$listalicencias = "SELECT tipo_licencia FROM ta_claselicencia ORDER BY id_cls_licencia ASC";
 
-$sentencia_listarreg = $conn->prepare($listarregiones);// Preparamos la consulta a la base de datos
-$sentencia_listarreg->execute();            // Ejecutamos la consulta
-$resultado_listarreg = $sentencia_listarreg->fetchAll(); //Obtenemos los datos
+$sentencia_listalicencias = $conn->prepare($listalicencias);// Preparamos la consulta a la base de datos
+$sentencia_listalicencias->execute();            // Ejecutamos la consulta
+$resultado_listalicencias = $sentencia_listalicencias->fetchAll(); //Obtenemos los datos
 
 // Consulta de comunas
 
@@ -62,21 +62,36 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
                                                 <br>
 
                                                 <div class="form-group">
+                                                                <!-- Separador de campos -->
+                                                                <div class="row">    
+                                                                                <div class="input-field col s12">
+                                                                                        <select name="claselicencia" id="claselicencia" required="">
+                                                                                                 <option value="0">Seleccione una opción</option>
+                                                                                                 <?php foreach($resultado_listalicencias as $lic): ?>
+                                                                                                        <option value="<?php echo $lic['id_cls_licencia'];?>"><?php echo $lic['tipo_licencia'];?></option>     
+                                                                                                  <?php endforeach?>
+                                                                                                
+                                                                                        </select>
+                                                                                        <label for="claselicencia">Licencia</label>
+                                                                                        <span class="abajito" data-error="wrong" data-success="right">Seleccione la clase de la Licencia a Renovar</span>
+                                                                                </div>        
+                                                                </div>
 
+                                                                 <!-- Separador de campos -->
                                                 
                                                                
                                                                 <!-- Separador de campos -->
                                                                 <div class="row">    
                                                                                 <div class="input-field col s12">
-                                                                                        <select name="comunas" id="comunas" required="">
+                                                                                        <select name="comunalic" id="comunalic" required="">
                                                                                                  <option value="0">Selecciona una Comuna</option>
                                                                                                  <?php foreach($resultado_listacomuna as $nombrecomuna): ?>
                                                                                                         <option value="<?php echo $nombrecomuna['id_comuna'];?>"><?php echo utf8_encode($nombrecomuna['nombre_comuna']);?></option>     
                                                                                                   <?php endforeach?>
                                                                                                 
                                                                                         </select>
-                                                                                        <label for="comunas">Comuna</label>
-                                                                                        <span class="abajito" data-error="wrong" data-success="right">Seleccione su comuna de residencia</span>
+                                                                                        <label for="comunalic">Comuna de origen</label>
+                                                                                        <span class="abajito" data-error="wrong" data-success="right">Seleccione la comuna que le otorgó la licencia</span>
                                                                                 </div>        
                                                                 </div>
 
