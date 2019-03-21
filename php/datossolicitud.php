@@ -2,7 +2,7 @@
 include_once '../intranet/phpintra/conexion.php'; 
 session_start();
 
-$listalicencias = "SELECT tipo_licencia FROM ta_claselicencia ORDER BY id_cls_licencia ASC";
+$listalicencias = "SELECT id_cls_licencia, tipo_licencia FROM ta_claselicencia ORDER BY id_cls_licencia ASC";
 
 $sentencia_listalicencias = $conn->prepare($listalicencias);// Preparamos la consulta a la base de datos
 $sentencia_listalicencias->execute();            // Ejecutamos la consulta
@@ -17,7 +17,7 @@ $sentencia_listacomunas->execute(array($rm));            // Ejecutamos la consul
 $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los datos
 
 
-
+//si le quitas el id al formulario, se trasnforma completamente y esta weno, saludos
 
 ?>
 <!doctype html>
@@ -45,19 +45,19 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
         <div class="container">
                                 <div class="barra">
                                                     <div class="progress">
-                                                            <div class="determinate" style="width: 40%"></div>
+                                                            <div class="determinate" style="width: 60%"></div>
                                                     </div>
                                 </div>
 
                                 <br>
 
-                                <form name="form1" id="formu" class="mt-5" action="procesa/procesadatosdireccion.php"  method="POST">
+                                <form name="" id="formu" class="mt-5" enctype="multipart/form-data" action="procesa/procesadatossolicitud.php"  method="POST">
 
                             
 
-                                                <h1 class="h2 mb-4 mt-1 font-weight-normal">Detalles de la Solicitud</h1>
+                                                <h1 class="h2 mb-4 mt-1 font-weight-normal">Detalles del Tramite</h1>
 
-                                                <small>Hola <b class="abajito"><?php echo $_SESSION['nombre']; ?></b>, Recuerda que debes ser residente de la comuna de <b class="abajito">Padre Hurtado</b> para que tu solicitud sea aprobada.</small>
+                                                <small> Recuerda que tu licencia debe haber sido <b class="abajito">emitida</b> por la comuna de <b class="abajito">Padre Hurtado</b> para que tu solicitud sea aprobada.</small>
                                                 <br>
                                                 <br>
 
@@ -68,12 +68,12 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
                                                                                         <select name="claselicencia" id="claselicencia" required="">
                                                                                                  <option value="0">Seleccione una opción</option>
                                                                                                  <?php foreach($resultado_listalicencias as $lic): ?>
-                                                                                                        <option value="<?php echo $lic['id_cls_licencia'];?>"><?php echo $lic['tipo_licencia'];?></option>     
+                                                                                                        <option value="<?php echo $lic['id_cls_licencia'];?>" ><?php echo $lic['tipo_licencia'];?></option>     
                                                                                                   <?php endforeach?>
                                                                                                 
                                                                                         </select>
                                                                                         <label for="claselicencia">Licencia</label>
-                                                                                        <span class="abajito" data-error="wrong" data-success="right">Seleccione la clase de la Licencia a Renovar</span>
+                                                                                        <span class="abajito" data-error="wrong" data-success="right">Seleccione la clase de la Licencia a renovar</span>
                                                                                 </div>        
                                                                 </div>
 
@@ -83,10 +83,12 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
                                                                 <!-- Separador de campos -->
                                                                 <div class="row">    
                                                                                 <div class="input-field col s12">
-                                                                                        <select name="comunalic" id="comunalic" required="">
+                                                                                        <select class="" name="comunalic" id="comunalic" required="">
                                                                                                  <option value="0">Selecciona una Comuna</option>
                                                                                                  <?php foreach($resultado_listacomuna as $nombrecomuna): ?>
-                                                                                                        <option value="<?php echo $nombrecomuna['id_comuna'];?>"><?php echo utf8_encode($nombrecomuna['nombre_comuna']);?></option>     
+                                                                                                        <option value="<?php echo $nombrecomuna['id_comuna'];?>" <?php if ($nombrecomuna['nombre_comuna'] == 'Padre Hurtado') {
+                                                                                                                echo ' selected';
+                                                                                                        } ?> ><?php echo utf8_encode($nombrecomuna['nombre_comuna']);?></option>     
                                                                                                   <?php endforeach?>
                                                                                                 
                                                                                         </select>
@@ -94,40 +96,46 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
                                                                                         <span class="abajito" data-error="wrong" data-success="right">Seleccione la comuna que le otorgó la licencia</span>
                                                                                 </div>        
                                                                 </div>
+                                                                <!-- Separador de campos -->
 
-                                                                 <!-- Separador de campos -->
+                                                                <!-- Separador de campos -->
                                                                 <div class="row">    
                                                                         <div class="input-field col s12">
-                                                                        <input type="text" id="calle" name="calle" class="input-oscuro" required=""
-                                                                        value="<?php //if ($_SESSION['encontrado']) {
-                                                                                //echo utf8_encode($_SESSION['apellidom_obtenido']);
-                                                                                //}?>" >
-                                                                                <label for="calle">Calle o Pasaje</label>
-                                                                                <span class="abajito" data-error="wrong" data-success="right">Ingrese el nombre de la calle en donde vive</span>
+                                                                                <input type="date" class="input-oscuro" name="fechacontrol" placeholder="" min="2018-01-01" required
+                                                                                >
+                                                                                <label for="fechacontrol">Fecha de Control</label>
+                                                                                <span class="abajito" data-error="wrong" data-success="right">Se desplegará un menú cuando haga click</span>
+                                                                        </div>        
+                                                                </div> 
+                                                                 <!-- Separador de campos -->
+                                                                 <br>
+                                                                 <h1 class="h2 mb-4 mt-1 font-weight-normal">Confirmacion de Domicilio</h1>
+                                                                 <small>Necesitamos confirmar que seas residente de nuestra comuna, sube una foto o imagen de tu <b class="abajito">certificado de residencia</b>.</small>
+                                                                 
+                                                                 <br>
+                                                                 <!-- Separador de campos -->
+                                                                 
+                                                                <div class="form-group"> <br>
+                                                                        <div class="row"><label class="labelwacho text-light" for="calle">Certificado de Residencia</label>   <br></div>
+                                                                
+                                                                        <div class="input-field col s12">
+                                                                        <div class="file-field input-field">
+                                                                                        <div class="btn">
+                                                                                                <span>Certificado</span>
+                                                                                                <input type="file" name="archivo">
+                                                                                        </div>
+                                                                                        <div class="file-path-wrapper">
+                                                                                                <input  class="file-path validate" type="text">
+                                                                                        </div>
+                                                                                        </div>
+                                                                                
+                                                                                <span class="abajito" data-error="wrong" data-success="right">Podras conseguirlo en la junta de vecinos de tu villa o población.</span>
                                                                         </div>        
                                                                 </div> 
 
                                                                 <!-- Separador de campos -->
 
-                                                                <div class="row">    
-                                                                        <div class="input-field col s6">
-                                                                        <input type="text" id="numero" name="numero" class="input-oscuro" required=""
-                                                                        value="<?php //if ($_SESSION['encontrado']) {
-                                                                                //echo utf8_encode($_SESSION['apellidom_obtenido']);
-                                                                                //}?>" >
-                                                                                <label for="numero">Numero</label>
-                                                                                <span class="abajito" data-error="wrong" data-success="right">Numeracion</span>
-                                                                        </div>    
-                                                                        
-                                                                        <div class="input-field col s6">
-                                                                                <input type="text" id="otro" name="otro" class="input-oscuro" 
-                                                                                value="<?php //if ($_SESSION['encontrado']) {
-                                                                                        //echo utf8_encode($_SESSION['apellidom_obtenido']);
-                                                                                        //}?>" >
-                                                                                        <label for="otro">Otro</label>
-                                                                                        <span class="abajito" data-error="wrong" data-success="right">Casa /block / Dpto</span>
-                                                                                </div>  
-                                                                </div> 
+                                                               
 
                                                                 <!-- Separador de campos -->
 
@@ -141,7 +149,7 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
                                                             <div class="button__vertical"></div>
                                                 </button>
                                                 <br>
-                                                <small class="">Tranquilo, son solo unos pocos datos, y solo los pediremos <b>una vez</b>. Tu proxima visita cargará estos datos automaticamente.</small>
+                                                <small class="">Perfecto!, da click en <b>"Continuar"</b> para seleccionar el dia y confirmar la solicitud.</small>
 
                                                 <div class="row">
                                                             <div class="input-field col s12">

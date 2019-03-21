@@ -9,7 +9,7 @@ function llenarcomuna($id,$comunas,$conn){
 
     foreach ($comunas as $comu) {
 
-        echo '<br><br>For cont:'.''.$conta.''.'<br>';
+        //echo '<br>For cont:'.''.$conta.''.'<br>';
             $insertcomuna = 'INSERT INTO ta_comuna(nombre_comuna, fk_id_region) 
                             VALUES (?,?)';
             $sentencia_insert = $conn->prepare($insertcomuna);
@@ -25,13 +25,13 @@ $licencias = array(
 
 );
 
-echo '<br>';
+
 function licencia($licencias,$conn){
       $contadore=1;
 
       foreach ($licencias as $lic) {
 
-          echo '<br>For cont:'.''.$contadore.''.'<br>';
+          echo '<br>Cargando licencia: '.' '.$contadore.''.'<br>';
               $insertlicencia = 'INSERT INTO ta_claselicencia(tipo_licencia) 
                               VALUES (?)';
               $sentencia_insertl = $conn->prepare($insertlicencia);
@@ -40,7 +40,9 @@ function licencia($licencias,$conn){
               $contadore++;
       }           
 }
-
+echo '=====================================<br>';
+echo 'Cargando Licencias <br>';
+echo '=====================================<br>';
 licencia($licencias,$conn);
 
 $sql = "SELECT * FROM ta_region";
@@ -49,6 +51,9 @@ $sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
 $sentencia->execute();            // Ejecutamos la consulta
 $resultado = $sentencia->fetchAll(); //Obtenemos los datos
 $cont = 1;
+echo '=====================================<br>';
+echo 'Cargando modulos de division geografica<br>';
+echo '=====================================<br>';
 
 foreach ($resultado as $reg) {
     
@@ -133,6 +138,9 @@ foreach ($resultado as $reg) {
   
  $cont++;
 }
+echo '=====================================<br>';
+echo 'Agregando Credenciales<br>';
+echo '=====================================<br>';
 $rut_nuevo = '19.001.795-8';
 $nombre_nuevo = 'Sergio';
 $apellidop_nuevo = 'Sepúlveda';
@@ -146,10 +154,10 @@ $sql_agregar= 'INSERT INTO TA_Usuario (rut_usuario, nombre_usuario, apellidop_us
 $sentencia_agregar = $conn->prepare($sql_agregar);
     
     if ($sentencia_agregar->execute(array($rut_nuevo, utf8_decode($nombre_nuevo), utf8_decode($apellidop_nuevo), utf8_decode($apellidom_nuevo), utf8_decode($correo_nuevo), $pass_nuevo, $tipo_nuevo ) )) {
-        echo 'Usuario Agregado exitosamente <br>';
+        echo '<br>Usuario Agregado exitosamente <br>';
 
     }else{
-        echo 'No agregado <br>';
+        echo '<br>No agregado <br>';
       }
 
       

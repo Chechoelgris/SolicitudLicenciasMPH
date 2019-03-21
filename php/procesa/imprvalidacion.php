@@ -37,7 +37,7 @@ if (isset($_SESSION['fallalongitud'])) {
     
 }
 
-if ($_SESSION['vacios']) {
+if (isset($_SESSION['vacios'])) {
     echo '<br>';
     echo '<h5 class="--red">* Uno o mas campos se enviaron vacíos.</h5>';
     unset($_SESSION['vacios']);

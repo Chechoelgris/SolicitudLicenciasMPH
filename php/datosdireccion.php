@@ -16,8 +16,10 @@ $sentencia_listacomunas = $conn->prepare($listarcomunas);// Preparamos la consul
 $sentencia_listacomunas->execute(array($rm));            // Ejecutamos la consulta
 $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los datos
 
+if (!$_SESSION['id_persona']) {
+        header('location:ingresorut.php');
+}
 
-header('location:ingresorut.php');
 
 ?>
 <!doctype html>
@@ -84,7 +86,9 @@ header('location:ingresorut.php');
                                                                                         <select name="comunas" id="comunas" required="">
                                                                                                  <option value="0">Selecciona una Comuna</option>
                                                                                                  <?php foreach($resultado_listacomuna as $nombrecomuna): ?>
-                                                                                                        <option value="<?php echo $nombrecomuna['id_comuna'];?>"><?php echo utf8_encode($nombrecomuna['nombre_comuna']);?></option>     
+                                                                                                        <option class="text-light" value="<?php echo $nombrecomuna['id_comuna'];?>" <?php if ($nombrecomuna['nombre_comuna'] == 'Padre Hurtado') {
+                                                                                                                echo ' selected';
+                                                                                                        } ?> ><?php echo utf8_encode($nombrecomuna['nombre_comuna']);?></option>     
                                                                                                   <?php endforeach?>
                                                                                                 
                                                                                         </select>
