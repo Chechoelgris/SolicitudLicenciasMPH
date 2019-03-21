@@ -84,7 +84,7 @@ if (!empty($_POST['comunas']) && !empty($_POST['calle']) && !empty($_POST['numer
 
 
 
-                                            }else {
+                                            }else {                                                                             //otros vacio
                                                 echo ' No se lleno otros, procedemos <br>';
                                                             $consulta_update ='UPDATE TA_direccion 
                                                                                SET calle_dir=(?),
@@ -169,7 +169,7 @@ if (!empty($_POST['comunas']) && !empty($_POST['calle']) && !empty($_POST['numer
                                                                 header('location:../datosdireccion.php');
                                                             } 
 
-                                                 }else{
+                                                 }else{                                                         //sin otros
                                                     echo ' no hay otros ingresado, insert sin el<br>';
                                                             $consulta_insert ='INSERT INTO TA_direccion(
                                                                 calle_dir, 
@@ -177,7 +177,7 @@ if (!empty($_POST['comunas']) && !empty($_POST['calle']) && !empty($_POST['numer
                                                                 fk_id_persona,
                                                                 fk_id_comuna
                                                                 ) 
-                                                            VALUES (?,?,?,?,?)';
+                                                            VALUES (?,?,?,?)';
                                                             $sentencia_insert = $conn->prepare($consulta_insert);
 
                                                             if ($sentencia_insert->execute(array(utf8_decode($calle), $numero, $id_persona, $comuna))){
@@ -194,6 +194,7 @@ if (!empty($_POST['comunas']) && !empty($_POST['calle']) && !empty($_POST['numer
                                                                             if (!$_SESSION['id_direccion']) {
                                                                                 echo 'problemas para obtener el id direccion';
                                                                                 header('location:../datosdireccion.php');
+                                                                               echo"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
                                                                             }
                                                                             $sentencia_consultar=null;
                                                                             $conn=null;
@@ -205,7 +206,7 @@ if (!empty($_POST['comunas']) && !empty($_POST['calle']) && !empty($_POST['numer
                                                                 $_SESSION['fallainsert'] = true;
                                                                 $sentencia_consultar=null;
                                                                 $conn=null;
-                                                             header('location:../datosdireccion.php');
+                                                            header('location:../datosdireccion.php');
                                                             }
                                                  }
 
