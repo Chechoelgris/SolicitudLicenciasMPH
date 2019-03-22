@@ -1,28 +1,55 @@
 <?php
+//==========================================================================================|
+//-------------Consultas Iniciales y capturamos datos enviados por POST---------------------|
+//==========================================================================================|
 include_once '../../intranet/phpintra/conexion.php'; 
 session_start();
+//==========================================================================================|
 $claselicencia = $_POST['claselicencia'];
 $comunalic = $_POST['comunalic'];
 $fechacontrol = $_POST['fechacontrol'];
 $persona = $_SESSION['id_persona'];
+//==========================================================================================|
+//mini validacion 
 if ($_FILES['archivo']) {
     $archivo = $_FILES['archivo'];
 }else {
     echo 'no esta llegando el archivo, whaat';
 }
 
-//==========================================================================================
-//-------------------------------Insert a TA_licencia---------------------------------------
-//==========================================================================================
+//==========================================================================================|
+//-------------------Buscamos si existe solicitud asociada al RUT---------------------------|
+//==========================================================================================|
 
 // [A1=1][A2=2][A3=3][A4=4][A5=5][B=6][C=7][D=8][A1-A2 Ley 18.290=9]
 
+$consultaexiste = 'SELECT * FROM ta_licencia WHERE fk_id_persona = ?';
+$select_consultaexiste = $conn->prepare($consultaexiste);
+$select_consultaexiste->execute(array($persona));
+$resultadoconsultaexiste = $select_consultaexiste->fetch();
 
-$insert_licencia = 'INSERT INTO ta_licencia(fechacont_licencia, fk_id_cls_licencia, fk_id_comuna, fk_id_persona) VALUES (?,?,?,?)';
+print_r ($resultadoconsultaexiste);
+
+//==========================================================================================|
+//-------------------------------Insert a TA_licencia---------------------------------------|
+//==========================================================================================|
+
+// [A1=1][A2=2][A3=3][A4=4][A5=5][B=6][C=7][D=8][A1-A2 Ley 18.290=9]
+
+$insert_licencia = 'INSERT INTO ta_licencia(
+                    fechacont_licencia, 
+                    fk_id_cls_licencia, 
+                    fk_id_comuna, 
+                    fk_id_persona) 
+                    VALUES (?,?,?,?)';
+
 $sentencia_insertlicencia = $conn->prepare($insert_licencia);
 
 
-if ($sentencia_insertlicencia->execute(array($fechacontrol, $claselicencia,utf8_decode($comunalic), $persona))){
+if ($sentencia_insertlicencia->execute(array($fechacontrol, 
+                                             $claselicencia,
+                                             utf8_decode($comunalic), 
+                                             $persona))){
 
     echo '<br>Insert de Licencia realizado con exito';
 //                  Obtenemos el id para las relaciones
@@ -30,7 +57,10 @@ if ($sentencia_insertlicencia->execute(array($fechacontrol, $claselicencia,utf8_
 
 
 
-                $select_validalicencia = 'SELECT id_licencia FROM ta_licencia WHERE fk_id_persona = (?) AND fechacont_licencia = (?)';
+                $select_validalicencia = 'SELECT id_licencia 
+                                          FROM ta_licencia 
+                                          WHERE fk_id_persona = (?) 
+                                          AND fechacont_licencia = (?)';
                 $sentencia_consultarlic = $conn->prepare($select_validalicencia);
                 $sentencia_consultarlic->execute(array($persona, $fechacontrol));
 
@@ -38,12 +68,13 @@ if ($sentencia_insertlicencia->execute(array($fechacontrol, $claselicencia,utf8_
                
                 echo 'El id de su nuevo registro es: ';
                 print_r($resultadolic['id_licencia']);
+                $_SESSION['id_licencia'] = $resultadolic['id_licencia'];
                // header('location:../datosdireccion.php');
 }
 
-//==========================================================================================
-//------------------------Procesamiento y subida del archivo--------------------------------
-//==========================================================================================
+//==========================================================================================|
+//------------------------Procesamiento y subida del archivo--------------------------------|
+//==========================================================================================|
 
 $uploadedfileload="true"; //Esta variable será el indicador que nos permita avanzar en el script 
 $msg;
@@ -54,8 +85,8 @@ if ($_FILES['archivo']['size']>2000000){                                        
 }
 echo 'pasa validacion de tamaño';
 echo '<br>';
-if (!($_FILES['archivo']['type'] =="image/jpeg" OR $_FILES['archivo']['type'] =="image/gif")){// Validacion de formato
-    $msg="Tu archivo tiene que ser JPG o GIF. Otros archivos no son permitidos<BR>";
+if (!($_FILES['archivo']['type'] =="image/jpeg" OR $_FILES['archivo']['type'] =="image/png")){// Validacion de formato
+    $msg="Tu archivo tiene que ser JPG o png. Otros archivos no son permitidos<BR>";
     $uploadedfileload="false";
 }
 
@@ -119,7 +150,7 @@ if( file_exists($ruta) == true ){
                                    
                                   echo $resultado['id_archivo'];
                                   $_SESSION['id_archivo'] = $resultado['id_archivo'];
-                                //  header('location:../datosfecha.php');
+                                  header('location:../datosfecha.php');
 
                             }else {
                                 echo "<br><p>Hubo un problema con el insert, despaila</p>";
@@ -128,5 +159,6 @@ if( file_exists($ruta) == true ){
     echo "<br><p>El archivo no se ha encontrado</p>";
 
 }
+
 
 

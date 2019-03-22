@@ -163,9 +163,9 @@ if ($_SESSION['tipo']=='Funcionario') {
           
           
           <article class="margen container-fluid col-6  ">
-              <h1 class="titulo border text-light border-warning rounded-pill mb-4">Registro de Usuarios</h1>
+              <h1 class="titulo border bg-dark text-light border-warning rounded-pill mb-4">Registro de Usuarios</h1>
 
-            <section class="registro text-light row">
+            <section class="registro bg-dark text-light row">
 
                           
                <form action="procesaregistro.php" method="POST" class="form-signin" name="form1">

@@ -60,24 +60,28 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             
             $iniciar=($_GET['pagina']-1)*$artxpag;
             
-            $sql_pendientes = "SELECT id_solicitud , ta_persona.rut_persona , ta_persona.nombre_persona , ta_persona.apellidop_persona , ta_fecha.fecha_asignada , ta_hora.hora_asignada ,ta_direccion.comuna_dir , ta_direccion.calle_dir , ta_direccion.numero_dir , ta_acreditadomicilio.ruta_archivo , ta_solicitud.estado_solicitud   
-            from ta_solicitud 
-            
-            INNER JOIN ta_persona 
-            ON ta_solicitud.fk_id_persona = ta_persona.id_persona 
-            
-            INNER JOIN ta_direccion 
-            ON ta_solicitud.fk_id_persona = ta_direccion.fk_id_persona
-            
-            INNER JOIN ta_fecha
-            ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha
-            
-            INNER JOIN ta_hora
-            ON ta_solicitud.fk_id_hora = ta_hora.id_hora
-            
-            INNER JOIN ta_acreditadomicilio
-            ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo 
-            WHERE TA_solicitud.estado_solicitud = 'Pendiente'
+            $sql_pendientes = "SELECT id_solicitud , 
+                                        ta_persona.rut_persona , ta_persona.nombre_persona , ta_persona.apellidop_persona ,
+                                        ta_fecha.fecha_asignada ,
+                                        ta_direccion.calle_dir, ta_direccion.numero_dir, ta_direccion.dpto_dir,
+                                        ta_acreditadomicilio.ruta_archivo , 
+                                        ta_solicitud.estado_solicitud   
+                                
+                from ta_solicitud 
+                
+                INNER JOIN ta_persona 
+                ON ta_solicitud.fk_id_persona = ta_persona.id_persona 
+                
+                INNER JOIN ta_fecha
+                ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha
+
+                INNER JOIN ta_direccion
+                ON ta_solicitud.fk_id_direccion = ta_direccion.id_direccion
+                
+                INNER JOIN ta_acreditadomicilio
+                ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo
+                
+                WHERE TA_solicitud.estado_solicitud = 'Pendiente'
             
             LIMIT :iniciar, :nusuarios";  // limit, su primer parametro 
                                                                                     //indica desde que valor iniciaremos (valor del fetch), y el segundo indica
@@ -253,7 +257,6 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                               <th scope="col">RUT</th>
                                               <th scope="col">Nombre</th>
                                               <th scope="col">Fecha</th>
-                                              <th scope="col">Hora</th>
                                               <th scope="col">Dirección</th>
                                               <th scope="col">Archivo</th>
                                               <th scope="col">Estado</th>
@@ -281,12 +284,10 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                                             <th>
                                                                     <?php echo $pend['fecha_asignada'] ?>
                                                             </th>
-                                                            <th>
-                                                                    <?php echo $pend['hora_asignada']; ?>
-                                                            </th>
+                                                            
                                                             <td>
-                                                                    <?php echo utf8_encode($pend['comuna_dir']).' '. utf8_encode($pend['calle_dir']).' '. $pend['numero_dir'] ?>
-                                                                      </td>
+                                                                    <?php echo 'Padre Hurtado, '. utf8_encode($pend['calle_dir']).', # '. utf8_encode($pend['numero_dir']).' '. $pend['dpto_dir'] ?>
+                                                           </td>
                                                             
                                                             <td class="">
                                                                     <a class="btn btn-outline-warning " id="verimg" name ="imagen" data-fancybox="gallery" href="<?php echo $pend['ruta_archivo']?>">

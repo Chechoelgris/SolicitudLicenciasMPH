@@ -191,10 +191,10 @@
                   </div>     <!-- /Sidebar --> 
           </article>
 
-          <article class="margen container-fluid col-6  ">
-              <h1 class="titulo border text-light border-warning rounded-pill mb-4">Edicion de Usuarios</h1>
+          <article class="margen  container-fluid col-6  ">
+              <h1 class="titulo border bg-dark text-light border-warning rounded-pill mb-4">Edicion de Usuarios</h1>
 
-              <section class="registro text-light row ">
+              <section class="registro bg-dark text-light row ">
                           
              
                             

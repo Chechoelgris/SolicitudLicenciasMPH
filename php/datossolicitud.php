@@ -176,27 +176,6 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
         });
     </script>
 
-    <script>
-            function cargarcomunas(){
-                
-                var region = document.getElementById('regiones').value;
-
-                $.ajax({
-                        type:'POST',
-                        url: 'procesa/consultaregion.php',
-                        data:(region),
-                        success:function(respuesta){
-
-                        //if (respuesta=1) {
-                                alert(region);
-                               
-                               
-                                
-                        }
-                })//ajax
-
-            }//funcion
-    </script>
    
     
     

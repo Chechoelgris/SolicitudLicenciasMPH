@@ -35,7 +35,7 @@ session_start();
 
                                 <br>
 
-                                <form name="" id="formu" class="mt-5" action="procesa/procesadatossolicitud.php"  method="POST">
+                                <form name="" id="formu" class="mt-5" action="procesa/procesafecha.php"  method="POST">
 
                             
 
@@ -51,7 +51,7 @@ session_start();
                                                                 <!-- Separador de campos -->
                                                                 <div class="row">    
                                                                         <div class="input-field col s12">
-                                                                                <input type="date" class="input-oscuro" name="fechasolicitada" placeholder="" min="2018-01-01" required
+                                                                                <input type="date" class="input-oscuro" name="fechasolicitada" id="fechasolicitada" placeholder="" min="2018-01-01" required
                                                                                 >
                                                                                 <label for="fechasolicitada">Fecha Solicitada </label>
                                                                                 <span class="abajito" data-error="wrong" data-success="right">Se desplegará un menú cuando haga click</span>
@@ -60,18 +60,25 @@ session_start();
                                                                  <!-- Separador de campos -->
                                                                  
                                                               
-
+                                                                 <div class="row">    
+                                                                        <div class="input-field col s12">
+                                                                                <input type="text" name="cuposdisponibles" id="cuposdisponibles" class="input-oscuro"  required="" autofocus
+                                                                                placeholder="1" readonly>
+                                                                                <label for="cuposdisponibles">Cupos Disponibles</label>
+                                                                                <span class="abajito" data-error="wrong" data-success="right">Un nombre es suficiente</span>
+                                                                        </div>        
+                                                                </div>
                                                               
                                                 </div>
                                                                
                                                 <br>
                                                 <button class="button mt-3 mb-4" id=""  type="submit" >
-                                                            Continuar
+                                                            Enviar Solicitud
                                                             <div class="button__horizontal"></div>
                                                             <div class="button__vertical"></div>
                                                 </button>
                                                 <br>
-                                                <small class="">Perfecto!, da click en <b>"Continuar"</b> para seleccionar el dia y confirmar la solicitud.</small>
+                                                <small class="">Perfecto!, da click en <b>"Enviar Solicitud"</b> para confirmar.</small>
 
                                                 <div class="row">
                                                             <div class="input-field col s12">
@@ -95,6 +102,19 @@ session_start();
     <script>
              $(document).ready(function(){
                 $('select').formSelect();
+                var cuposd=1;
+
+                $('#fechasolicitada').click(function(e){
+                        
+                        cuposd++;
+
+                        $("#cuposdisponibles").attr("placeholder", cuposd);
+
+                       
+
+                        
+                        
+                });
         });
     </script>
 

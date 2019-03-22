@@ -64,7 +64,7 @@ if ($_SESSION['tipo']=='Funcionario') {
         $sentencia_agregar=null;
         $conn=null;
 
-       // header('location:prueba.php');
+        header('location:listarusuarios.php');
     } else {
         echo 'La contraseña no es válida.';
     }

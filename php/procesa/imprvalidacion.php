@@ -47,4 +47,13 @@ if (isset($_SESSION['vacios'])) {
 }
 
 
+if (isset($_SESSION['existe'])) {
+    echo '<br>';
+    echo '<h5 class="--red">* Ya hay una solicitud pendiente asociada a su rut.</h5>';
+    unset($_SESSION['existe']);
+}else{
+    
+    
+}
+
 

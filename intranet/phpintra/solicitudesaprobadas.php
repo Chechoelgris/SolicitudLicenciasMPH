@@ -61,23 +61,23 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             
             $iniciar=($_GET['pagina']-1)*$artxpag;
             
-            $sql_aprobadas = "SELECT id_solicitud , ta_persona.rut_persona , ta_persona.nombre_persona , ta_persona.apellidop_persona , ta_fecha.fecha_asignada , ta_hora.hora_asignada ,ta_direccion.comuna_dir , ta_direccion.calle_dir , ta_direccion.numero_dir , ta_acreditadomicilio.ruta_archivo , ta_solicitud.estado_solicitud   
+            $sql_aprobadas = "SELECT id_solicitud , 
+                             ta_persona.rut_persona , ta_persona.nombre_persona , ta_persona.apellidop_persona , 
+                             ta_fecha.fecha_asignada , 
+                             ta_direccion.calle_dir , ta_direccion.numero_dir ,  ta_direccion.dpto_dir,
+                             ta_solicitud.estado_solicitud   
             from ta_solicitud 
             
             INNER JOIN ta_persona 
             ON ta_solicitud.fk_id_persona = ta_persona.id_persona 
             
-            INNER JOIN ta_direccion 
-            ON ta_solicitud.fk_id_persona = ta_direccion.fk_id_persona
+            INNER JOIN ta_direccion
+                ON ta_solicitud.fk_id_direccion = ta_direccion.id_direccion
             
-            INNER JOIN ta_fecha
-            ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha
+                INNER JOIN ta_fecha
+                ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha
             
-            INNER JOIN ta_hora
-            ON ta_solicitud.fk_id_hora = ta_hora.id_hora
-            
-            INNER JOIN ta_acreditadomicilio
-            ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo 
+           
             WHERE TA_solicitud.estado_solicitud = 'Aceptada'
             
             LIMIT :iniciar, :nusuarios";  // limit, su primer parametro 
@@ -242,7 +242,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
           <article class="margen  container-fluid col-10">
                     <section class=" ">
                       
-                            <h1 class="titulo border text-white border-warning rounded-pill mb-4">Solicitudes Pendientes</h1>
+                            <h1 class="titulo border text-white border-warning rounded-pill mb-4">Solicitudes Aprobadas</h1>
                             <div class="table-responsive-xl" name="tabla">
                                   <table class="table table-dark table-bordered table-hover ">                                       <!-- Tabla con la informacion-->
                                           <caption> <span class="text-light table-bordered rounded bg-dark  p-1 text-center" >
@@ -255,7 +255,6 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                               <th scope="col">RUT</th>
                                               <th scope="col">Nombre</th>
                                               <th scope="col">Fecha</th>
-                                              <th scope="col">Hora</th>
                                               <th scope="col">Dirección</th>
                                               
 
@@ -281,12 +280,10 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                                             <th>
                                                                     <?php echo $apro['fecha_asignada'] ?>
                                                             </th>
-                                                            <th>
-                                                                    <?php echo $apro['hora_asignada']; ?>
-                                                            </th>
+                                                           
                                                             <td>
-                                                                    <?php echo utf8_encode($apro['comuna_dir']).' '. utf8_encode($apro['calle_dir']).' '. $apro['numero_dir'] ?>
-                                                            </td>
+                                                                    <?php echo 'Padre Hurtado, '. utf8_encode($apro['calle_dir']).', # '. utf8_encode($apro['numero_dir']).' '. $apro['dpto_dir'] ?>
+                                                           </td>
                                                             
                                                           
                                                       </tr>

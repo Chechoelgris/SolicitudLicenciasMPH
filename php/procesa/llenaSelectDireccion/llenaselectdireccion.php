@@ -147,7 +147,7 @@ $apellidop_nuevo = 'Sepúlveda';
 $apellidom_nuevo = 'Muñoz';
 $correo_nuevo = 'so.sepulveda.m@gmail.com';
 $pass_nuevo = 'checho1994';
-$tipo_nuevo = 'Funcionario';
+$tipo_nuevo = 'Administrador';
 //HASH DE CONTRASEÑAS
 $pass_nuevo = password_hash($pass_nuevo, PASSWORD_DEFAULT);
 $sql_agregar= 'INSERT INTO TA_Usuario (rut_usuario, nombre_usuario, apellidop_usuario, apellidom_usuario, correo_usuario, pass_usuario, tipo_usuario) VALUES (?,?,?,?,?,?,?)';
