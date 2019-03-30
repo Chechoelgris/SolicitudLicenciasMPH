@@ -169,13 +169,13 @@
               <section class=" ">
                           <br>
                           <br>
-              <div class="card text-center alert-success" >
+              <div class="card text-center bg-dark text-info border rounded " >
                     <div class="card-body">
-                        <h5 class="card-title">Operacion finalizada</h5>
+                        <h4 class="card-title">Operacion finalizada</h4>
                         <p class="card-text">La operacion solicitada ha sido realizada exitosamente.</p>
                         <p class="card-text">Para seguir trabajando, haga click en el boton de abajo para volver al menu principal.</p>
                         
-                        <a href="../index.php" class="btn btn-dark">Volver al Inicio</a>
+                        <a href="../index.php" class="btn btn-outline-success">Volver al Inicio</a>
                     </div>
                     </div>
                         

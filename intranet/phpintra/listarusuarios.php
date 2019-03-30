@@ -165,7 +165,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown2">
                                 <a class="dropdown-item " href="solicitudespendientes.php"><i class="far fa-calendar"></i> Pendientes</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="#"><i class="fas fa-calendar-check"></i> Aprobadas</a>
+                                <a class="dropdown-item " href="solicitudesaprobadas.php"><i class="fas fa-calendar-check"></i> Aprobadas</a>
                                
                             </div>
                             <div class="linea"></div>

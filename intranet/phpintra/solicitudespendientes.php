@@ -298,11 +298,11 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                                                     <?php echo $pend['estado_solicitud']?>
                                                             </td>
                                                             <td class="">
-                                                                    <a class="btn btn-outline-success "  href="procesaaprobacionsolicitud.php?id=<?php echo $pend['id_solicitud']; ?>" id="aceptar">
+                                                                    <a class="btn btn-outline-success "  href="nivel1/procesaaprobacionsolicitud.php?id=<?php echo $pend['id_solicitud']; ?>" id="aceptar">
                                                                         <i class="far fa-calendar-check"></i>
                                                                     </a>
 
-                                                                    <a class="btn btn-outline-danger " href="procesarechazosolicitud.php?id=<?php echo $pend['id_solicitud']; ?>" id="rechazar">
+                                                                    <a class="btn btn-outline-danger " href="nivel1/procesarechazosolicitud.php?id=<?php echo $pend['id_solicitud']; ?>" id="rechazar">
                                                                           <i class="far fa-calendar-times"></i>
                                                                     </a>
                                                             </td>

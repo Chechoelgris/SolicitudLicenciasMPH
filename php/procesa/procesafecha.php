@@ -2,12 +2,63 @@
 include_once '../../intranet/phpintra/conexion.php'; 
 session_start();
 
+//==========================================================================================|
+//----------------------------Preparacion de validacion-------------------------------------|
+//==========================================================================================|
+$fecha_actual = date("Y-m-d"); //obtenemos fecha actual y la forma teamos 
+if (!empty($_POST['fechasolicitada'])) {  // validacion de campos vacios
+        echo '<br>pasa vacio';
+        if(strlen($_POST['fechasolicitada']) == 10){//validacion de cantidad de caracteres
+            echo '<br>pasa largo';
+            $fechasolicitada = $_POST['fechasolicitada'];
+//=======================================================================================================|
+//---------Buscamos el id_fecha de los campos que tengan como fecha_asignada el valor solicitado---------|
+//=======================================================================================================|
 
-$idpersona = $_SESSION['id_persona'];
-$idarchivo = $_SESSION['id_archivo'];
-$idlicencia = $_SESSION['id_licencia'];
-$iddireccion = $_SESSION['id_direccion'];
-$fechasolicitud = $_POST['fechasolicitada'];
+
+$sql_buscarporfecha='SELECT id_fecha FROM TA_fecha WHERE fecha_asignada = ?';
+$sentencia_buscarfecha=$conn->prepare($sql_buscarporfecha);
+$sentencia_buscarfecha->execute(array($fechasolicitada));
+$resultadobuscarfecha = $sentencia_buscarfecha->fetchAll();
+
+$contcupos = 0;
+            foreach ($resultadobuscarfecha as $fenc) {
+                $contcupos++;
+                echo '<br>';
+                echo 'Contador: '.$contcupos;
+            }
+
+            $_SESSION['cuposdisponibles'] = 25 - $contcupos;
+            echo '<br>Cupos Disponibles: ';
+            echo $_SESSION['cuposdisponibles'];
+
+            //$_SESSION['cuposdisponibles'] = 0;                    Aqui podemos hacer una consulta a la BD, buscando el cupo por dia 
+            if ($_SESSION['cuposdisponibles']<=0) {                 //le restamos los cupos disponibles y si sobran 0 = no haay cupos. sies mas de 0, hay cupos y todo eos.
+               echo '<br>No hay cupos disponibles';
+            }else {
+                echo '<br>Hay cupos disponibles, reservando';
+
+
+
+//=================================================================================================================================|
+//---------Almacenamos los datos para llenar la TA_persona para posteriormente, llenar la TA_fecha que pide  el id persona---------|
+//=================================================================================================================================|
+
+
+
+
+
+            }
+        }else {//validacion de cantidad de caracteres else
+            echo 'FALLO caracteres';
+             // $_SESSION['vacios']=true;
+            //header('location:../datosfecha.php');
+        }//validacion de cantidad de caracteres
+} else {// validacion de campos vacio elses
+        echo 'FALLO esta vacio';
+  //  $_SESSION['vacios']=true;
+   // header('location:../datosfecha.php');
+}// validacion de campos vacios
 
 
 
@@ -17,8 +68,8 @@ $fechasolicitud = $_POST['fechasolicitada'];
 
 //$_SESSION['id_archivo']
 
-$cuposdisponibles=5;
 
+/*
 if ($cuposdisponibles>0) {
 echo '<br> Pasa cupos disponibles';
     
@@ -99,3 +150,4 @@ echo '<br> Pasa cupos disponibles';
 
 
 
+*/

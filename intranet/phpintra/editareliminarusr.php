@@ -201,7 +201,7 @@
                         <?php  if(isset($_GET['usuario'])): //Si se recibieron datos por GET haremos lo de abajo?> 
                         
                           
-                        <form action="procesaedicion.php" method="POST" class="" name="form1">
+                        <form action="nivel3/procesaedicion.php" method="POST" class="" name="form1">
                             <?php foreach($resultado as $usr):?>
                             
 

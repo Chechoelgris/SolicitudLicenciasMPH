@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+
 utf8_encode($_SESSION['tipo']);
 if  (!isset($_SESSION['tipo'])) {
 
@@ -10,10 +12,24 @@ if ($_SESSION['tipo']!='Funcionario' && $_SESSION['tipo']!='Administrador') {
   header('Location:../../login.php');
 }//validacion de perfil de sesion
 
-include_once 'conexion.php';//Conexion a la Base de datos
+//Conexion a la Base de datos
+include_once 'conexion.php';
 
-include_once 'contaraprobado.php';//Contar Aprobadas
 
+
+
+
+   $sql = "SELECT id_solicitud FROM TA_solicitud WHERE estado_solicitud = ?";
+            $acep = 'Aceptada';
+            $sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
+            $sentencia->execute(array($acep)); // Ejecutamos la consulta
+            $resultado = $sentencia->fetchAll(); //Obtenemos los datos
+            $cont = 0;
+            foreach ($resultado as $apro) {
+                $cont++;
+            }
+            $aceptadas = $cont;
+  
 
 $artxpag = 7; //Se definen la cantidad de usuarios a mostrar por paginacion
 $totalobtenido = $sentencia->rowCount();//Contamos la cantidad de elementos obtenidos
@@ -246,7 +262,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                             <div class="table-responsive-xl" name="tabla">
                                   <table class="table table-dark table-bordered table-hover ">                                       <!-- Tabla con la informacion-->
                                           <caption> <span class="text-light table-bordered rounded bg-dark  p-1 text-center" >
-                                                  Solicitudes Aprobadas: <?php echo $_SESSION['aprobadas'];?>
+                                                  Solicitudes Aprobadas: <?php echo $aceptadas;?>
                                           </span></caption>
                                           <thead>
                                             <tr>
@@ -282,7 +298,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                                             </th>
                                                            
                                                             <td>
-                                                                    <?php echo 'Padre Hurtado, '. utf8_encode($apro['calle_dir']).', # '. utf8_encode($apro['numero_dir']).' '. $apro['dpto_dir'] ?>
+                                                                    <?php echo 'Padre Hurtado, '. utf8_encode($apro['calle_dir']).', #'. utf8_encode($apro['numero_dir']).' /'. $apro['dpto_dir'] ?>
                                                            </td>
                                                             
                                                           
@@ -340,88 +356,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
     <script src="../jsintra/jquery.fancybox.js" charset="utf-8"></script>    
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script><!--   Alertas   -->
    
-    <script type="Text/javascript">
-                   
-                        $("#rechazar").click(function(e) {
-                                e.preventDefault(); // Prevent the href from redirecting directly
-                                var linkURL = $(this).attr("href");
-                                warnBeforeRedirect(linkURL);
-                                });
 
-                                function warnBeforeRedirect(linkURL) {
-                                swal({
-                                        title: "¿Desea Rechazar esta Solicitud?",
-                                        text: "Si acepta, esta solicitud sera eliminada del sistema  y el usuario recibira la informacion por correo electronico.",
-                                        icon: "warning",
-                                        buttons: ["Volver", "Rechazar"],
-                                        
-                                        dangerMode: true,
-                                                                                
-                                }).then(function(result) {
-                                        console.log(linkURL);
-                                console.log(result);
-                                
-                                if (result != null) {
-                                        window.location.href = linkURL;
-                                        console.log('aceptado');
-                              
-                                }else{
-                                        swal({
-                                               
-                                         title: "Gestion Cancelada!",
-                                         icon: "warning",
-                                        });
-                                       
-                                        console.log('cancelado');
-
-                                }
-                                });
-                                }
-
-                               
-                     
-                        
-    </script>
-    <script>
-     $("#aceptar").click(function(e) {
-                                e.preventDefault(); // Prevent the href from redirecting directly
-                                var linkURL = $(this).attr("href");
-                                warnBeforeRedirect1(linkURL);
-                                });
-
-                                function warnBeforeRedirect1(linkURL) {
-                                swal({
-                                        title: "¿Desea Aceptar esta Solicitud?",
-                                        text: "Si acepta, esta solicitud sera confirmada y el usuario recibira la confirmacion por correo electronico.",
-                                        icon: "info",
-
-                                        buttons: ["Volver", "Aceptar"],
-                                        
-                                       
-                                                                                
-                                }).then(function(result) {
-                                        console.log(linkURL);
-                                console.log(result);
-                                
-                                if (result != null) {
-                                        window.location.href = linkURL;
-                                        console.log('aceptado');
-                                        
-                                }else{
-                                        swal({
-                                                icon: "warning",
-                                         title: "Gestion Cancelada!",
-                                        });
-                                       
-                                        console.log('cancelado');
-
-                                }
-                                });
-                                }</script>
-
-   
-   
-   
     <script>
       $("#menu-toggle").click(function(e){
         e.preventDefault();

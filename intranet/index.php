@@ -11,6 +11,7 @@ include_once 'phpintra/conexion.php';//Conexion a la Base de datos
       header('Location:../../login.php');
     }//validacion de perfil de sesion
     include_once 'phpintra/contarpendientes.php';//Contar pendientes
+    
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -165,15 +166,19 @@ include_once 'phpintra/conexion.php';//Conexion a la Base de datos
             <div class="row">
             
               <div class="col-sm-6">
-              <div class="card alert-info border-dark">
+              <div class="card bg-dark border-info text-light">
                   <div class="card-body">
-                    <h5 class="card-title "><b>Gestion de Solicitudes</b></h5>
+                    <h5 class="card-title"><b>Gestion de Solicitudes</b></h5>
+                    <div class="linea"></div>
                     <br>
                     <p class="card-text">En este apartado te informaremos sobre las nuevas solicitudes que requieran aprobacion.</p>
-                    <p class="text">Existen <b><?php echo $_SESSION['pendientes']; ?></b> solicitudes que requieren confirmacion</p>
                     <br>
+                    <p class="text">Existen <b class="text-warning"><?php echo $_SESSION['pendientes']; ?></b> solicitudes que requieren confirmacion</p>
                     
-                    <a href="phpintra/solicitudespendientes.php" class="btn btn-dark">Solicitudes Pendientes</a>
+                    
+                    
+                    <br>
+                    <a href="phpintra/solicitudespendientes.php" class="btn btn-outline-info">Solicitudes Pendientes</a>
                     
                   </div>
                 </div>
@@ -181,15 +186,17 @@ include_once 'phpintra/conexion.php';//Conexion a la Base de datos
 <br>            
 <?php if ($_SESSION['tipo']=='Administrador'):?>
               <div class="col-sm-6">
-                <div class="card alert-info border-dark" >
+                <div class="card bg-dark border-info text-light" >
                   <div class="card-body">
                     <h5 class="card-title mb-1"><b>Gestion de Usuarios</b></h5>
+                    <div class="linea"></div>
+                    <br>
                     <p class="card-text">Te mantendremos al tanto del estado de tu mantenedor de usuarios.</p>
-                    <p class="text">En tu base hay <b>2</b> usuarios con el perfil de: <i>Administrador</i></p>
-                    <p class="text">En tu base hay <b>15</b> usuarios con el perfil de: <i>Funcionario</i></p>
-                    <p class="text">En tu base hay <b>3</b> usuarios con el perfil de: <i>Inactivo</i></p>
+                    <p class="text">En tu base hay <b class="text-warning">2</b> usuarios con el perfil de: <i>Administrador</i></p>
+                    <p class="text">En tu base hay <b class="text-warning">15</b> usuarios con el perfil de: <i>Funcionario</i></p>
+                    <p class="text">En tu base hay <b class="text-warning">3</b> usuarios con el perfil de: <i>Inactivo</i></p>
                     
-                    <a href="phpintra/listarusuarios.php" class="btn btn-dark">Listar usuarios</a>
+                    <a href="phpintra/listarusuarios.php" class="btn btn-outline-info">Listar usuarios</a>
                   </div>
                 </div>
               </div>

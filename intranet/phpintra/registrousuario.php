@@ -16,7 +16,7 @@ if ($_SESSION['tipo']=='Funcionario') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registrar Usuarios - Administracion SSH</title>
+    <title>Listar usuarios - Administracion SSH</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <!--   Estilos personalizados -->
@@ -35,7 +35,7 @@ if ($_SESSION['tipo']=='Funcionario') {
             
                 <a class="btn btn-outline-info mt-1 mr-4 mb-1 text-light" href="../index.php"><i class="fas fa-home"></i> Home</a>
                 
-           
+            
     
             <button class="navbar-toggler btn-outline-info" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon   "></span>
@@ -119,7 +119,7 @@ if ($_SESSION['tipo']=='Funcionario') {
                             <div class=" dropdown-menu alert-dark " aria-labelledby="navbarDropdown2">
                                 <a class="dropdown-item " href="solicitudespendientes.php"><i class="far fa-calendar"></i> Pendientes</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item " href="solicitudesaprobadas.php"><i class="fas fa-calendar-check"></i> Aprobadas</a>
+                                <a class="dropdown-item " href="#"><i class="fas fa-calendar-check"></i> Aprobadas</a>
                                
                             </div>
                             <div class="linea"></div>
@@ -159,102 +159,100 @@ if ($_SESSION['tipo']=='Funcionario') {
                       
                   </div>     <!-- /Sidebar --> 
           </article>
-          
-          
-          
-          <article class="margen container-fluid col-6  ">
-              <h1 class="titulo border bg-dark text-light border-warning rounded-pill mb-4">Registro de Usuarios</h1>
 
-            <section class="registro bg-dark text-light row">
+          <article class="margen container col-10">
+                     <h1 class="titulo border  text-light border-warning rounded-pill mb-4">Registro de Usuarios</h1>
 
-                          
-               <form action="procesaregistro.php" method="POST" class="form-signin" name="form1">
-                    
-                    <div class="form-group row ">
-                        <label for="" class="col-sm-12 col-form-label"><h4><b>Informacion Personal</b></h4></label>
-                    </div>
-                    <!-- Separador de campos -->
-                    <div class="form-group row">
-                        <label for="inputRut" class="col-sm-12 col-form-label"><b>RUT</b></label>
+                    <section class="registro container bg-dark text-light col-6 ">
+
+                                
+                                    <form action="nivel3/procesaregistro.php" method="POST" class="form-signin" name="form1">
+                                            
+                                            <div class="form-group row ">
+                                                <label for="" class="col-sm-12 col-form-label"><h4><b>Informacion Personal</b></h4></label>
+                                            </div>
+                                            <!-- Separador de campos -->
+                                            <div class="form-group row">
+                                                <label for="inputRut" class="col-sm-12 col-form-label"><b>RUT</b></label>
+                                                
+                                                <div class="col-sm-5">
+                                                    <input type="text" class="form-control" name="rut" id="inputRut" required placeholder="11222333-4" onblur="javascript:Rut(document.form1.rut.value)">
+                                                </div>
+                                            </div>
+                                            <!-- Separador de campos -->
+                                            
+                                            
+                                            <div class="form-group row">
+                                            <label for="inputRut" class="col-sm-12 col-form-label"><b>Nombre</b></label>
+
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control" id="inputNombre" required name="nombrenuevo" placeholder="Nombre/s">
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="inputApellidoP" required name="apellidopnuevo" placeholder="Apellido Paterno">
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="inputApellidoM" required name="apellidomnuevo" placeholder="Apellido Materno">
+                                                </div>
+
+                                            </div>
+                                        
+                                            <!-- Separador de campos -->
+                                            
+                                            <div class="form-group row">
+                                            <label for="inputRut" class="col-sm-12 col-form-label"><b>Correo Electronico</b></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="email" name="correonuevo" class="form-control" id="inputCorreo" required placeholder="Correo">
+                                                    </div>
+                                            </div>
+                                            <br>
+                                            <!-- Separador de campos -->
+                                            <div class="form-group row">
+                                                    <label for="" class="col-sm-12 col-form-label"><h4><b>Informacion de la Cuenta</b></h4></label>
+                                                    
+                                            </div>
+                                            
+                                            <div class="form-group row">
+                                            <label for="inputRut" class="col-sm-12 col-form-label"><b>Contraseña</b></label>
+
+                                                    <div class="col-sm-5">
+                                                        <input type="password" name="passnuevo" class="form-control" required id="inputPassword" placeholder="Contraseña">
+                                                    </div>
+                                            </div>   
+
+                                    
+                                            <div class="form-group row">
+                                            <label for="inputRut" class="col-sm-12 col-form-label"><b>Repetir Contraseña</b></label>
+                                                <div class="col-sm-5">
+                                                    <input type="password" name="passnuevo2" required class="form-control" id="inputPassword2" placeholder="Confirma tu Contraseña">
+                                                </div>
+                                            </div>
+
+                                            <!-- Separador de campos -->
+                                            
+                                            <div class="form-group row">
+                                            <label for="inputRut" class="col-sm-12 col-form-label"><b>Tipo de Usuario</b></label>       
+
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control" name="tiponuevo" id="selecttipo">
+                                                                <option value="Funcionario" >Funcionario</option>
+                                                                <option value="Administrador" >Administrador</option>
+                                                        </select>
+                                                    </div>
+                                            </div>
+                                            
+                                            <br>
+                                            
+                                            <div class="form-row">
+                                            <br>
+                                                <button type="submit" class="btn btn-success mb-2 float-left">Confirmar Registro</button>
+                                                
+                                            </div>
+                                    </form>
                         
-                        <div class="col-sm-5">
-                              <input type="text" class="form-control" name="rut" id="inputRut" required placeholder="11222333-4" onblur="javascript:Rut(document.form1.rut.value)">
-                        </div>
-                    </div>
-                    <!-- Separador de campos -->
-                       
-                      
-                      <div class="form-group row">
-                       <label for="inputRut" class="col-sm-12 col-form-label"><b>Nombre</b></label>
-
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="inputNombre" required name="nombrenuevo" placeholder="Nombre/s">
-                        </div>
-
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inputApellidoP" required name="apellidopnuevo" placeholder="Apellido Paterno">
-                        </div>
-
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inputApellidoM" required name="apellidomnuevo" placeholder="Apellido Materno">
-                        </div>
-
-                    </div>
-                   
-                     <!-- Separador de campos -->
-                     
-                    <div class="form-group row">
-                    <label for="inputRut" class="col-sm-12 col-form-label"><b>Correo Electronico</b></label>
-                            <div class="col-sm-10">
-                                <input type="email" name="correonuevo" class="form-control" id="inputCorreo" required placeholder="Correo">
-                            </div>
-                    </div>
-                    <br>
-                     <!-- Separador de campos -->
-                     <div class="form-group row">
-                            <label for="" class="col-sm-12 col-form-label"><h4><b>Informacion de la Cuenta</b></h4></label>
-                            
-                    </div>
-                    
-                    <div class="form-group row">
-                    <label for="inputRut" class="col-sm-12 col-form-label"><b>Contraseña</b></label>
-    
-                            <div class="col-sm-5">
-                                <input type="password" name="passnuevo" class="form-control" required id="inputPassword" placeholder="Contraseña">
-                            </div>
-                    </div>   
-          
-               
-                    <div class="form-group row">
-                    <label for="inputRut" class="col-sm-12 col-form-label"><b>Repetir Contraseña</b></label>
-                          <div class="col-sm-5">
-                              <input type="password" name="passnuevo2" required class="form-control" id="inputPassword2" placeholder="Confirma tu Contraseña">
-                          </div>
-                    </div>
-
-                    <!-- Separador de campos -->
-                    
-                    <div class="form-group row">
-                    <label for="inputRut" class="col-sm-12 col-form-label"><b>Tipo de Usuario</b></label>       
-    
-                            <div class="col-sm-10">
-                                <select class="form-control" name="tiponuevo" id="selecttipo">
-                                        <option value="Funcionario" >Funcionario</option>
-                                        <option value="Administrador" >Administrador</option>
-                                </select>
-                            </div>
-                    </div>
-                    
-                        
-                    
-                    <div class="">
-                      <br>
-                        <button type="submit" class="btn btn-success mb-2 float-left">Confirmar Registro</button>
-                        
-                    </div>
-               </form>
-                   
-            </section>
+                    </section>
           </article>
 
 
