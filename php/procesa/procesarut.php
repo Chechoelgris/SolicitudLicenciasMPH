@@ -39,6 +39,7 @@ $_SESSION['encontrado'] = false;   // Creamos variable que indicara si encontram
                     }else{
                         echo '<br>No existe el men';
                         $_SESSION['encontrado']=false;
+                        
                         header('location:../datosfecha.php');
                     }
 

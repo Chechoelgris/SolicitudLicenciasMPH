@@ -57,10 +57,10 @@ if (isset($_SESSION['existe'])) {
 }
 
 
-if (isset($_SESSION['nohaaycupos'])) {
+if (isset($_SESSION['nohaycupos'])) {
     echo '<br>';
     echo '<h5 class="text-danger">* No hay cupos disponibles para la fecha seleccionada.</h5>';
-    unset($_SESSION['existe']);
+    unset($_SESSION['nohaycupos']);
 }else{
     
     
@@ -68,7 +68,8 @@ if (isset($_SESSION['nohaaycupos'])) {
 
 if (isset($_SESSION['noesfecha'])) {
     echo '<br>';
-    echo '<h5 class="text-danger">* Debes seleccionar la fecha desde la lsita desplegable o escribirla respetando su formato.</h5>';
+    echo '<h5 class="text-danger">* Debes seleccionar la fecha desde la lista desplegable o escribirla respetando su formato.</h5>';
     unset($_SESSION['noesfecha']);
 }
+
 

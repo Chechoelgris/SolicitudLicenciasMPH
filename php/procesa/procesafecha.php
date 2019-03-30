@@ -9,56 +9,94 @@ $fecha_actual = date("Y-m-d"); //obtenemos fecha actual y la forma teamos
 if (!empty($_POST['fechasolicitada'])) {  // validacion de campos vacios
         echo '<br>pasa vacio';
         if(strlen($_POST['fechasolicitada']) == 10){//validacion de cantidad de caracteres
-            echo '<br>pasa largo';
-            $fechasolicitada = $_POST['fechasolicitada'];
-//=======================================================================================================|
+                echo '<br>pasa largo';
+
+    //------------------------valiidacion de fecha mas brigida------------------------------|
+                    $fechasolicitada = $_POST['fechasolicitada'];
+                    $valores = explode('-', $fechasolicitada);
+                    var_dump($valores);
+                    echo '<br>';
+
+                    if (count($valores)==3) { //validacion de los 3 valores del array
+                        echo '<br>hay 3 casillas, en el array';
+                                    if(checkdate($valores[1] ,$valores[2] ,$valores[0])){ //fecha existe en calendario
+                                        echo '<br>la fecha esta ok';
+
+
+
+ //=======================================================================================================|
 //---------Buscamos el id_fecha de los campos que tengan como fecha_asignada el valor solicitado---------|
 //=======================================================================================================|
 
 
-$sql_buscarporfecha='SELECT id_fecha FROM TA_fecha WHERE fecha_asignada = ?';
-$sentencia_buscarfecha=$conn->prepare($sql_buscarporfecha);
-$sentencia_buscarfecha->execute(array($fechasolicitada));
-$resultadobuscarfecha = $sentencia_buscarfecha->fetchAll();
+                                            $sql_buscarporfecha='SELECT id_fecha FROM TA_fecha WHERE fecha_asignada = ?';//Aqui podemos hacer una consulta a la BD, buscando 
+                                            $sentencia_buscarfecha=$conn->prepare($sql_buscarporfecha);                  //el numero de filas total correspondietes a ese dia.
+                                            $sentencia_buscarfecha->execute(array($fechasolicitada));
+                                            $resultadobuscarfecha = $sentencia_buscarfecha->fetchAll();
 
-$contcupos = 0;
-            foreach ($resultadobuscarfecha as $fenc) {
-                $contcupos++;
-                echo '<br>';
-                echo 'Contador: '.$contcupos;
-            }
+                                             $contcupos = 0;                        // este tomodachi se encargara de incrementar cada vez que obtengamos una 
+                                                                            //fila, de esta manera al terminar al iteracion tendremos el total de filas obtenidas
+                                                
+                                            foreach ($resultadobuscarfecha as $fenc) { //recorremos el resultado de la consulta
+                                                    $contcupos++;                          //le sumamos uno al tomodachi por iteracion
+                                                    echo '<br>';
+                                                    echo 'Contador: '.$contcupos;
+                                            }
 
-            $_SESSION['cuposdisponibles'] = 25 - $contcupos;
-            echo '<br>Cupos Disponibles: ';
-            echo $_SESSION['cuposdisponibles'];
+                                            $cuposdisponibles = 25 - $contcupos; //definimos que 25 es el maximo legal de personas que deben atender en la muni
+                                            echo '<br>Cupos Disponibles: ';      //entonces le restamos el total de registros obtenidos y lo guardamos en la variable
+                                            echo $cuposdisponibles;
 
-            //$_SESSION['cuposdisponibles'] = 0;                    Aqui podemos hacer una consulta a la BD, buscando el cupo por dia 
-            if ($_SESSION['cuposdisponibles']<=0) {                 //le restamos los cupos disponibles y si sobran 0 = no haay cupos. sies mas de 0, hay cupos y todo eos.
-               echo '<br>No hay cupos disponibles';
-            }else {
-                echo '<br>Hay cupos disponibles, reservando';
+                                            //$cuposdisponibles = 0;            Para hacer que no hayan cupos         
+                                            if ($cuposdisponibles<=0) {            //si la variable antes mencionada es menor o igual a 0, se vuelve a datosfecha.php y se indica el problema
+                                                $_SESSION['nohaycupos']=true;    
+                                                 header('location:../datosfecha.php');                                               
+                                                                                                //echo '<br>No hay cupos disponibles';
+
+                                            }else {                                              //Si hay cupos disponibles, guardamos la fecha en una variable de 
+                                                                                                //sesion para llenar las tablas mas adelante
+                                                $_SESSION['fechasolicitada']=$fechasolicitada;
+                                                header('location:../datospersonales.php'); 
+                                                echo '<br>Hay cupos disponibles, reservando...';
+
+                                            //=================================================================================================================================|
+                                            //-----Almacenamos los datos para llenar la TA_persona primero y posteriormente, llenar la TA_fecha que pide  el fk_id_persona-----|
+                                            //=================================================================================================================================|
 
 
 
-//=================================================================================================================================|
-//---------Almacenamos los datos para llenar la TA_persona para posteriormente, llenar la TA_fecha que pide  el id persona---------|
-//=================================================================================================================================|
+                                            }
+                                        
+                                    }else {//fecha existe en calendario else
+                                            echo '<br>La fecha no existe.';
+                                            $_SESSION['noesfecha']=true;
+                                            header('location:../datosfecha.php');
+                                    }//fecha existe en calendario
+                        
+                    }else {//validacion de los 3 valores del array else
+                        echo 'Formato invalido';
+                        $_SESSION['noesfecha']=true;
+                        header('location:../datosfecha.php');
+                    }//validacion de los 3 valores del array 
+               
 
+                }else {//validacion de cantidad de caracteres else
+                        echo 'FALLO caracteres';
+                        $_SESSION['noesfecha']=true;
+                         header('location:../datosfecha.php');
+                }//validacion de cantidad de caracteres
 
-
-
-
-            }
-        }else {//validacion de cantidad de caracteres else
-            echo 'FALLO caracteres';
-             // $_SESSION['vacios']=true;
-            //header('location:../datosfecha.php');
-        }//validacion de cantidad de caracteres
 } else {// validacion de campos vacio elses
         echo 'FALLO esta vacio';
-  //  $_SESSION['vacios']=true;
-   // header('location:../datosfecha.php');
-}// validacion de campos vacios
+        $_SESSION['vacios']=true;
+         header('location:../datosfecha.php');
+        }// validacion de campos vacios
+
+
+
+    
+                
+
 
 
 
