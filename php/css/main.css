@@ -554,11 +554,15 @@ textarea.input100 {
 .cabecera {
   font-family: Poppins-Bold;
   background-image: url(../images/bg-02.jpg);
-}
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  
+   }
 
 .cont{
   margin-left: auto;
   margin-right: auto; 
 }
+
 
 

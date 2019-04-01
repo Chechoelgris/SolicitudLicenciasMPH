@@ -49,11 +49,16 @@ $copiaencontrado = $_SESSION['encontrado'];
                                                 $sentencia_consultar = $conn->prepare($select_validacion);
                                                 $sentencia_consultar->execute(array($rut));
                                                 $resultado = $sentencia_consultar->fetch();
-                                                var_dump($resultado['id_persona']);
                                                 $_SESSION['id_persona'] = $resultado['id_persona'];
-                                                $sentencia_consultar=null;
-                                                $conn=null;
-                                                 header('location:../datosdireccion.php');
+                                                echo '<br>Id Persona obtenido: '.$_SESSION['id_persona'];
+                                                        $idpersona = $_SESSION['id_persona'];
+                                                        $fechasolicitud  = $_SESSION['fechasolicitada'];
+
+                                                include_once 'llenafecha.php';
+
+
+                                                
+
                                         }else{
                                             $_SESSION['fallaupdate'] = true;
                                             $sentencia_update=null;
@@ -76,27 +81,24 @@ $copiaencontrado = $_SESSION['encontrado'];
                                                                 $sentencia_consultar = $conn->prepare($select_validacion);
                                                                 $sentencia_consultar->execute(array($rut));
                                                                 $resultado = $sentencia_consultar->fetch();
-                                                                var_dump($resultado['id_persona']);
                                                                 $_SESSION['id_persona'] = $resultado['id_persona'];
-                                                                 $sentencia_consultar=null;
-                                                                $conn=null;
-                                                                header('location:../datosdireccion.php');
+                                                                echo '<br>Id Persona obtenido: '.$_SESSION['id_persona'];
+                                                                        $idpersona = $_SESSION['id_persona'];           
+                                                                        $fechasolicitud  = $_SESSION['fechasolicitada'];
+
+                                                                include_once 'llenafecha.php';
+
+                                                
+
                                                 }else{
                                                     $_SESSION['fallaupdate'] = true;
                                                     $sentencia_consultar=null;
                                                     $conn=null;
                                                     header('location:../datospersonales.php');
                                                 } 
-
-
+                                            }
 // --  FIN  --  INSERT con los datos ingresados
                                        
-}
-
-
-
-
-
 
                             }else{
                                 $_SESSION['fallalongitud'] = true;

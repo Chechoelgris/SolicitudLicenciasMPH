@@ -4,17 +4,29 @@
 //==========================================================================================|
 include_once '../../intranet/phpintra/conexion.php'; 
 session_start();
+
+
 //==========================================================================================|
 $claselicencia = $_POST['claselicencia'];
 $comunalic = $_POST['comunalic'];
+if ($claselicencia==0 || $comunalic==0 ) {
+    
+echo'uno paso vacio, no hay mano<br>';
+$_SESSION['vacios']=true;
+header('location:../datossolicitud.php');
+
+}
 $fechacontrol = $_POST['fechacontrol'];
 $persona = $_SESSION['id_persona'];
 //==========================================================================================|
 //mini validacion 
+
 if ($_FILES['archivo']) {
     $archivo = $_FILES['archivo'];
 }else {
     echo 'no esta llegando el archivo, whaat';
+    $_SESSION['archivo']=true;
+    header('location:../datossolicitud.php');
 }
 
 //==========================================================================================|
@@ -79,7 +91,7 @@ if ($sentencia_insertlicencia->execute(array($fechacontrol,
 $uploadedfileload="true"; //Esta variable será el indicador que nos permita avanzar en el script 
 $msg;
 
-if ($_FILES['archivo']['size']>2000000){                                                                     // Validacion de tamaño
+if ($_FILES['archivo']['size']>5000000){                                                                     // Validacion de tamaño
     $msg="El archivo es mayor que 2000KB, debes reduzcirlo antes de subirlo<BR>";
     $uploadedfileload="false";
 }

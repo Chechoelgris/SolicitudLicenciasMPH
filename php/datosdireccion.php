@@ -2,13 +2,18 @@
 include_once '../intranet/phpintra/conexion.php'; 
 session_start();
 
+if (!$_SESSION['id_persona']) {
+        header('location:ingresorut.php');
+}
+
+// Consulta de regiones (no se ve en front)
 $listarregiones = "SELECT id_region, nombre_region FROM ta_region ORDER BY nombre_region ASC";
 
-$sentencia_listarreg = $conn->prepare($listarregiones);// Preparamos la consulta a la base de datos
-$sentencia_listarreg->execute();            // Ejecutamos la consulta
-$resultado_listarreg = $sentencia_listarreg->fetchAll(); //Obtenemos los datos
+$sentencia_listarreg = $conn->prepare($listarregiones);   // Preparamos la consulta a la base de datos
+$sentencia_listarreg->execute();                          // Ejecutamos la consulta
+$resultado_listarreg = $sentencia_listarreg->fetchAll();  //Obtenemos los datos
 
-// Consulta de comunas
+// Consulta de comunas (carga select)
 
 $listarcomunas = "SELECT id_comuna, nombre_comuna FROM ta_comuna WHERE fk_id_region = ?";
 $rm=16;
@@ -16,185 +21,130 @@ $sentencia_listacomunas = $conn->prepare($listarcomunas);// Preparamos la consul
 $sentencia_listacomunas->execute(array($rm));            // Ejecutamos la consulta
 $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los datos
 
-if (!$_SESSION['id_persona']) {
-        header('location:ingresorut.php');
-}
+//consulta por direccion
+
+$selectdireccion = "SELECT * FROM ta_direccion WHERE fk_id_persona = ?";
+
+$sentencia_buscardireccion = $conn->prepare($selectdireccion);// Preparamos la consulta a la base de datos
+$sentencia_buscardireccion->execute(array($_SESSION['id_persona']));            // Ejecutamos la consulta
+$resultado_buscardireccion = $sentencia_buscardireccion->fetchAll(); //Obtenemos los datos
+
 
 
 ?>
-<!doctype html>
-<html lang="es">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Solicitud de Horas para examen Psicotécnico</title>
+<!--=====================================================================================================================================================================================================================-->
+<!--=============================================================BOOTSTRAP4CND=========================================================================================================================================-->
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script></script>
-    <link rel="stylesheet" href="../css/nivel1.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+<!--=====================================================================================================================================================================================================================-->
 
-    <title>Datos de Residencia!</title>
-  </head>
-  <body>
-   <header>
-   
-   </header>
+	<link rel="stylesheet" href="css/main.css">
+	<script src="../js/validarut.js"></script>
+</head>
+<body>
 
-        <div class="container">
-                                <div class="barra">
-                                                    <div class="progress">
-                                                            <div class="determinate" style="width: 40%"></div>
-                                                    </div>
-                                </div>
+		
+	<article>
+			<div class="container mt-5">
 
-                                <br>
+					<section class="cabecera text-center rounded-top ">
+							<div class="contact100-form-title  titulo" >
 
-                                <form name="form1" id="formu" class="mt-5" action="procesa/procesadatosdireccion.php"  method="POST">
+								<h4 class="text-light">
+									Solicitud de Horas para Examen Psicotécnico
+								</h4>
+				
+								<h6 class="text-light">
+									<br>Residentes
+								</h6>
 
-                            
+							</div>
 
-                                                <h1 class="h2 mb-4 mt-1 font-weight-normal">Datos de Residencia</h1>
+					</section>
+					<section class="formulario bg-light text-center p-3 rounded-bottom">
+							<h3 class=""><b>Datos de Residencia </b></h3>
+							<br>
+							<h5 class="text-secondary">Recuerda que SOLO residentes de la comuna pueden utilizar este servicio	. </h5>
+							<br>
+							<form name="form1" id="formu" action="procesa/procesadatosdireccion.php" method="POST" >
 
-                                                <small>Hola <b class="abajito"><?php echo $_SESSION['nombre']; ?></b>, Recuerda que debes ser residente de la comuna de <b class="abajito">Padre Hurtado</b> para que tu solicitud sea aprobada.</small>
-                                                <br>
-                                                <br>
-
-                                                <div class="form-group">
-
-                                                
-                                                                <!--
-                                                                <div class="row">    
-                                                                                <div class="input-field col s12">
-                                                                                        <select name="regiones" id="regiones" onblur="javascript:cargarcomunas();">
-                                                                                                  <option value="0">Selecciona una Región</option>
-                                                                                                  <?php //foreach($resultado_listarreg as $nombreregion): ?>
-                                                                                                        <option value="<?php //echo $nombreregion['id_region'];?>"><?php //echo utf8_encode($nombreregion['nombre_region']);?></option>     
-                                                                                                  <?php //endforeach?>
-                                                                                        </select>
-                                                                                        <label for="regiones">Region</label>
-                                                                                        <span class="abajito" data-error="wrong" data-success="right">Seleccione su región de residencia</span>
-                                                                                </div>        
-                                                                </div>
-                                                                -->
-                                                                <!-- Separador de campos -->
-                                                                <div class="row">    
-                                                                                <div class="input-field col s12">
-                                                                                        <select name="comunas" id="comunas" required="">
-                                                                                                 <option value="0">Selecciona una Comuna</option>
-                                                                                                 <?php foreach($resultado_listacomuna as $nombrecomuna): ?>
-                                                                                                        <option class="text-light" value="<?php echo $nombrecomuna['id_comuna'];?>" <?php if ($nombrecomuna['nombre_comuna'] == 'Padre Hurtado') {
-                                                                                                                echo ' selected';
-                                                                                                        } ?> ><?php echo utf8_encode($nombrecomuna['nombre_comuna']);?></option>     
-                                                                                                  <?php endforeach?>
+								<div class="form-row cont justify-content-center">
+										<div class="form-group text-left col-md-6">
+												<label for="comunas" class="text-info">Comuna</label>
+												<select class="custom-select" name="comunas" id="comunas" required="">
+                                                    	 <option value="0">Selecciona una Comuna</option>
+                                                    	 <?php foreach($resultado_listacomuna as $nombrecomuna): ?>
+                                                         <option class="text-dark" value="<?php echo $nombrecomuna['id_comuna'];?>" <?php if ($nombrecomuna['nombre_comuna'] == 'Padre Hurtado') {
+                                                        	   echo ' selected';
+                                                        } ?> ><?php echo utf8_encode($nombrecomuna['nombre_comuna']);?></option>     
+                                                        <?php endforeach?>
                                                                                                 
-                                                                                        </select>
-                                                                                        <label for="comunas">Comuna</label>
-                                                                                        <span class="abajito" data-error="wrong" data-success="right">Seleccione su comuna de residencia</span>
-                                                                                </div>        
-                                                                </div>
+												</select>
+												<small class="text-secondary" data-error="wrong" data-success="right">Deberás acreditar domicilio.</small>
 
-                                                                 <!-- Separador de campos -->
-                                                                <div class="row">    
-                                                                        <div class="input-field col s12">
-                                                                        <input type="text" id="calle" name="calle" class="input-oscuro" required=""
-                                                                        value="<?php //if ($_SESSION['encontrado']) {
-                                                                                //echo utf8_encode($_SESSION['apellidom_obtenido']);
-                                                                                //}?>" >
-                                                                                <label for="calle">Calle o Pasaje</label>
-                                                                                <span class="abajito" data-error="wrong" data-success="right">Ingrese el nombre de la calle en donde vive</span>
-                                                                        </div>        
-                                                                </div> 
-
-                                                                <!-- Separador de campos -->
-
-                                                                <div class="row">    
-                                                                        <div class="input-field col s6">
-                                                                        <input type="text" id="numero" name="numero" class="input-oscuro" required=""
-                                                                        value="<?php //if ($_SESSION['encontrado']) {
-                                                                                //echo utf8_encode($_SESSION['apellidom_obtenido']);
-                                                                                //}?>" >
-                                                                                <label for="numero">Numero</label>
-                                                                                <span class="abajito" data-error="wrong" data-success="right">Numeracion</span>
-                                                                        </div>    
-                                                                        
-                                                                        <div class="input-field col s6">
-                                                                                <input type="text" id="otro" name="otro" class="input-oscuro" 
-                                                                                value="<?php //if ($_SESSION['encontrado']) {
-                                                                                        //echo utf8_encode($_SESSION['apellidom_obtenido']);
-                                                                                        //}?>" >
-                                                                                        <label for="otro">Otro</label>
-                                                                                        <span class="abajito" data-error="wrong" data-success="right">Casa /block / Dpto</span>
-                                                                                </div>  
-                                                                </div> 
-
-                                                                <!-- Separador de campos -->
-
-                                                              
-                                                </div>
-                                                               
-                                                <br>
-                                                <button class="button mt-3 mb-4" id=""  type="submit" >
-                                                            Continuar
-                                                            <div class="button__horizontal"></div>
-                                                            <div class="button__vertical"></div>
-                                                </button>
-                                                <br>
-                                                <small class="">Tranquilo, son solo unos pocos datos, y solo los pediremos <b>una vez</b>. Tu proxima visita cargará estos datos automaticamente.</small>
-
-                                                <div class="row">
-                                                            <div class="input-field col s12">
-                                                                        <?php include("procesa/imprvalidacion.php"); ?>
-                                                            
-                                                            </div>
-                                                </div>
-                                </form>
-        </div>
+										</div>				
+								</div>
+<!-- Separador de campos -->	
+								<div class="form-row cont justify-content-center">    
+                                        <div class="form-group text-left col-md-6">
+												<label for="calle" class="text-info">Calle o Pasaje</label>
+                                                <input type="text" name="calle" class="form-control"  required="" 
+                                                value="<?php if ($resultado_buscardireccion) {
+                                                        echo utf8_encode($resultado_buscardireccion['calle_dir']);
+                                                }?>" >
+                                                
+                                                <small class="text-secondary" data-error="wrong" data-success="right">Ingrese el nombre de la calle en donde vive</small>
+                                        </div>        
+								</div>
+<!-- Separador de campos -->	
+								<div class="form-row cont justify-content-center">    
+                                        <div class="form-group text-left col-md-6">
+												<label for="numero" class="text-info">Numeración</label>
+                                                <input type="text" name="numero" class="form-control"  required="" 
+                                                value="<?php if ($resultado_buscardireccion) {
+                                                        echo utf8_encode($resultado_buscardireccion['numero_dir']);
+                                                }?>" >
+                                                
+                                                <small class="text-secondary" data-error="wrong" data-success="right">Numero de casa o de departamento.</small>
+                                        </div>        
+								</div>		
+<!-- Separador de campos -->	
+								<div class="form-row cont justify-content-center">    
+                                        <div class="form-group text-left col-md-6">
+												<label for="otro" class="text-info">Otro</label>
+                                                <input type="text" name="otro" class="form-control"  
+                                                value="<?php if ($resultado_buscardireccion) {
+                                                        echo utf8_encode($resultado_buscardireccion['dpto_dir']);
+                                                }?>" >
+                                                
+                                                <small class="text-secondary" data-error="wrong" data-success="right">Casa, block u otra numeración adicional.</small>
+                                        </div>        
+								</div>						
 
 
-   <footer>
-   </footer>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
-  
-    <script>
-             $(document).ready(function(){
-                $('select').formSelect();
-        });
-    </script>
+								<button class="btn btn-outline-info" type="submit" >Continuar</button>
+								<br>
+               
 
-    <script>
-            function cargarcomunas(){
-                
-                var region = document.getElementById('regiones').value;
+                <?php include("procesa/imprvalidacion.php"); ?>
+                <p class="font-italic text-right ">Desarrollado por <a href="" class="text-success">Sergio Sepúlveda</a>.</p>
+							</form>
+					</section>
 
-                $.ajax({
-                        type:'POST',
-                        url: 'procesa/consultaregion.php',
-                        data:(region),
-                        success:function(respuesta){
 
-                        //if (respuesta=1) {
-                                alert(region);
-                               
-                               
-                                
-                        }
-                })//ajax
 
-            }//funcion
-    </script>
-   
-    
-    
+			</div>
+	</article>
+
+	
 </body>
 </html>
-
-

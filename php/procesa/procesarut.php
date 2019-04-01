@@ -39,18 +39,22 @@ $_SESSION['encontrado'] = false;   // Creamos variable que indicara si encontram
                     }else{
                         echo '<br>No existe el men';
                         $_SESSION['encontrado']=false;
-                        
+                        $resultado_preguntar=null;
+                        $conn=null;
                         header('location:../datosfecha.php');
                     }
 
             }else {//validacion de cantidad de caracteres
                 $_SESSION['fallalongitud'] = true;
-                                
+                $resultado_preguntar=null;
+                $conn=null;                
                 header('location:../ingresorut.php');
             }
 
        }else {// validacion de campos vacios
             $_SESSION['vacios']=true;
+            $resultado_preguntar=null;
+            $conn=null;
             header('location:../ingresorut.php');
        }            
 

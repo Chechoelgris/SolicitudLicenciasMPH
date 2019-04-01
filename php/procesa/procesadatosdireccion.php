@@ -10,8 +10,8 @@ $id_persona = $_SESSION['id_persona'];
 $region = 16;
 
         $select_preguntar = 'SELECT * FROM TA_direccion WHERE fk_id_persona = ?';           // Definimos, preparamos, ejecutamos 
-        $sentencia_preguntar = $conn->prepare($select_preguntar);                       //consulta sql y obtenemos datos, segun el resultado 
-        $sentencia_preguntar->execute(array($id_persona));                                 //se tomaran dos cursos de accion diferentes
+        $sentencia_preguntar = $conn->prepare($select_preguntar);                           //consulta sql y obtenemos datos, segun el resultado 
+        $sentencia_preguntar->execute(array($id_persona));                                  //se tomaran dos cursos de accion diferentes
         $resultado_preguntar = $sentencia_preguntar->fetch();
         $copiaencontrado = false;
         if ($resultado_preguntar) {

@@ -40,15 +40,16 @@ session_start();
 
 					</section>
 					<section class="formulario bg-light text-center p-3 rounded-bottom">
-							
-							<h4>Para comenzar, necesitamos validar tu identidad. </h4>
+							<h3 class=""><b>Identificación </b></h3>
+							<br>
+							<h5 class="text-secondary">Para comenzar, necesitamos validar tu identidad. </h5>
 							<br>
 							<form name="form1" id="formu" action="procesa/procesarut.php" method="POST" >
 								<div class="form-row cont justify-content-center">
 										<div class="form-group text-left">
-												<label for="rut" class="">RUT</label>
+												<label for="rut" class="text-info">RUT</label>
 												<input type="text" class="form-control" name="rut" id="inputRut" onblur="javascript:Rut(document.form1.rut.value)" required>
-												<span class="abajito" data-error="wrong" data-success="right">Sin puntos ni guión.</span>
+												<small class="text-secondary" data-error="wrong" data-success="right">Sin puntos ni guión.</small>
 
 										</div>
 										

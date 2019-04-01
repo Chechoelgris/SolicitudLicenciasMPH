@@ -41,13 +41,14 @@ $fecha_actual = date("Y-m-d");
 
 					</section>
 					<section class="formulario bg-light text-center p-3 rounded-bottom">
-							
-							<h4>Selecciona un dia para solicitar una hora.</h4>
+							<h3 class=""><b>Fecha de Exámen </b></h3>
+							<br>
+							<h5 class="text-secondary">Selecciona un dia para solicitar una hora.</h5>
 							<br>
 							<form name="form1" id="formu" action="procesa/procesafecha.php" method="POST" >
 								<div class="form-row cont justify-content-center">
 										<div class="form-group text-left">
-												<label for="fechasolicitada" class="">Fecha Solicitada</label>
+												<label for="fechasolicitada" class="text-info">Fecha Solicitada</label>
 												<input type="date" class="form-control" name="fechasolicitada" id="fechasolicitada" min="<?php echo $fecha_actual; ?>" required >
 												<span class="abajito" data-error="wrong" data-success="right">Presiona continuar para verificar si hay cupos disponibles.</span>
 

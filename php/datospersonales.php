@@ -1,214 +1,191 @@
-<?php 
+<?php
 session_start();
-
 ?>
-<!doctype html>
-<html lang="es">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Solicitud de Horas para examen Psicotécnico</title>
+<!--=====================================================================================================================================================================================================================-->
+<!--=============================================================BOOTSTRAP4CND=========================================================================================================================================-->
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <script src="../js/validarut.js"></script>
-   
-    <link rel="stylesheet" href="../css/nivel1.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+<!--=====================================================================================================================================================================================================================-->
 
-    <title>Datos Personales!</title>
-  </head>
-  <body>
-   <header>
-   
-   </header>
-   
-      
-            <br>
-            <div class="container">
-                    <div class="barra">
-                            <div class="progress">
-                                    <div class="determinate" style="width: 20%"></div>
-                            </div>
-                    </div>
-                    <form name="form1" id="formu" class="mt-5" action="procesa/procesadatospersonales.php"  method="POST">
+	<link rel="stylesheet" href="css/main.css">
+	<script src="../js/validarut.js"></script>
+</head>
+<body>
 
-                            
+		
+	<article>
+			<div class="container mt-5">
 
-                            <h1 class="h2 mb-4 mt-1 font-weight-normal">Datos Personales</h1>
+					<section class="cabecera text-center rounded-top ">
+							<div class="contact100-form-title  titulo" >
 
-                            <small>Queremos conocerte, por favor, completa estos datos para continuar.</small>
-                            <br>
+								<h4 class="text-light">
+									Solicitud de Horas para Examen Psicotécnico
+								</h4>
+				
+								<h6 class="text-light">
+									<br>Datos Personales
+								</h6>
 
-                            <div class="form-group">
+							</div>
 
-                               
-
-                                <div class="row">    
-                                        <div class="input-field col s12">
-                                                <input type="text" name="ingresonombre" class="input-oscuro"  required="" autofocus
+					</section>
+					<section class="formulario bg-light text-center p-3 rounded-bottom">
+					<h3 class=""><b>Datos Personales</b></h3>
+					<br>
+							<h5 class="text-secondary">Necesitamos tus datos para realizar la solicitud.</h5>
+							<br>
+							<form name="form1" id="formu" action="procesa/procesadatospersonales.php" method="POST" >
+<!-- SEPARADOR ---Nombre-->
+								
+								<div class="form-row cont justify-content-center">    
+                                        <div class="form-group text-left col-md-5">
+												<label for="ingresonombre" class="text-info">Nombre</label>
+                                                <input type="text" name="ingresonombre" class="form-control"  required="" autofocus
                                                 value="<?php if ($_SESSION['encontrado']) {
                                                         echo utf8_encode($_SESSION['nombre_obtenido']);
                                                 }?>" >
-                                                <label for="ingresonombre">Nombre</label>
-                                                <span class="abajito" data-error="wrong" data-success="right">Un nombre es suficiente</span>
+                                                
+                                                <small class="text-secondary" data-error="wrong" data-success="right">Un nombre es suficiente</small>
                                         </div>        
                                 </div>
-                                <!-- Separador de campos -->
-                                <div class="row">    
-                                        <div class="input-field col s12">
-                                                <input type="text" name="ingresapellidop" class="input-oscuro"  required=""
+<!-- SEPARADOR ---Apellido Paterno-->
+								<div class="form-row cont justify-content-center">    
+                                        <div class="form-group text-left col-md-5">
+												<label for="ingresapellidop" class="text-info">Apellido Paterno</label>
+                                                <input type="text" name="ingresapellidop" class="form-control"  required="" 
                                                 value="<?php if ($_SESSION['encontrado']) {
                                                         echo utf8_encode($_SESSION['apellidop_obtenido']);
                                                 }?>" >
-                                                <label for="ingresapellidop">Apellido Paterno</label>
-                                                <span class="abajito" data-error="wrong" data-success="right">Primer apellido</span>
+                                                
+                                                <small class="text-secondary" data-error="wrong" data-success="right">Primer apellido</small>
                                         </div>        
                                 </div>
-
-                                <!-- Separador de campos -->
-
-                                <div class="row">    
-                                        <div class="input-field col s12">
-                                                <input type="text" name="ingresapellidom" class="input-oscuro" required=""
+<!-- SEPARADOR ---Apellido Materno-->
+								<div class="form-row cont justify-content-center">    
+                                        <div class="form-group text-left col-md-5">
+												<label for="ingresapellidom" class="text-info">Apellido Materno</label>
+                                                <input type="text" name="ingresapellidom" class="form-control"  required="" 
                                                 value="<?php if ($_SESSION['encontrado']) {
                                                         echo utf8_encode($_SESSION['apellidom_obtenido']);
-                                                        }?>" >
-                                                <label for="ingresapellidom">Apellido Materno</label>
-                                                <span class="abajito" data-error="wrong" data-success="right">Segundo apellido</span>
-                                        </div>        
-                                </div>       
-                                <!-- Separador de campos -->
-                                <div class="row">    
-                                        <div class="input-field col s12">
-                                                <input type="date" class="input-oscuro" name="fechanacimiento" placeholder="" min="1919-01-01" required
-                                                >
-                                                <label for="fechanacimiento">Fecha de Nacimiento</label>
-                                                <span class="abajito" data-error="wrong" data-success="right">Se desplegará un menú cuando haga click</span>
-                                        </div>        
-                                </div> 
-
-                                <!-- Separador de campos -->
-                                <div class="row">    
-                                        <div class="input-field col s12">
-                                        <label for="sexo">Sexo</label>
-                                        <p>
-                                                        <label>
-                                                          <input name="sexo" type="radio" value="No Especifica" <?php if ($_SESSION['encontrado']) {
-                                                                if($_SESSION['sexo_obtenido']=='No Especifica'){
-                                                                        echo 'checked';
-                                                                }
-                                                                
-                                                                }?>  />
-                                                          <span>Prefiero no decir</span>
-                                                        </label>
-                                                      </p>
-                                                      <p>
-                                                        <label>
-                                                          <input name="sexo" type="radio" value="Femenino" <?php if ($_SESSION['encontrado']) {
-                                                                if($_SESSION['sexo_obtenido']=='Femenino'){
-                                                                        echo 'checked';
-                                                                }
-                                                                
-                                                                }?> />
-                                                          <span>Femenino</span>
-                                                        </label>
-                                                      </p>
-                                                      <p>
-                                                        <label>
-                                                          <input class="with-gap" name="sexo" type="radio" value="Masculino" <?php if ($_SESSION['encontrado']) {
-                                                                if($_SESSION['sexo_obtenido']=='Masculino'){
-                                                                        echo 'checked';
-                                                                }
-                                                                
-                                                                }?> />
-                                                          <span>Masculino</span>
-                                                        </label>
-                                                      </p>
+                                                }?>" >
                                                 
+                                                <small class="text-secondary" data-error="wrong" data-success="right">Segundo apellido</small>
+                                        </div>        
+                                </div>
+<!-- SEPARADOR ---Fecha de Nacimiento-->
+								<div class="form-row cont justify-content-center">
+									<div class="form-group text-left col-md-5">
+											<label for="fechanacimiento" class="text-info">Fecha de Nacimiento</label>
+											<input type="date" class="form-control" name="fechanacimiento" id="fechanacimiento" min="1919-01-01" required value="
+											<?php if ($_SESSION['encontrado']) {
+												echo utf8_encode($_SESSION['fechanac_obtenido']);
+											}?>">
+											<small class="text-secondary" data-error="wrong" data-success="right">Ingresa tu fecha de Nacimiento</small>
+									</div>
+								</div>
+<!-- SEPARADOR ---Sexo -->													
+								<div class="cont col-md-5">
+
+									<div class="form-group text-left">
+											<label  class="text-info text-left">Sexo</label>
+									</div>
+
+									<div class="form-row justify-content-between">
+											<div class="custom-control custom-radio">
+													<input type="radio" id="customRadio1" name="sexo" class="custom-control-input" value="Femenino"
+													<?php if ($_SESSION['encontrado']) {
+														if($_SESSION['sexo_obtenido']=='Femenino'){
+																echo 'checked';
+														}
+														
+														}?>
+														>
+													<label class="custom-control-label" for="customRadio1">Femenino</label>
+											</div>
+											<div class="custom-control custom-radio">
+													<input type="radio" id="customRadio2" name="sexo" class="custom-control-input" value="Masculino"
+													<?php if ($_SESSION['encontrado']) {
+														if($_SESSION['sexo_obtenido']=='Masculino'){
+																echo 'checked';
+														}
+														
+														}?>
+														>
+													<label class="custom-control-label" for="customRadio2">Masculino</label>
+											</div>
+											<div class="custom-control custom-radio">
+													<input type="radio" id="customRadio3" name="sexo" class="custom-control-input" value="No Especifica"
+													<?php if ($_SESSION['encontrado']) {
+														if($_SESSION['sexo_obtenido']=='Otro'){
+																echo 'checked';
+														}
+														
+														}?>
+														>
+													<label class="custom-control-label" for="customRadio3">Otro</label>
+											</div>
+									</div>
+
+								</div>
+
+<!-- SEPARADOR CONTACTO -->
+
+								<br>
+								<h3 class=""><b>Datos de Contacto</b></h3>
+								<br>
+
+<!-- SEPARADOR ---Correo -->
+								<div class="form-row cont justify-content-center">    
+                                        <div class="form-group text-left col-md-5">
+												<label for="email" class="text-info">Correo Electronico</label>
+                                                <input type="email" name="email" id="email" class="form-control"  required="" value=" <?php if ($_SESSION['encontrado']) {
+													echo utf8_encode($_SESSION['correo_obtenido']);
+													}?>" >
                                                 
-                                                <span class="abajito" data-error="wrong" data-success="right">Indique su sexo.</span>
+                                                <small class="text-secondary" data-error="wrong" data-success="right">Su dirección de correo podría ser algo así:  sunombre@gmail.com</small>
                                         </div>        
-                                </div> 
-                                <!-- Separador de campos -->
-                                <br>
-                                <h1 class="h2 mb-4 mt-1 font-weight-normal">Contacto</h1>
-                                <small>Esta información es muy importante, si necesitamos contactarte, lo haremos usando estos datos.</small>
-                                <br>
-                                <!-- Separador de campos -->
+								</div>
+								
+<!-- SEPARADOR ---Telefono -->
+								<div class="form-row cont justify-content-center">    
+										<div class="form-group text-left col-md-5">
+												<label for="telefono" class="text-info">Teléfono </label>
+												<input type="tel" name="telefono" id="telefono" class="form-control"  required=""   value="<?php if ($_SESSION['encontrado']) {
+													echo $_SESSION['telefono_obtenido'];
+													}else{
+															echo '+56';   
+													}?>" >
+												
+												<small class="text-secondary" data-error="wrong" data-success="right">Su numero de teléfono Celular</small>
+										</div>        
+								</div>
 
-                                 <div class="row">    
-                                         <div class="input-field col s12">
-                                                              
+								<button class="btn btn-outline-info" type="submit" >Continuar</button>
+								<br>
+               
 
-                                                <input name="email" id="email" type="email" class="input-oscuro "  required
-                                                value=" <?php if ($_SESSION['encontrado']) {
-                                                        echo utf8_encode($_SESSION['correo_obtenido']);
-                                                        }?>" >
-                                                <label for="email">Email</label>
-                                                <span class="abajito" data-error="wrong" data-success="right">Su correo actualizado</span>
-                                         </div>        
-                                </div> 
-                               
-                               <!-- Separador de campos -->
-
-                               <div class="row">    
-                                        <div class="input-field col s12 ">
-                                                        
-
-                                                <input name="telefono" id="telefono" type="tel" class="input-oscuro"  required
-                                                value="<?php if ($_SESSION['encontrado']) {
-                                                        echo $_SESSION['telefono_obtenido'];
-                                                        }else{
-                                                                echo '+56';   
-                                                        }?>" >
-                                                <label for="telefono">Teléfono</label>
-                                                <span class="abajito" data-error="wrong" data-success="right">Desde el 9 en adelante  </span>
-                                        </div>        
-                               </div> 
-
-                                
-                                                    
-                               
-                              
-                            </div>
+				<?php include("procesa/imprvalidacion.php"); ?>
+				
+				<br>
+                <p class="font-italic text-right ">Desarrollado por <a href="" class="text-success">Sergio Sepúlveda</a>.</p>
+							</form>
+					</section>
 
 
 
+			</div>
+	</article>
 
-                            <br>
-
-                            
-                            <button class="button mt-3 mb-4" id=""  type="submit" >
-                                        Continuar
-                                        <div class="button__horizontal"></div>
-                                        <div class="button__vertical"></div>
-                            </button>
-                            <br>
-                            <small class="">Tranquilo, son solo unos pocos datos, y solo los pediremos <b>una vez</b>. Tu proxima visita cargará estos datos automaticamente.</small>
-
-                            <div class="row">
-                                        <div class="input-field col s12">
-                                                       <?php include("procesa/imprvalidacion.php"); ?>
-                                        
-                                        </div>
-                            </div>
-                    </form>
-            </div>
-      
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
-   
-    <script>
-             $(document).ready(function(){
-                $('select').formSelect();
-        });
-    </script>
+	
 </body>
 </html>

@@ -72,4 +72,14 @@ if (isset($_SESSION['noesfecha'])) {
     unset($_SESSION['noesfecha']);
 }
 
+if (isset($_SESSION['existe2'])) {
+    echo '<br>';
+    echo '<h5 class="text-danger">* Ya tienes una solicitud pendiente para la fecha indicada.</h5>';
+    unset($_SESSION['existe2']);
+}
 
+if (isset($_SESSION['archivo'])) {
+    echo '<br>';
+    echo '<h5 class="text-danger">* Recuerda que solo puedes enviar imagenes en formato "jpeg" o "png", y el archivo no puede pesar mas de 5 mb.</h5>';
+    unset($_SESSION['archivo']);
+}
