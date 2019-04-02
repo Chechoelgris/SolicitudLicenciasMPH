@@ -38,7 +38,7 @@ if ($contsoli>0) {
     header('location:../ingresorut.php');   
     
 }else {
-    echo'NO hay solicitudes, hacer la wea';
+    echo'NO hay solicitudes, hacer la wea xD';
 
     $insert_fecha = 'INSERT INTO ta_fecha(
         fecha_asignada, 

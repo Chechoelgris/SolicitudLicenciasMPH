@@ -1,9 +1,16 @@
 <?php
+include_once '../../intranet/phpintra/conexion.php'; 
+session_start();
+//==========================================================================================|
+//--------------------------FUNCION QUE CREARA LA SOLICITUD---------------------------------|
+//==========================================================================================|
+
+    
+
 //==========================================================================================|
 //-------------Consultas Iniciales y capturamos datos enviados por POST---------------------|
 //==========================================================================================|
-include_once '../../intranet/phpintra/conexion.php'; 
-session_start();
+
 
 
 //==========================================================================================|
@@ -81,7 +88,12 @@ if ($sentencia_insertlicencia->execute(array($fechacontrol,
                 echo 'El id de su nuevo registro es: ';
                 print_r($resultadolic['id_licencia']);
                 $_SESSION['id_licencia'] = $resultadolic['id_licencia'];
-               // header('location:../datosdireccion.php');
+               
+}else {
+    echo 'Problemas al insertar datos de licencia';
+    $_SESSION['fallainsert']=true;
+    header('location:../datossolicitud.php');
+
 }
 
 //==========================================================================================|
@@ -92,7 +104,7 @@ $uploadedfileload="true"; //Esta variable será el indicador que nos permita ava
 $msg;
 
 if ($_FILES['archivo']['size']>5000000){                                                                     // Validacion de tamaño
-    $msg="El archivo es mayor que 2000KB, debes reduzcirlo antes de subirlo<BR>";
+    $msg="La imagen pesa mas de 5MB, debes reducir su tamaño antes de subirla<BR>";
     $uploadedfileload="false";
 }
 echo 'pasa validacion de tamaño';
@@ -160,16 +172,52 @@ if( file_exists($ruta) == true ){
                                         $resultado = $sentencia_consultar->fetch();
                                     
                                    
-                                  echo $resultado['id_archivo'];
+                                  echo '<br>Su ID de archivo es: '.$resultado['id_archivo'];
                                   $_SESSION['id_archivo'] = $resultado['id_archivo'];
-                                  header('location:../datosfecha.php');
+
+
+
+//Tenemos todo listo, ahora solo queda subir la info a la solicitud.
+
+
+//|==========================================================================================|
+//|---------------------------------Insert a TA_Solicitud------------------------------------|
+//|==========================================================================================|
+
+//Recoleccion de datos final.
+$a=$_SESSION['id_persona'];
+$b=$_SESSION['id_archivo'];
+$c=$_SESSION['id_licencia'];
+$d='Pendiente';
+$e=$_SESSION['id_fecha'];
+$f=$_SESSION['id_direccion'];
+
+
+                        include_once 'funcionsolicitud.php';   
+                        
+                        
+                       /* if (insertsolicitud($a,$b,$c,$d,$e,$f)) {
+                            echo 'terminamos parse';
+                            //header('location:../ingresofinalizado.php');
+                        }else {
+                            echo "<br><p>Problema al ingresar la solicitud, algo anda mal.</p>";
+                            $_SESSION['solicitud']=true;
+                           // header('location:../datosolicitud.php');
+                        }*/
+
+
+
+                                 
 
                             }else {
-                                echo "<br><p>Hubo un problema con el insert, despaila</p>";
+                                echo "<br><p>El archivo no se ha encontrado</p>";
+                                $_SESSION['archivo']=true;
+                                header('location:../datosolicitud.php');
                             }
 }else{
     echo "<br><p>El archivo no se ha encontrado</p>";
-
+    $_SESSION['archivo']=true;
+    header('location:../datosolicitud.php');
 }
 
 

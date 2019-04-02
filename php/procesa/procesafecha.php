@@ -1,7 +1,7 @@
 <?php
 include_once '../../intranet/phpintra/conexion.php'; 
 session_start();
-
+$rut_usr = $_SESSION['rut'];
 //==========================================================================================|
 //----------------------------Preparacion de validacion-------------------------------------|
 //==========================================================================================|
@@ -22,36 +22,31 @@ if (!empty($_POST['fechasolicitada'])) {                                        
                                     if(checkdate($valores[1] ,$valores[2] ,$valores[0])){   //fecha existe en calendario
                                         echo '<br>la fecha esta ok';
 
-
-
- //=======================================================================================================|
+//=======================================================================================================|
 //---------Buscamos el id_fecha de los campos que tengan como fecha_asignada el valor solicitado---------|
 //=======================================================================================================|
 $cupomaximo = 25;                                                                           //Debemos hacer una consulta a la base de datos 
-                                                                                            //y recuperar el valor maximo ingresado
+//y recuperar el valor maximo ingresado
 
 $sql_buscarporfecha='SELECT id_fecha FROM TA_fecha WHERE fecha_asignada = ?';               //Aqui podemos hacer una consulta a la BD, buscando 
 $sentencia_buscarfecha=$conn->prepare($sql_buscarporfecha);                                 //el numero de filas total correspondietes a ese dia.
 $sentencia_buscarfecha->execute(array($fechasolicitada));
 $resultadobuscarfecha = $sentencia_buscarfecha->fetchAll();
 
- $contcupos = 0;                                                                            // este tomodachi se encargara de incrementar cada vez que 
-                                                                                            //obtengamos una  fila, de esta manera al terminar al iteracion 
-        
-                                                                                            //tendremos el total de filas obtenidas
+$contcupos = 0;                                                                            // este tomodachi se encargara de incrementar cada vez que 
+//obtengamos una  fila, de esta manera al terminar al iteracion 
+
+//tendremos el total de filas obtenidas
 
 foreach ($resultadobuscarfecha as $fenc) {                                                  //recorremos el resultado de la consulta
-        $contcupos++;                                                                       //le sumamos uno al tomodachi por iteracion
-        echo '<br>';
-        echo 'Contador: '.$contcupos;
+$contcupos++;                                                                       //le sumamos uno al tomodachi por iteracion
+echo '<br>';
+echo 'Contador: '.$contcupos;
 }
 
 $cuposdisponibles = $cupomaximo - $contcupos;                                               //definimos que 25 es el maximo legal de personas que deben atender
 echo '<br>Cupos Disponibles: ';                                                             // en la muni entonces le restamos el total de registros obtenidos 
-echo $cuposdisponibles;                                                                     //y lo guardamos en la variable
-
-                                                                                            //$cuposdisponibles = 0;                                         
-                                                                                            //Para hacer que no hayan cupos      
+echo $cuposdisponibles;    
 
 if ($cuposdisponibles<=0) {                                                                 //si la variable antes mencionada es menor o igual a 0, se vuelve a 
     $_SESSION['nohaycupos']=true;                                                           //datosfecha.php y  se indica el problema
@@ -64,15 +59,56 @@ if ($cuposdisponibles<=0) {                                                     
    
 
     echo '<br>Hay cupos disponibles, reservando...';                                           
-                                             
+                                   
+    echo '<br>' .$fechasolicitada;
+    //--
+
+    $select_preguntar = 'SELECT id_persona FROM TA_persona WHERE rut_persona = ?';           // Definimos, preparamos, ejecutamos 
+    $sentencia_preguntar = $conn->prepare($select_preguntar);                       //consulta sql y obtenemos datos, segun el resultado 
+    $sentencia_preguntar->execute(array($rut_usr));                                 //se tomaran dos cursos de accion diferentes
+    $resultado_preguntar = $sentencia_preguntar->fetch();
+
+
+    $idpersona = $resultado_preguntar[0];
+
+    $select_validafecha = 'SELECT id_fecha 
+    FROM ta_fecha 
+    WHERE fecha_asignada = (?)
+    AND fk_id_persona = (?)';
+
+
+    $select_validafecha = $conn->prepare($select_validafecha);
+
+    $select_validafecha->execute(array($fechasolicitada, $idpersona));
+
+    $resultadofech = $select_validafecha->fetchall();
+
+
+
+$contsoli=0;
+foreach ($resultadofech as $soli) {
+    $contsoli++;
+}
+
+
+
+if ($contsoli==0) {
+    echo $contsoli;
+
     header('location:../datospersonales.php');                                                                                        
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
+
+}else {
+    $_SESSION['existe2']=true;
+    $resultadofech==null;
+    $resultado_preguntar == null;
+
+    header('location:../datosfecha.php');  
 } //todo este bloque, debe estar en el proximo procesa, aqui solo sacamos la fecha, namas
-                                            
+ }
+
                                         
                                         
                                     }else {//fecha existe en calendario else

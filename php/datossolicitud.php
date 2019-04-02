@@ -63,40 +63,71 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
 							<br>
 							<h5 class="text-secondary">Indicanos los datos de la licencia que estas tramitando. </h5>
 							<br>
-							<form name="form1" id="formu" action="procesa/procesadatossolicitud.php" method="POST" >
-                            <div class="form-row cont justify-content-center">
-										<div class="form-group text-left col-md-6">
-												<label for="claselicencia" class="text-info">Clase de Licencia</label>
-												<select class="custom-select" name="claselicencia" id="claselicencia" required="">
-                                                    	 <option value="0">Seleccione una opción</option>
-                                                    	 <?php foreach($resultado_listalicencias as $lic): ?>
-                                                              <option value="<?php echo $lic['id_cls_licencia'];?>" ><?php echo $lic['tipo_licencia'];?></option>     
-                                                         <?php endforeach?>
-                                                                                                
-												</select>
-												<small class="text-secondary" data-error="wrong" data-success="right">Deberás acreditar domicilio.</small>
+							<form name="form1" id="formu" action="procesa/procesadatossolicitud.php" method="POST" enctype="multipart/form-data" >
+                        <div class="form-row cont justify-content-center">
+															<div class="form-group text-left col-md-6">
+																		<label for="claselicencia" class="text-info">Clase de Licencia</label>
+																		<select class="custom-select" name="claselicencia" id="claselicencia" required="">
+																																	<option value="0" >Seleccione una opción</option>
+																																	<?php foreach($resultado_listalicencias as $lic): ?>
+																																					<option value="<?php echo $lic['id_cls_licencia'];?>" ><?php echo $lic['tipo_licencia'];?></option>     
+																																		<?php endforeach?>
+																																																						
+																		</select>
+																		<small class="text-secondary" data-error="wrong" data-success="right">Deberás acreditar domicilio.</small>
 
-										</div>				
-                            </div>
-<!-- Separador de campos -->              
-                            <div class="form-row cont justify-content-center">
-										<div class="form-group text-left col-md-6">
-												<label for="comunalic" class="text-info">Comuna que la emite</label>
-												<select class="custom-select" name="comunalic" id="comunalic" required="">
-                                                    	 <option value="0">Selecciona una Comuna</option>
-                                                    	 <?php foreach($resultado_listacomuna as $nombrecomuna): ?>
-                                                         <option class="text-dark" value="<?php echo $nombrecomuna['id_comuna'];?>" <?php if ($nombrecomuna['nombre_comuna'] == 'Padre Hurtado') {
-                                                        	   echo ' selected';
-                                                        } ?> ><?php echo utf8_encode($nombrecomuna['nombre_comuna']);?></option>     
-                                                        <?php endforeach?>
-                                                                                                
-												</select>
-												<small class="text-secondary" data-error="wrong" data-success="right">Deberás acreditar domicilio.</small>
+															</div>				
+                        </div>
+<!-- Separador de campos -->   
 
-										</div>				
-								</div>
+                    <div class="form-row cont justify-content-center">
+														<div class="form-group text-left col-md-6">
+																	<label for="comunalic" class="text-info">Comuna que la emite</label>
+																	<select class="custom-select" name="comunalic" id="comunalic" required="">
+																						<option value="0">Selecciona una Comuna</option>
+																						<?php foreach($resultado_listacomuna as $nombrecomuna): ?>
+																										<option class="text-dark" value="<?php echo $nombrecomuna['id_comuna'];?>" <?php if ($nombrecomuna['nombre_comuna'] == 'Padre Hurtado') {
+																															echo ' selected';
+																										} ?> ><?php echo utf8_encode($nombrecomuna['nombre_comuna']);?></option>     
+																						<?php endforeach?>
+																																																											
+																	</select>
+																<small class="text-secondary" data-error="wrong" data-success="right">Deberás acreditar domicilio.</small>
 
-								<button class="btn btn-outline-info" type="submit" >Continuar</button>
+														</div>				
+										</div>
+
+<!-- Separador de campos -->   
+
+									<div class="form-row cont justify-content-center">
+														<div class="form-group text-left col-md-6">
+																<label for="fechacontrol" class="text-info">Fecha de control</label>
+																<input type="date" class="form-control" name="fechacontrol" id="fechacontrol" min="" required >
+																<span class="abajito" data-error="wrong" data-success="right">Seleccione la fecha de control indicada en su licencia.</span>
+
+														</div>
+									</div>
+<!-- Separador de campos --> 
+							<h3 class=""><b>Confirmación de Domicilio </b></h3>
+							<br>
+							<h5 class="text-secondary">Necesitamos confirmar que seas residente de nuestra comuna.</h5>
+							<h5 class="text-secondary">Sube una foto o imagen de tu certificado de residencia.</h5>
+							<br>
+							
+							<div class="form-row cont justify-content-center">
+										<div class="custom-file col-md-6">
+													<input type="file" class="custom-file-input" name="archivo" id="customFileLangHTML" lang="es" required>
+													<label class="custom-file-label" for="customFileLangHTML" data-browse="Buscar">Seleccionar Archivo</label>
+										</div>
+							</div>
+							<br>
+
+<!-- Separador de campos --> 
+
+
+
+
+								<button class="btn btn-outline-info" type="submit" >Finalizar</button>
 								<br>
                
 
@@ -110,6 +141,6 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
 			</div>
 	</article>
 
-	
+																									
 </body>
 </html>

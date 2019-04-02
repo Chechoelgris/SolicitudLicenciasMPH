@@ -40,30 +40,17 @@ session_start();
 
 					</section>
 					<section class="formulario bg-light text-center p-3 rounded-bottom">
-							<h3 class=""><b>Identificación </b></h3>
+							<h3 class=""><b>Finalizado </b></h3>
 							<br>
-							<h5 class="text-secondary">Para comenzar, necesitamos validar tu identidad. </h5>
+							<h5 class="text-secondary">Tu solicitud ha sido ingresada exitosamente</h5>
 							<br>
-							<form name="form1" id="formu" action="procesa/procesarut.php" method="POST" >
-								<div class="form-row cont justify-content-center">
-										<div class="form-group text-left">
-												<label for="rut" class="text-info">RUT</label>
-												<input type="text" class="form-control" name="rut" id="inputRut" onblur="javascript:Rut(document.form1.rut.value)" required>
-												<small class="text-secondary" data-error="wrong" data-success="right">Sin puntos ni guión.</small>
-
-										</div>
-										
-										
 							
-								</div>
 
-								<button class="btn btn-outline-info" type="submit" >Continuar</button>
+								<a class="btn btn-success text-light" href="http://portal.mph.cl/">Inicio</a>
 								<br>
                
 
-                <?php include("procesa/imprvalidacion.php"); ?>
-                <p class="font-italic text-right ">Desarrollado por <a href="" class="text-success">Sergio Sepúlveda</a>.</p>
-							</form>
+								<p class="font-italic text-right ">Desarrollado por <a href="http://sergiosepulveda.com" class="text-success">Sergio Sepúlveda</a>.</p>
 					</section>
 
 

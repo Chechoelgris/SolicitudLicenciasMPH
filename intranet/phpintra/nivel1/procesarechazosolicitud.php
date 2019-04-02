@@ -11,7 +11,7 @@ if ($_SESSION['tipo']!='Funcionario' && $_SESSION['tipo']!='Administrador') {
 }//validacion de perfil de sesion
 
 
-include_once 'conexion.php'; //CONEXION A LA BASE DE DATOS
+include_once '../conexion.php'; //CONEXION A LA BASE DE DATOS
 
 
 $idsol = $_GET['id'];//obtenemos el id de la solicitud a rechazar enviado por get

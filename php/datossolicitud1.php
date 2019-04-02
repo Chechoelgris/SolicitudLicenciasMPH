@@ -114,24 +114,9 @@ $resultado_listacomuna = $sentencia_listacomunas->fetchAll(); //Obtenemos los da
                                                                  
                                                                  <br>
                                                                  <!-- Separador de campos -->
-                                                                 
-                                                                <div class="form-group"> <br>
-                                                                        <div class="row"><label class="labelwacho text-light" for="calle">Certificado de Residencia</label>   <br></div>
-                                                                
-                                                                        <div class="input-field col s12">
-                                                                        <div class="file-field input-field">
-                                                                                        <div class="btn">
-                                                                                                <span>Certificado</span>
-                                                                                                <input type="file" name="archivo">
-                                                                                        </div>
-                                                                                        <div class="file-path-wrapper">
-                                                                                                <input  class="file-path validate" type="text">
-                                                                                        </div>
-                                                                                        </div>
-                                                                                
-                                                                                <span class="abajito" data-error="wrong" data-success="right">Podras conseguirlo en la junta de vecinos de tu villa o población.</span>
-                                                                        </div>        
-                                                                </div> 
+                                                            
+
+                                                            
 
                                                                 <!-- Separador de campos -->
 

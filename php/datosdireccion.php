@@ -27,7 +27,7 @@ $selectdireccion = "SELECT * FROM ta_direccion WHERE fk_id_persona = ?";
 
 $sentencia_buscardireccion = $conn->prepare($selectdireccion);// Preparamos la consulta a la base de datos
 $sentencia_buscardireccion->execute(array($_SESSION['id_persona']));            // Ejecutamos la consulta
-$resultado_buscardireccion = $sentencia_buscardireccion->fetchAll(); //Obtenemos los datos
+$resultado_buscardireccion = $sentencia_buscardireccion->fetch(); //Obtenemos los datos
 
 
 
