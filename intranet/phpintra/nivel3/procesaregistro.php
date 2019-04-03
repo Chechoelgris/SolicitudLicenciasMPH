@@ -25,7 +25,7 @@ if ($_SESSION['tipo']=='Funcionario') {
 
     //VERIFICAR USUARIOS DUPLICADOS
 
-    $select_validacion = 'SELECT * FROM TA_Usuario WHERE rut_usuario = ?';
+    $select_validacion = 'SELECT * FROM ta_Usuario WHERE rut_usuario = ?';
     $sentencia_consultar = $conn->prepare($select_validacion);
     $sentencia_consultar->execute(array($rut_nuevo));
 
@@ -50,23 +50,28 @@ if ($_SESSION['tipo']=='Funcionario') {
         echo '¡La contraseña es válida!<br>';
       
         //SI LA CONTRASEÑA PASA LA VALIDACION, ENTONCES SE ALMACENA EN LA BD
-        $sql_agregar= 'INSERT INTO TA_Usuario (rut_usuario, nombre_usuario, apellidop_usuario, apellidom_usuario, correo_usuario, pass_usuario, tipo_usuario) VALUES (?,?,?,?,?,?,?)';
+        $sql_agregar= 'INSERT INTO ta_usuario (rut_usuario, nombre_usuario, apellidop_usuario, apellidom_usuario, correo_usuario, pass_usuario, tipo_usuario) VALUES (?,?,?,?,?,?,?)';
 		$sentencia_agregar = $conn->prepare($sql_agregar);
         
-        if ($sentencia_agregar->execute(array($rut_nuevo, utf8_decode($nombre_nuevo), utf8_decode($apellidop_nuevo), utf8_decode($apellidom_nuevo), utf8_decode($correo_nuevo), $pass_nuevo, $tipo_nuevo ) )) {
+        if ($sentencia_agregar->execute(array($rut_nuevo, utf8_decode($nombre_nuevo), utf8_decode($apellidop_nuevo), utf8_decode($apellidom_nuevo), utf8_decode($correo_nuevo), utf8_decode($pass_nuevo), $tipo_nuevo ) )) {
             echo 'Agregado exitosamente <br>';
-
+             header('location:../listarusuarios.php');
+             
         }else{
             echo 'No agregado <br>';
+            header('location:../registrousuario.php');
         }
         
 
         $sentencia_agregar=null;
         $conn=null;
-
-        header('location:../listarusuarios.php');
+        echo '<br>no pasan las contrasenas';
+        header('location:../registrousuario.php');
+       // header('location:../listarusuarios.php');
     } else {
-        echo 'La contraseña no es válida.';
+        header('location:../registrousuario.php');
+        echo 'La contraseña no coinciden.';
+
     }
     
     

@@ -195,15 +195,16 @@ $f=$_SESSION['id_direccion'];
 
                         include_once 'funcionsolicitud.php';   
                         
+                        echo 'terminamos parse';
                         
-                       /* if (insertsolicitud($a,$b,$c,$d,$e,$f)) {
+                        if ($_SESSION['listo']) {
                             echo 'terminamos parse';
-                            //header('location:../ingresofinalizado.php');
+                            header('location:../ingresofinalizado.php');
                         }else {
                             echo "<br><p>Problema al ingresar la solicitud, algo anda mal.</p>";
                             $_SESSION['solicitud']=true;
-                           // header('location:../datosolicitud.php');
-                        }*/
+                            header('location:../datosolicitud.php');
+                        }
 
 
 

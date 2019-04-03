@@ -10,7 +10,7 @@ if ($_SESSION['tipo']!='Funcionario' && $_SESSION['tipo']!='Administrador') {
   header('Location:../../login.php');
 }//validacion de perfil de sesion
 
-include_once 'conexion.php';//Conexion a la Base de datos
+
 
 include_once 'contarpendientes.php';//Contar pendientes
 
@@ -19,7 +19,7 @@ $totalobtenido = $sentencia->rowCount();//Contamos la cantidad de elementos obte
 $paginas = $totalobtenido/$artxpag;//calculamos la cantidad de paginas a necesitar
 $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS los elementos obtenidos
 
-
+include_once 'conexion.php';//Conexion a la Base de datos
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -81,9 +81,9 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                 INNER JOIN ta_acreditadomicilio
                 ON ta_solicitud.fk_id_archivo = ta_acreditadomicilio.id_archivo
                 
-                WHERE TA_solicitud.estado_solicitud = 'Pendiente'
+                WHERE ta_solicitud.estado_solicitud = 'Pendiente'
             
-            LIMIT :iniciar, :nusuarios";  // limit, su primer parametro 
+                 LIMIT :iniciar, :nusuarios";  // limit, su primer parametro 
                                                                                     //indica desde que valor iniciaremos (valor del fetch), y el segundo indica
                                                                                     //en este caso, la cantidad de campos a mostrar (cantidad de filas del fetch obtenidas)
             $sentencia_pendientes = $conn->prepare($sql_pendientes);                    //preparamos la sentencia sql
@@ -96,7 +96,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             $sentencia_pendientes->execute();                                         //Ejecutamos la consulta sql    
             $resultado_pendientes = $sentencia_pendientes->fetchAll();                  //Se almacenan los datos obtenidos
               
-
+           // var_dump ($resultado_pendientes);
      
 
 ?>
@@ -343,6 +343,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                                                   Siguiente
                                               </a>
                                       </li>
+                                     
                               </ul>
                       
                       </nav>                                                                                                        <!-- /menu de navegacion entre paginas-->

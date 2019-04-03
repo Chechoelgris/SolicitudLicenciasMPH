@@ -29,7 +29,7 @@
 
     <form name="form1" id="formu" class="form-signin" action="intranet/phpintra/nivel3/procesalogin.php"  method="POST">
             
-            <img class="mb-4" src="resources/img/Logo.jpeg" alt="" width="200" height="80">
+            <img class="mb-4" src="resources/img/logo.jpeg" alt="" width="200" height="80">
 
             
             

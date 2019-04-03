@@ -161,21 +161,21 @@ if ($_SESSION['tipo']=='Funcionario') {
           </article>
 
           <article class="margen container col-10">
-                     <h1 class="titulo border  text-light border-warning rounded-pill mb-4">Registro de Usuarios</h1>
+                     <h1 class="titulo border bg-dark text-light border-warning rounded-pill mb-4">Registro de Usuarios</h1>
 
-                    <section class="registro container bg-dark text-light col-6 ">
+                    <section class="registro container gris text-light col-9 rounded">
 
                                 
-                                    <form action="nivel3/procesaregistro.php" method="POST" class="form-signin" name="form1">
+                                    <form action="nivel3/procesaregistro.php" method="POST" class=" justify-content-center" name="form1">
                                             
-                                            <div class="form-group row ">
+                                            <div class="form-group  ">
                                                 <label for="" class="col-sm-12 col-form-label"><h4><b>Informacion Personal</b></h4></label>
                                             </div>
                                             <!-- Separador de campos -->
                                             <div class="form-group row">
                                                 <label for="inputRut" class="col-sm-12 col-form-label"><b>RUT</b></label>
                                                 
-                                                <div class="col-sm-5">
+                                                <div class="col-9">
                                                     <input type="text" class="form-control" name="rut" id="inputRut" required placeholder="11222333-4" onblur="javascript:Rut(document.form1.rut.value)">
                                                 </div>
                                             </div>
@@ -183,17 +183,23 @@ if ($_SESSION['tipo']=='Funcionario') {
                                             
                                             
                                             <div class="form-group row">
-                                            <label for="inputRut" class="col-sm-12 col-form-label"><b>Nombre</b></label>
+                                            <label for="inputNombre" class="col-sm-12 col-form-label"><b>Nombre</b></label>
 
-                                                <div class="col-sm-4">
+                                                <div class="col-9">
                                                     <input type="text" class="form-control" id="inputNombre" required name="nombrenuevo" placeholder="Nombre/s">
                                                 </div>
+                                            </div>
+                                            <div class="form-group row">
+                                            <label for="inputApellidoP" class="col-sm-12 col-form-label"><b>Apellido Paterno</b></label>
 
-                                                <div class="col-sm-3">
+                                                <div class="col-9">
                                                     <input type="text" class="form-control" id="inputApellidoP" required name="apellidopnuevo" placeholder="Apellido Paterno">
                                                 </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-9">
+                                                <label for="inputApellidoM" class="col-sm-12 col-form-label"><b>Apellido Materno</b></label>
 
-                                                <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="inputApellidoM" required name="apellidomnuevo" placeholder="Apellido Materno">
                                                 </div>
 
@@ -202,30 +208,30 @@ if ($_SESSION['tipo']=='Funcionario') {
                                             <!-- Separador de campos -->
                                             
                                             <div class="form-group row">
-                                            <label for="inputRut" class="col-sm-12 col-form-label"><b>Correo Electronico</b></label>
-                                                    <div class="col-sm-10">
+                                            <label for="inputRut" class="col-9 col-form-label"><b>Correo Electronico</b></label>
+                                                    <div class="col-9">
                                                         <input type="email" name="correonuevo" class="form-control" id="inputCorreo" required placeholder="Correo">
                                                     </div>
                                             </div>
                                             <br>
                                             <!-- Separador de campos -->
                                             <div class="form-group row">
-                                                    <label for="" class="col-sm-12 col-form-label"><h4><b>Informacion de la Cuenta</b></h4></label>
+                                                    <label for="" class="col-9 col-form-label"><h4><b>Informacion de la Cuenta</b></h4></label>
                                                     
                                             </div>
                                             
                                             <div class="form-group row">
-                                            <label for="inputRut" class="col-sm-12 col-form-label"><b>Contraseña</b></label>
+                                            <label for="inputRut" class="col-9 col-form-label"><b>Contraseña</b></label>
 
-                                                    <div class="col-sm-5">
+                                                    <div class="col-9">
                                                         <input type="password" name="passnuevo" class="form-control" required id="inputPassword" placeholder="Contraseña">
                                                     </div>
                                             </div>   
 
                                     
                                             <div class="form-group row">
-                                            <label for="inputRut" class="col-sm-12 col-form-label"><b>Repetir Contraseña</b></label>
-                                                <div class="col-sm-5">
+                                            <label for="inputRut" class="col-9 col-form-label"><b>Repetir Contraseña</b></label>
+                                                <div class="col-9">
                                                     <input type="password" name="passnuevo2" required class="form-control" id="inputPassword2" placeholder="Confirma tu Contraseña">
                                                 </div>
                                             </div>
@@ -233,9 +239,9 @@ if ($_SESSION['tipo']=='Funcionario') {
                                             <!-- Separador de campos -->
                                             
                                             <div class="form-group row">
-                                            <label for="inputRut" class="col-sm-12 col-form-label"><b>Tipo de Usuario</b></label>       
+                                            <label for="inputRut" class="col-9 col-form-label"><b>Tipo de Usuario</b></label>       
 
-                                                    <div class="col-sm-10">
+                                                    <div class="col-9">
                                                         <select class="form-control" name="tiponuevo" id="selecttipo">
                                                                 <option value="Funcionario" >Funcionario</option>
                                                                 <option value="Administrador" >Administrador</option>
@@ -247,7 +253,7 @@ if ($_SESSION['tipo']=='Funcionario') {
                                             
                                             <div class="form-row">
                                             <br>
-                                                <button type="submit" class="btn btn-success mb-2 float-left">Confirmar Registro</button>
+                                                <button type="submit" class="btn btn-info mb-2 float-left">Confirmar Registro</button>
                                                 
                                             </div>
                                     </form>

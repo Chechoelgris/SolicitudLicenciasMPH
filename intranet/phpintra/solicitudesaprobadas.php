@@ -12,30 +12,13 @@ if ($_SESSION['tipo']!='Funcionario' && $_SESSION['tipo']!='Administrador') {
   header('Location:../../login.php');
 }//validacion de perfil de sesion
 
-//Conexion a la Base de datos
-include_once 'conexion.php';
-
-
-
-
-
-   $sql = "SELECT id_solicitud FROM TA_solicitud WHERE estado_solicitud = ?";
-            $acep = 'Aceptada';
-            $sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
-            $sentencia->execute(array($acep)); // Ejecutamos la consulta
-            $resultado = $sentencia->fetchAll(); //Obtenemos los datos
-            $cont = 0;
-            foreach ($resultado as $apro) {
-                $cont++;
-            }
-            $aceptadas = $cont;
-  
+include_once 'contaraprobado.php';//Contar aprobadas
 
 $artxpag = 7; //Se definen la cantidad de usuarios a mostrar por paginacion
 $totalobtenido = $sentencia->rowCount();//Contamos la cantidad de elementos obtenidos
 $paginas = $totalobtenido/$artxpag;//calculamos la cantidad de paginas a necesitar
 $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS los elementos obtenidos
-
+include_once 'conexion.php';//Conexion a la Base de datos
 
 ?>
 <!DOCTYPE html>
@@ -78,10 +61,10 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             $iniciar=($_GET['pagina']-1)*$artxpag;
             
             $sql_aprobadas = "SELECT id_solicitud , 
-                             ta_persona.rut_persona , ta_persona.nombre_persona , ta_persona.apellidop_persona , 
-                             ta_fecha.fecha_asignada , 
-                             ta_direccion.calle_dir , ta_direccion.numero_dir ,  ta_direccion.dpto_dir,
-                             ta_solicitud.estado_solicitud   
+                                      ta_persona.rut_persona , ta_persona.nombre_persona , ta_persona.apellidop_persona , 
+                                      ta_fecha.fecha_asignada , 
+                                      ta_direccion.calle_dir , ta_direccion.numero_dir ,  ta_direccion.dpto_dir,
+                                      ta_solicitud.estado_solicitud   
             from ta_solicitud 
             
             INNER JOIN ta_persona 
@@ -90,11 +73,11 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             INNER JOIN ta_direccion
                 ON ta_solicitud.fk_id_direccion = ta_direccion.id_direccion
             
-                INNER JOIN ta_fecha
-                ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha
+            INNER JOIN ta_fecha
+            ON ta_solicitud.fk_id_fecha = ta_fecha.id_fecha
             
            
-            WHERE TA_solicitud.estado_solicitud = 'Aceptada'
+            WHERE ta_solicitud.estado_solicitud = 'Aceptada'
             
             LIMIT :iniciar, :nusuarios";  // limit, su primer parametro 
                                                                                     //indica desde que valor iniciaremos (valor del fetch), y el segundo indica
@@ -109,7 +92,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
 
             $sentencia_aprobadas->execute();                                         //Ejecutamos la consulta sql    
             $resultado_aprobadas = $sentencia_aprobadas->fetchAll();                  //Se almacenan los datos obtenidos
-              
+              //var_dump($resultado_aprobadas);
 
      
 
@@ -262,7 +245,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                             <div class="table-responsive-xl" name="tabla">
                                   <table class="table table-dark table-bordered table-hover ">                                       <!-- Tabla con la informacion-->
                                           <caption> <span class="text-light table-bordered rounded bg-dark  p-1 text-center" >
-                                                  Solicitudes Aprobadas: <?php echo $aceptadas;?>
+                                                  Solicitudes Aprobadas: <?php echo $_SESSION['aprobados'];?>
                                           </span></caption>
                                           <thead>
                                             <tr>

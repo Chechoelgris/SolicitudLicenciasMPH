@@ -1,6 +1,6 @@
 <?php
 session_start();
-utf8_encode($_SESSION['tipo']);
+//utf8_encode($_SESSION['tipo']);
 include_once 'phpintra/conexion.php';//Conexion a la Base de datos
 
     if  (!isset($_SESSION['tipo'])) {

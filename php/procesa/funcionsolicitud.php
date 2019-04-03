@@ -1,5 +1,5 @@
 <?php
-
+session_start():
 include_once '../../intranet/phpintra/conexion.php'; 
 
 
@@ -16,5 +16,9 @@ include_once '../../intranet/phpintra/conexion.php';
 
     $sentencia_insertfinal = $conn->prepare($insertfinal);
 
-    $sentencia_insertfinal->execute(array($a,$b,$c,$d,$e,$f));
+    if ($sentencia_insertfinal->execute(array($a,$b,$c,$d,$e,$f))) {
+        $_SESSION['listo']=true;
+    }else {
+        $_SESSION['listo']=false;
+    }
 

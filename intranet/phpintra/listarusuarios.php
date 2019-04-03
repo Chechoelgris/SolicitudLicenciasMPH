@@ -11,7 +11,7 @@ if ($_SESSION['tipo']=='Funcionario') {
 
 include_once 'conexion.php';//Conexion a la Base de datos
 
-$sql = 'SELECT * FROM TA_usuario';//Definimos la consulta a la base de datos
+$sql = 'SELECT * FROM ta_usuario';//Definimos la consulta a la base de datos
 $sentencia = $conn->prepare($sql);// Preparamos la consulta a la base de datos
 $sentencia->execute();            // Ejecutamos la consulta
 $resultado = $sentencia->fetchAll(); //Obtenemos los datos
@@ -40,13 +40,15 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             if (!$_GET){
               header('Location:listarusuarios.php?pagina=1');
             } //Con esto, modificamos la cabecera para que nos envie a la pagina 1 si es que no se ha seleccionado ninguna pagina en especifico
+
             if ($_GET['pagina']>$paginas || $_GET['pagina']<=0 ) {
 
               header('Location:listarusuarios.php?pagina=1');
-            }//Con este if, nos aseguramos que al instar manualmente numeros que no esten en el dominio de la pagina, se redirigan a la pagina 1
+            }//Con este if, nos aseguramos que al insertar manualmente numeros que no esten en el dominio de la pagina, se redirigan a la pagina 1
+            
             $iniciar=($_GET['pagina']-1)*$artxpag;
             
-            $sql_usuarios = 'SELECT * FROM TA_usuario LIMIT :iniciar, :nusuarios';  // limit, su primer parametro 
+            $sql_usuarios = 'SELECT * FROM ta_usuario LIMIT :iniciar, :nusuarios';  // limit, su primer parametro 
                                                                                     //indica desde que valor iniciaremos (valor del fetch), y el segundo indica
                                                                                     //en este caso, la cantidad de campos a mostrar (cantidad de filas del fetch obtenidas)
             $sentencia_usuarios = $conn->prepare($sql_usuarios);                    //preparamos la sentencia sql
@@ -59,17 +61,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
             $sentencia_usuarios->execute();                                         //Ejecutamos la consulta sql    
             $resultado_usuarios = $sentencia_usuarios->fetchAll();                  //Se almacenan los datos obtenidos
              
-            
-            /* 
-
-            
-            
-            
-            
-            
-              
-
-    */ 
+        
 
 ?>
   <header>
@@ -216,7 +208,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
 
               <div class="table-responsive-xl">
                 <table class="table table-dark table-bordered table-hover ">
-                <caption>Listado de usuarios</caption>
+                
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
@@ -228,14 +220,17 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                     </tr>
                   </thead>
                   <tbody>
-                  <?php foreach($resultado_usuarios as $usr):?>
+                  <?php 
+                  $conte=0;
+                  foreach($resultado_usuarios as $usr):?>
                   
                     <tr>
                       <th><?php echo $usr['id_usuario']?></th>  
                       <th><?php echo $usr['rut_usuario']?></th>
                       <td><?php echo utf8_encode($usr['nombre_usuario']).' '.utf8_encode($usr['apellidop_usuario']).' '.utf8_encode($usr['apellidom_usuario'])?></td>
                       <td><?php echo $usr['correo_usuario']?></td>
-                      <td><?php echo $usr['tipo_usuario']?></td>
+                      <td><?php echo $usr['tipo_usuario'];
+                      $conte++;?></td>
                       
                       <td class="">
                         <a class="btn btn-outline-warning " href="editareliminarusr.php?usuario=<?php $_GET['usuario'] = $usr['id_usuario']; echo $_GET['usuario']; ?>"><i class="fas fa-user-edit"></i></a>
@@ -244,6 +239,7 @@ $paginas = ceil($paginas);//Redondeamos hacia arriba para poder mostrar TODOS lo
                     </tr>
                     <?php endforeach?>
                   </tbody>
+                  <caption>Listado de usuarios <?php echo $conte; ?></caption>
                 </table>
               </div>
              
